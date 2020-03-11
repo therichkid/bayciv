@@ -1,0 +1,93 @@
+<template>
+  <v-container class="post-container">
+    <Loading v-if="isLoading" :height="500" />
+    <LoadingError v-if="loadingError" :height="500" @retryAgain="getPageBySlug(slug)" />
+
+    <v-row v-if="!isLoading && !loadingError && page" align="center">
+      <v-col cols="12">
+        <h1 class="display-1" v-html="page.title"></h1>
+      </v-col>
+      <v-col cols="12" v-html="page.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
+      <v-col cols="12" v-if="page.formId && page.formData && page.formData.length">
+        <Form type="page" :formIdProp="page.formId" :formDataProp="page.formData" />
+      </v-col>
+      <v-col cols="12" v-else>
+        <v-btn @click="$router.go(-1)">
+          <v-icon>mdi-chevron-left</v-icon>
+          <span>Zurück</span>
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import Loading from "@/components/partials/Loading";
+import LoadingError from "@/components/partials/LoadingError";
+import Form from "@/views/Form";
+
+export default {
+  components: {
+    Loading,
+    LoadingError,
+    Form
+  },
+
+  props: {
+    slug: String
+  },
+
+  data() {
+    return {
+      page: {}
+    };
+  },
+
+  computed: {
+    isLoading() {
+      return this.$store.state.pageLoading;
+    },
+    loadingError() {
+      return this.$store.state.pageLoadingError;
+    },
+    fontSize() {
+      return this.$store.state.fontSize;
+    },
+    failedRequests() {
+      return this.$store.state.failedRequests;
+    }
+  },
+
+  watch: {
+    page: function(page) {
+      if (!page && !this.failedRequests) {
+        this.$router.push("/404");
+      }
+    },
+    $route() {
+      this.getPageBySlug(this.slug);
+    }
+  },
+
+  methods: {
+    async getPageBySlug(slug) {
+      const pageFetched = this.$store.getters.getFetchedPageBySlug(slug);
+      if (pageFetched[0]) {
+        // Already fetched
+        this.page = pageFetched[1];
+      } else {
+        // Not fetched yet
+        this.page = await this.$store
+          .dispatch("fetchPageBySlug", slug)
+          .catch(error => console.error(error));
+      }
+    }
+  },
+
+  created() {
+    this.getPageBySlug(this.slug);
+  }
+};
+</script>
+
+<style></style>
