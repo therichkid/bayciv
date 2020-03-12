@@ -13,7 +13,9 @@
             </v-tooltip>
           </div>
           <span class="headline pr-2">{{ event.dayFormatted }}.</span>
-          <span class="caption pt-2 text-truncate" style="flex: 10 0">{{ event.monthFormatted }}</span>
+          <span class="caption pt-2 text-truncate" style="flex: 10 0">
+            {{ event.monthFormatted }}
+          </span>
         </v-card-title>
 
         <v-card-title>
@@ -22,12 +24,9 @@
 
         <!-- Body -->
         <v-card-text>
-          <v-chip
-            v-if="event.registration"
-            color="primary"
-            text-color="white"
-            class="mb-2"
-          >Bitte anmelden!</v-chip>
+          <v-chip v-if="event.registration" color="primary" text-color="white" class="mb-2">
+            Bitte anmelden!
+          </v-chip>
           <v-row align="center" dense>
             <!-- Group -->
             <v-col cols="12" v-if="event.group">

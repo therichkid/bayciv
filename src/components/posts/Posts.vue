@@ -18,7 +18,9 @@
           >
             <v-row v-if="article.group">
               <v-col class="ml-3">
-                <v-chip color="primary" class="text-truncate" text-color="white">{{ article.group }}</v-chip>
+                <v-chip color="primary" class="text-truncate" text-color="white">
+                  {{ article.group }}
+                </v-chip>
               </v-col>
             </v-row>
           </v-img>

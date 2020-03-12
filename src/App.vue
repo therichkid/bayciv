@@ -13,18 +13,21 @@
             href="https://support.microsoft.com/de-de/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
             target="_blank"
             rel="noopener noreferrer"
-          >Microsoft Edge</a>,
+            >Microsoft Edge</a
+          >,
           <a
             href="https://www.google.com/intl/de_de/chrome/"
             target="_blank"
             rel="noopener noreferrer"
-          >Google Chrome</a>
+            >Google Chrome</a
+          >
           oder
           <a
             href="https://www.mozilla.org/de/firefox/new/"
             target="_blank"
             rel="noopener noreferrer"
-          >Mozilla Firefox</a>.
+            >Mozilla Firefox</a
+          >.
         </v-alert>
         <router-view />
       </v-container>
