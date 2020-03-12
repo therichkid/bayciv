@@ -17,11 +17,9 @@ export default {
     const currentDate = new Date();
     const mm = currentDate.getMonth() + 1;
     const dd = currentDate.getDate();
-    return [
-      currentDate.getFullYear(),
-      (mm > 9 ? "" : "0") + mm,
-      (dd > 9 ? "" : "0") + dd
-    ].join(delimiter);
+    return [currentDate.getFullYear(), (mm > 9 ? "" : "0") + mm, (dd > 9 ? "" : "0") + dd].join(
+      delimiter
+    );
   },
   splitDate: (date, hasDelimiter) => {
     let year, month, day;

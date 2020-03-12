@@ -13,21 +13,18 @@
             href="https://support.microsoft.com/de-de/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
             target="_blank"
             rel="noopener noreferrer"
-            >Microsoft Edge</a
-          >,
+          >Microsoft Edge</a>,
           <a
             href="https://www.google.com/intl/de_de/chrome/"
             target="_blank"
             rel="noopener noreferrer"
-            >Google Chrome</a
-          >
+          >Google Chrome</a>
           oder
           <a
             href="https://www.mozilla.org/de/firefox/new/"
             target="_blank"
             rel="noopener noreferrer"
-            >Mozilla Firefox</a
-          >.
+          >Mozilla Firefox</a>.
         </v-alert>
         <router-view />
       </v-container>
@@ -61,6 +58,22 @@ export default {
     onToggleEmit() {
       this.$refs.drawer.drawer = !this.$refs.drawer.drawer;
     }
+  },
+
+  mounted() {
+    // Workaround to disable ripple effect on touchmove
+    window.addEventListener(
+      "touchmove",
+      () => {
+        document.body.classList.add("hide-ripple");
+      },
+      { passive: true }
+    );
+    window.addEventListener("touchend", () => {
+      setTimeout(() => {
+        document.body.classList.remove("hide-ripple");
+      }, 50);
+    });
   }
 };
 </script>
@@ -89,6 +102,9 @@ export default {
 }
 .v-banner__wrapper {
   border-bottom: none !important;
+}
+.hide-ripple .v-ripple__container {
+  display: none;
 }
 /* WP classes */
 /* Inherited via v-html so they need a global style to be attached */

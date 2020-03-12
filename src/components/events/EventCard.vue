@@ -1,13 +1,7 @@
 <template>
   <v-dialog v-model="selectedOpen" scrollable max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-card
-        hover
-        :ripple="false"
-        v-on="on"
-        class="d-flex flex-column event-card"
-        style="min-width: 250px"
-      >
+      <v-card hover v-on="on" class="d-flex flex-column event-card" style="min-width: 250px">
         <!-- Header -->
         <v-card-title class="primary white--text">
           <div v-if="event.featured">
@@ -19,9 +13,7 @@
             </v-tooltip>
           </div>
           <span class="headline pr-2">{{ event.dayFormatted }}.</span>
-          <span class="caption pt-2 text-truncate" style="flex: 10 0">{{
-            event.monthFormatted
-          }}</span>
+          <span class="caption pt-2 text-truncate" style="flex: 10 0">{{ event.monthFormatted }}</span>
         </v-card-title>
 
         <v-card-title>
@@ -30,9 +22,12 @@
 
         <!-- Body -->
         <v-card-text>
-          <v-chip v-if="event.registration" color="primary" text-color="white" class="mb-2"
-            >Bitte anmelden!</v-chip
-          >
+          <v-chip
+            v-if="event.registration"
+            color="primary"
+            text-color="white"
+            class="mb-2"
+          >Bitte anmelden!</v-chip>
           <v-row align="center" dense>
             <!-- Group -->
             <v-col cols="12" v-if="event.group">

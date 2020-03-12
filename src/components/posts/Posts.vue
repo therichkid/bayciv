@@ -7,7 +7,6 @@
       <v-col class="d-flex" v-for="article in posts" :key="article.id" cols="12" sm="6">
         <v-card
           hover
-          :ripple="false"
           :to="`/news/${article.slug}`"
           class="d-flex flex-column"
           :style="{ width: '100%' }"
@@ -19,9 +18,7 @@
           >
             <v-row v-if="article.group">
               <v-col class="ml-3">
-                <v-chip color="primary" class="text-truncate" text-color="white">{{
-                  article.group
-                }}</v-chip>
+                <v-chip color="primary" class="text-truncate" text-color="white">{{ article.group }}</v-chip>
               </v-col>
             </v-row>
           </v-img>

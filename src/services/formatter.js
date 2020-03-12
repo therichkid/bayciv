@@ -38,9 +38,7 @@ export default {
         link: orig.link,
         startDate: orig.acf.event_datum,
         endDate:
-          orig.acf.event_datum !== orig.acf.event_datum_ende
-            ? orig.acf.event_datum_ende
-            : null,
+          orig.acf.event_datum !== orig.acf.event_datum_ende ? orig.acf.event_datum_ende : null,
         startTime: orig.acf.zeit_von,
         endTime: orig.acf.zeit_bis,
         featured: !!orig.acf.hauptevent,
@@ -50,11 +48,11 @@ export default {
         featuredImage: orig.acf.hauptevent ? addFeaturedImage(orig) : null
       };
       // Format the date
-      [
-        event.dateFormatted,
-        event.dayFormatted,
-        event.monthFormatted
-      ] = formatDate("event", event.startDate, event.endDate);
+      [event.dateFormatted, event.dayFormatted, event.monthFormatted] = formatDate(
+        "event",
+        event.startDate,
+        event.endDate
+      );
       // Props for the Vuetify calendar
       Object.assign(event, {
         name: event.title,
@@ -77,10 +75,7 @@ export default {
     }
     // Sort events by date
     events.sort((a, b) => {
-      return (
-        parseInt(a.startDate.replace(/-/g, "")) -
-        parseInt(b.startDate.replace(/-/g, ""))
-      );
+      return parseInt(a.startDate.replace(/-/g, "")) - parseInt(b.startDate.replace(/-/g, ""));
     });
     return events;
   },
@@ -185,11 +180,7 @@ const formatDate = (type, date1, date2) => {
     if (YYYY !== new Date().getFullYear()) {
       month += ` ${YYYY}`;
     }
-    return [
-      formattedDate,
-      dd2 ? `${dd1} - ${dd2}` : dd1.toString(),
-      `${month}, ${day}`
-    ];
+    return [formattedDate, dd2 ? `${dd1} - ${dd2}` : dd1.toString(), `${month}, ${day}`];
   } else {
     return formattedDate;
   }
@@ -277,21 +268,14 @@ const addFeaturedImage = input => {
 // Add the group to an event or an article
 const addGroup = (input, type) => {
   let str = "";
-  if (
-    input._embedded &&
-    input._embedded["wp:term"] &&
-    input._embedded["wp:term"][0]
-  ) {
+  if (input._embedded && input._embedded["wp:term"] && input._embedded["wp:term"][0]) {
     const taxonomies = input._embedded["wp:term"][0];
     for (const taxonomy of taxonomies) {
       if (
         taxonomy.taxonomy === "category" &&
         !["uncategorized", "selbsthilfegruppen"].includes(taxonomy.slug)
       ) {
-        if (
-          (type === "event" && taxonomy.link.includes("selbsthilfegruppen")) ||
-          type === "post"
-        ) {
+        if ((type === "event" && taxonomy.link.includes("selbsthilfegruppen")) || type === "post") {
           str += (str ? ", " : "") + taxonomy.name;
         }
       }
