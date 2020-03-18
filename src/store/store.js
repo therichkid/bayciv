@@ -312,10 +312,11 @@ export default new Vuex.Store({
           });
       });
     },
-    fetchPostsBySearchTerm(context, search) {
+    fetchPostsBySearchTerm(context, { search, perPage }) {
       const path = "wp/v2/posts";
       const params = {
-        search
+        search,
+        per_page: perPage
       };
       return new Promise((resolve, reject) => {
         api.fetchData(path, params).then(
@@ -431,6 +432,25 @@ export default new Vuex.Store({
           .finally(() => {
             context.commit("changeEventsLoading", false);
           });
+      });
+    },
+    fetchEventsBySearchTerm(context, { search, perPage }) {
+      const path = "wp/v2/events";
+      const params = {
+        search,
+        per_page: perPage
+      };
+      return new Promise((resolve, reject) => {
+        api.fetchData(path, params).then(
+          response => {
+            let { data } = response;
+            const posts = data;
+            resolve(posts);
+          },
+          error => {
+            reject(error);
+          }
+        );
       });
     },
     fetchPageBySlug(context, slug) {

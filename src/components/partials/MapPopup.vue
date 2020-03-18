@@ -30,7 +30,7 @@
       <v-spacer></v-spacer>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
-          <v-btn icon right light :to="`shgs/${group.slug}`" v-on="on" v-if="type === 'shgs'">
+          <v-btn icon right light :to="`/shgs/${group.slug}`" v-on="on" v-if="type === 'shgs'">
             <v-icon>mdi-open-in-new</v-icon>
           </v-btn>
           <v-btn

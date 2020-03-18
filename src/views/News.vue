@@ -29,18 +29,18 @@ export default {
       page: parseInt(this.$route.params.page, 10),
       selection: this.$route.query.selection || "all",
       postPages: 0,
-      isWatchPaused: false
+      isSelectionDisabled: false
     };
   },
 
   watch: {
     $route: function() {
-      this.pauseWatch();
+      this.disableSelection();
       this.page = parseInt(this.$route.params.page, 10);
       this.selection = this.$route.query.selection || "all";
     },
     selection: function() {
-      if (this.isWatchPaused) {
+      if (this.isSelectionDisabled) {
         return;
       }
       this.page = 1;
@@ -67,10 +67,10 @@ export default {
       }
       this.$router.push(route);
     },
-    pauseWatch() {
-      this.isWatchPaused = true;
+    disableSelection() {
+      this.isSelectionDisabled = true;
       setTimeout(() => {
-        this.isWatchPaused = false;
+        this.isSelectionDisabled = false;
       }, 100);
     }
   }

@@ -89,12 +89,12 @@
 
           <!-- Event popup -->
           <v-dialog
-            v-model="selectedOpen"
+            v-model="isSelectedOpen"
             :activator="selectedElement"
             scrollable
             max-width="600px"
           >
-            <EventModal :event="selectedEvent" type="popup" @close="selectedOpen = false" />
+            <EventModal :event="selectedEvent" type="popup" @close="isSelectedOpen = false" />
           </v-dialog>
         </v-sheet>
 
@@ -139,7 +139,7 @@
                 <td>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn icon right :to="`events/${event.startDate}/${event.slug}`" v-on="on">
+                      <v-btn icon right :to="`/events/${event.startDate}/${event.slug}`" v-on="on">
                         <v-icon>mdi-open-in-new</v-icon>
                       </v-btn>
                     </template>
@@ -190,7 +190,7 @@ export default {
       isLoading: false,
       selectedEvent: {},
       selectedElement: null,
-      selectedOpen: false,
+      isSelectedOpen: false,
       isIE: /MSIE|Trident/.test(window.navigator.userAgent)
     };
   },
@@ -291,10 +291,12 @@ export default {
       const open = () => {
         this.selectedEvent = event;
         this.selectedElement = nativeEvent.target;
-        setTimeout(() => (this.selectedOpen = true), 10);
+        setTimeout(() => {
+          this.isSelectedOpen = true;
+        }, 10);
       };
-      if (this.selectedOpen) {
-        this.selectedOpen = false;
+      if (this.isSelectedOpen) {
+        this.isSelectedOpen = false;
         setTimeout(open, 10);
       } else {
         open();

@@ -34,7 +34,7 @@
           <template v-slot:item.action="{ item }">
             <v-tooltip bottom>
               <template v-slot:activator="{ on }">
-                <v-btn icon right :to="`shgs/${item.slug}`" v-on="on" v-if="type === 'shgs'">
+                <v-btn icon right :to="`/shgs/${item.slug}`" v-on="on" v-if="type === 'shgs'">
                   <v-icon>mdi-open-in-new</v-icon>
                 </v-btn>
                 <v-btn
@@ -193,7 +193,7 @@ export default {
       ],
       selectedRegion: null,
       activeGroup: null,
-      activeGroupTimeout: null
+      timeout: null
     };
   },
 
@@ -286,14 +286,14 @@ export default {
       }
     },
     setGroupToActive(group) {
-      if (this.activeGroupTimeout) {
-        this.activeGroupTimeout = null;
+      if (this.timeout) {
+        this.timeout = null;
       }
       this.activeGroup = group;
       this.center = group.latlng;
       // Set the activeGroup to null after the bouncing animation
       // Else the icon would bounce again after each filter change
-      this.activeGroupTimeout = setTimeout(() => {
+      this.timeout = setTimeout(() => {
         this.activeGroup = null;
       }, 2250);
     }
