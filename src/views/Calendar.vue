@@ -113,7 +113,7 @@
             <tbody>
               <tr
                 v-for="event in filteredEvents"
-                :key="event.name"
+                :key="event.slug"
                 :class="{ 'grey--text': event.startDate < today }"
               >
                 <td>
