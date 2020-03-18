@@ -25,7 +25,7 @@
 
     <v-spacer></v-spacer>
 
-    <!-- <SearchBar /> -->
+    <SearchBar />
 
     <v-menu left bottom :close-on-content-click="false">
       <template v-slot:activator="{ on }">
@@ -69,11 +69,11 @@
 </template>
 
 <script>
-// import SearchBar from "@/components/partials/SearchBar";
+import SearchBar from "@/components/partials/SearchBar";
 
 export default {
   components: {
-    // SearchBar
+    SearchBar
   },
 
   data() {
