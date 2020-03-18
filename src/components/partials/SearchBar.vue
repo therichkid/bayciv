@@ -27,7 +27,15 @@
           <v-switch dense v-model="includePosts"></v-switch>
         </v-subheader>
         <v-list-item v-for="post in items.posts" :key="post.id" :to="`/news/${post.slug}`">
-          <v-list-item-title v-html="post.title.rendered" class="text-truncate"></v-list-item-title>
+          <v-list-item-content>
+            <v-list-item-title
+              v-html="post.title.rendered"
+              class="text-truncate"
+            ></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-list-item-action-text>{{ formatDate(post, "post") }}</v-list-item-action-text>
+          </v-list-item-action>
         </v-list-item>
         <v-divider></v-divider>
         <v-subheader>
@@ -40,10 +48,15 @@
           :key="event.id"
           :to="`/events/${event.acf.event_datum}/${event.slug}`"
         >
-          <v-list-item-title
-            v-html="event.title.rendered"
-            class="text-truncate"
-          ></v-list-item-title>
+          <v-list-item-content>
+            <v-list-item-title
+              v-html="event.title.rendered"
+              class="text-truncate"
+            ></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-list-item-action-text>{{ formatDate(event, "event") }}</v-list-item-action-text>
+          </v-list-item-action>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -95,19 +108,11 @@ export default {
         this.search(value);
       }, 150);
     },
-    includePosts(value) {
-      if (value) {
-        this.search(this.model);
-      } else {
-        this.items.posts = [];
-      }
+    includePosts() {
+      this.search(this.model);
     },
-    includeEvents(value) {
-      if (value) {
-        this.search(this.model);
-      } else {
-        this.items.events = [];
-      }
+    includeEvents() {
+      this.search(this.model);
     }
   },
 
@@ -144,10 +149,10 @@ export default {
         (this.items.posts.length || this.items.events.length) && !posts.length && !events.length;
       if (this.isMobile && (cond1 || cond2)) {
         this.isOpen = false;
-        setTimeout(() => {
-          this.isOpen = true;
-        });
       }
+      setTimeout(() => {
+        this.isOpen = true;
+      });
       this.items.posts = posts;
       this.items.events = events;
     },
@@ -156,6 +161,10 @@ export default {
         return null;
       }
       return this.$vuetify.theme.dark ? "var(--v-primary-base)" : "var(--v-secondary-base)";
+    },
+    formatDate(item, type) {
+      const date = type === "post" ? item.date : item.acf.event_datum;
+      return date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(2, 4);
     }
   }
 };
