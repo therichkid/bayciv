@@ -7,7 +7,7 @@
           @keydown="scope.value = true"
           v-model="model"
           :loading="isLoading"
-          placeholder="Nach Artikeln & Events suchen"
+          placeholder="Nach Neuigkeiten & Veranstaltungen suchen"
           solo
           flat
           hide-details
@@ -17,21 +17,17 @@
           append-icon="mdi-close"
           @click:append="toggleSearchBar"
           style="width: 55vw; max-width: 600px;"
-        >
-        </v-text-field>
+        ></v-text-field>
       </template>
       <v-list>
         <v-subheader>
-          Artikel
+          Neuigkeiten
           <v-spacer></v-spacer>
           <v-switch dense v-model="includePosts"></v-switch>
         </v-subheader>
         <v-list-item v-for="post in items.posts" :key="post.id" :to="`/news/${post.slug}`">
           <v-list-item-content>
-            <v-list-item-title
-              v-html="post.title.rendered"
-              class="text-truncate"
-            ></v-list-item-title>
+            <v-list-item-title v-html="post.title.rendered"></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ formatDate(post, "post") }}</v-list-item-action-text>
@@ -39,7 +35,7 @@
         </v-list-item>
         <v-divider></v-divider>
         <v-subheader>
-          Events
+          Veranstaltungen
           <v-spacer></v-spacer>
           <v-switch dense v-model="includeEvents"></v-switch>
         </v-subheader>
@@ -49,10 +45,7 @@
           :to="`/events/${event.acf.event_datum}/${event.slug}`"
         >
           <v-list-item-content>
-            <v-list-item-title
-              v-html="event.title.rendered"
-              class="text-truncate"
-            ></v-list-item-title>
+            <v-list-item-title v-html="event.title.rendered"></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
             <v-list-item-action-text>{{ formatDate(event, "event") }}</v-list-item-action-text>
