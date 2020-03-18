@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100vw; max-width: 600px;">
+  <div>
     <v-menu v-if="!isHidden" v-model="isOpen" offset-y max-height="75%">
       <template v-slot:activator="scope">
         <v-text-field
@@ -9,12 +9,14 @@
           :loading="isLoading"
           placeholder="Nach Artikeln & Events suchen"
           solo
+          flat
           hide-details
           autofocus
           :light="!$vuetify.theme.dark"
           prepend-inner-icon="mdi-magnify"
           append-icon="mdi-close"
           @click:append="toggleSearchBar"
+          style="width: 55vw; max-width: 600px;"
         >
         </v-text-field>
       </template>
@@ -45,7 +47,16 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-btn icon text v-if="isHidden" @click.stop="toggleSearchBar()" style="float: right;">
+    <v-btn
+      icon
+      text
+      :style="{
+        float: 'right',
+        'background-color': getButtonBackgroundColor()
+      }"
+      v-if="isHidden"
+      @click.stop="toggleSearchBar()"
+    >
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
   </div>
@@ -139,6 +150,12 @@ export default {
       }
       this.items.posts = posts;
       this.items.events = events;
+    },
+    getButtonBackgroundColor() {
+      if (!this.isMobile) {
+        return null;
+      }
+      return this.$vuetify.theme.dark ? "var(--v-primary-base)" : "var(--v-secondary-base)";
     }
   }
 };

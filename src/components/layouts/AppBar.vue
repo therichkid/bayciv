@@ -14,12 +14,7 @@
     ></v-app-bar-nav-icon>
 
     <router-link to="/">
-      <v-img
-        class="mx-2 mt-1 test"
-        src="@/assets/logo_white.png"
-        max-height="40"
-        max-width="40"
-      ></v-img>
+      <v-img class="mx-2 mt-1" src="@/assets/logo_white.png" max-height="40" max-width="40"></v-img>
     </router-link>
     <v-toolbar-title class="ml-2 hidden-xs-only">BayCIV</v-toolbar-title>
 
@@ -149,8 +144,4 @@ export default {
 };
 </script>
 
-<style scoped>
-test {
-  background-color: green;
-}
-</style>
+<style></style>
