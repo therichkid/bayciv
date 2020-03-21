@@ -2,8 +2,8 @@ import "babel-polyfill";
 import Vue from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
-import router from "./router/router";
-import store from "./store/store";
+import router from "./router/index";
+import store from "./store/index";
 import VueAnalytics from "vue-analytics";
 
 import shared from "./services/shared";
