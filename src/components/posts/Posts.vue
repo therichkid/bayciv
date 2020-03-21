@@ -48,17 +48,21 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <NoContentYet v-if="!posts.length" />
   </div>
 </template>
 
 <script>
 import Loading from "@/components/partials/Loading";
 import LoadingError from "@/components/partials/LoadingError";
+import NoContentYet from "@/components/partials/NoContentYet";
 
 export default {
   components: {
     Loading,
-    LoadingError
+    LoadingError,
+    NoContentYet
   },
 
   props: {

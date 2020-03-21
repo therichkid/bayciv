@@ -9,7 +9,7 @@
       </v-col>
       <!-- 1st column -->
       <v-col cols="12" sm="4">
-        <v-img :src="group.featuredImage.source" maxWidth="300px" maxHeight="300px" contain></v-img>
+        <v-img :src="group.featuredImage.source" maxHeight="300px" contain></v-img>
       </v-col>
       <!-- 2nd column -->
       <v-col cols="12" sm="4">
@@ -81,7 +81,7 @@
       <h1 class="display-1 mb-2">Neuigkeiten</h1>
       <Posts :page="page" :groupName="groupName" @postPagesInit="postPages = $event" />
     </v-container>
-    <div class="text-center">
+    <div class="text-center" v-if="postPages">
       <v-pagination v-model="page" :length="postPages" @input="changePage()"></v-pagination>
     </div>
     <Events :groupName="groupName" />

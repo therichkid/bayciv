@@ -62,6 +62,8 @@
         </v-col>
       </v-row>
     </template>
+
+    <NoContentYet v-if="!events.length" />
   </v-container>
 </template>
 
@@ -70,13 +72,15 @@ import Loading from "@/components/partials/Loading";
 import LoadingError from "@/components/partials/LoadingError";
 import EventCard from "@/components/events/EventCard.vue";
 import MainEventCard from "@/components/events/MainEventCard.vue";
+import NoContentYet from "@/components/partials/NoContentYet";
 
 export default {
   components: {
     Loading,
     LoadingError,
     EventCard,
-    MainEventCard
+    MainEventCard,
+    NoContentYet
   },
 
   props: {
