@@ -11,7 +11,7 @@
       <v-divider></v-divider>
     </template>
 
-    <v-list dense nav>
+    <v-list nav dense shaped>
       <template v-for="(item, i) in routerItems">
         <v-list-item :key="i" :to="item.to" v-if="typeof item.to === 'string'">
           <v-list-item-icon>
