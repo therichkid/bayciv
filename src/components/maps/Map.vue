@@ -22,7 +22,7 @@
         <v-data-table
           :headers="table.headers"
           :items="filteredGroups"
-          :items-per-page="isMobile ? 5 : 10"
+          :items-per-page="$vuetify.breakpoint.smAndDown ? 5 : 10"
           :sort-by="table.sortBy"
           :loading="isLoading"
           :mobile-breakpoint="NaN"
@@ -217,13 +217,6 @@ export default {
       return this.type === "shgs"
         ? this.$store.state.groupsLoading
         : this.$store.state.facilitiesLoading;
-    },
-    isMobile() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return true;
-      } else {
-        return false;
-      }
     },
     filteredGroups() {
       const filteredGroups = [];

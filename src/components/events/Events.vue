@@ -23,7 +23,7 @@
 
     <template v-if="!isLoading && !loadingError && events.length">
       <!-- Desktop devices -->
-      <v-card flat tile class="transparent" v-if="!isMobile">
+      <v-card flat tile class="transparent" v-if="$vuetify.breakpoint.mdAndUp">
         <v-window v-model="window">
           <v-window-item v-for="i in pages" :key="i">
             <v-container mx-0 px-0 mt-0 pt-0>
@@ -55,7 +55,7 @@
       </v-card>
 
       <!-- Mobile devices -->
-      <v-row no-gutters v-if="isMobile" class="horizontal-scrolling-wrapper">
+      <v-row no-gutters v-if="$vuetify.breakpoint.smAndDown" class="horizontal-scrolling-wrapper">
         <v-col v-for="event in events" :key="event.id" class="d-flex pa-2">
           <MainEventCard :event="event" v-if="type === 'mainEvents'" />
           <EventCard :event="event" v-else />
@@ -111,13 +111,6 @@ export default {
     },
     fontSize() {
       return this.$store.state.fontSize;
-    },
-    isMobile() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return true;
-      } else {
-        return false;
-      }
     }
   },
 

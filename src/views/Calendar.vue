@@ -106,7 +106,7 @@
                 <th class="text-left">Datum</th>
                 <th class="text-left">Zeit</th>
                 <th class="text-left">Veranstaltung</th>
-                <th class="text-left" v-if="!isMobile">Selbsthilfegruppe</th>
+                <th class="text-left" v-if="$vuetify.breakpoint.mdAndUp">Selbsthilfegruppe</th>
                 <th style="width: 1px;"></th>
               </tr>
             </thead>
@@ -135,7 +135,7 @@
                   </span>
                   <span>{{ event.name }}</span>
                 </td>
-                <td v-if="!isMobile">{{ event.group }}</td>
+                <td v-if="$vuetify.breakpoint.mdAndUp">{{ event.group }}</td>
                 <td>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
@@ -230,15 +230,11 @@ export default {
     loadingError() {
       return this.$store.state.eventsLoadingError;
     },
-    isMobile() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return true;
-      } else {
-        return false;
-      }
-    },
     selectedType() {
-      return this.$store.state.calendarView || (this.isMobile || this.isIE ? "list" : "month");
+      return (
+        this.$store.state.calendarView ||
+        (this.$vuetify.breakpoint.smAndDown || this.isIE ? "list" : "month")
+      );
     },
     filteredEvents() {
       const filteredEvents = [];

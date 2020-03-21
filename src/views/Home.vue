@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-card class="mb-4">
-        <v-banner :single-line="!isMobile" color="primary" class="white--text">
+        <v-banner :single-line="$vuetify.breakpoint.mdAndUp" color="primary" class="white--text">
           <span class="subtitle-1">
             Wir beraten, informieren und vertreten Ihre Interessen. Gemeinsam sind wir stark!
           </span>
@@ -42,13 +42,6 @@ export default {
   computed: {
     postPages() {
       return this.$store.state.totalPostPages;
-    },
-    isMobile() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return true;
-      } else {
-        return false;
-      }
     }
   },
 

@@ -1,5 +1,16 @@
 <template>
   <v-navigation-drawer v-model="drawer" clipped app overflow width="300px">
+    <template v-if="$vuetify.breakpoint.mdAndDown">
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            BayCIV
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider></v-divider>
+    </template>
+
     <v-list dense nav>
       <template v-for="(item, i) in routerItems">
         <v-list-item :key="i" :to="item.to" v-if="typeof item.to === 'string'">

@@ -83,16 +83,6 @@ export default {
     };
   },
 
-  computed: {
-    isMobile() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  },
-
   watch: {
     model(value) {
       // Call with simple debounce
@@ -140,7 +130,7 @@ export default {
       // ...or if there were search results before but none now
       const cond2 =
         (this.items.posts.length || this.items.events.length) && !posts.length && !events.length;
-      if (this.isMobile && (cond1 || cond2)) {
+      if (this.$vuetify.breakpoint.smAndDown && (cond1 || cond2)) {
         this.isOpen = false;
       }
       setTimeout(() => {
@@ -150,7 +140,7 @@ export default {
       this.items.events = events;
     },
     getButtonBackgroundColor() {
-      if (!this.isMobile) {
+      if (this.$vuetify.breakpoint.mdAndUp) {
         return null;
       }
       return this.$vuetify.theme.dark ? "var(--v-primary-base)" : "var(--v-secondary-base)";
