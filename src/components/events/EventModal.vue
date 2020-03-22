@@ -39,9 +39,9 @@
 
     <!-- Body -->
     <v-card-text>
-      <v-chip v-if="event.registration" color="primary" text-color="white" class="mb-2"
-        >Bitte anmelden!</v-chip
-      >
+      <v-chip v-if="event.registration" color="primary" text-color="white" class="mb-2">
+        Bitte anmelden!
+      </v-chip>
       <v-row align="center" dense>
         <!-- Group -->
         <v-col cols="12" v-if="event.group">
@@ -101,7 +101,7 @@ export default {
 
   methods: {
     closeModal() {
-      this.$emit("close");
+      this.$emit("onClose");
     }
   },
 
