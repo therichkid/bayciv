@@ -259,6 +259,7 @@ const addFeaturedImage = input => {
     }
   } else {
     // Set a placeholder
+    // https://via.placeholder.com/600x400/f07f00/3b2e88?text=BayCIV+e.V.
     obj.title = "Placeholder Image";
     obj.source = require("../assets/placeholder.png");
   }
