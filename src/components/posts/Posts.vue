@@ -49,7 +49,7 @@
       </v-col>
     </v-row>
 
-    <NoContentYet v-if="!posts.length" />
+    <NoContentYet v-if="!isLoading && !loadingError && !posts.length" />
   </div>
 </template>
 

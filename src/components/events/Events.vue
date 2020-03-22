@@ -63,7 +63,7 @@
       </v-row>
     </template>
 
-    <NoContentYet v-if="!events.length" />
+    <NoContentYet v-if="!isLoading && !loadingError && !events.length" />
   </v-container>
 </template>
 
