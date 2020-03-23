@@ -51,9 +51,7 @@
             ></v-textarea>
             <!-- Date picker -->
             <div v-if="form.type === 'date'" class="mt-3">
-              <h3 v-if="form.label" class="subheading mb-2">
-                {{ form.label }}
-              </h3>
+              <h3 v-if="form.label" class="subheading mb-2">{{ form.label }}</h3>
               <div>
                 <v-date-picker
                   v-model="form.value"
@@ -311,7 +309,7 @@ export default {
           if (form.type === "url" && !form.value.includes("http")) {
             form.value = `https://${form.value}`;
           }
-          data[form.id] = form.value;
+          data[form.id] = form.value.trim();
         }
       }
       // Create token for reCAPTCHA

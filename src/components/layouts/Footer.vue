@@ -130,7 +130,7 @@ export default {
   methods: {
     async sendForm() {
       const data = {
-        email: this.email
+        email: this.email.trim()
       };
       // Create token for reCAPTCHA
       const token = await this.$recaptcha("login");
