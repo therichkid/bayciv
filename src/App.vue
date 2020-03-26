@@ -6,29 +6,6 @@
 
     <v-content>
       <v-container fluid class="main-container">
-        <v-alert type="info" prominent v-if="isIE">
-          Internet Explorer wird von dieser Seite nicht mehr unterstützt. Bitte verwenden Sie einen
-          modernen Browser wie
-          <a
-            href="https://support.microsoft.com/de-de/help/4501095/download-the-new-microsoft-edge-based-on-chromium"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Microsoft Edge</a
-          >,
-          <a
-            href="https://www.google.com/intl/de_de/chrome/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Google Chrome</a
-          >
-          oder
-          <a
-            href="https://www.mozilla.org/de/firefox/new/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Mozilla Firefox</a
-          >.
-        </v-alert>
         <router-view />
       </v-container>
       <Footer />
@@ -49,13 +26,6 @@ import CookieAlert from "@/components/partials/CookieAlert";
 
 export default {
   components: { NavigationDrawer, AppBar, Footer, FAB, CookieAlert },
-
-  data() {
-    return {
-      sheet: true,
-      isIE: /MSIE|Trident/.test(window.navigator.userAgent)
-    };
-  },
 
   methods: {
     onToggleEmit() {

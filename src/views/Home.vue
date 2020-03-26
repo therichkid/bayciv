@@ -1,6 +1,13 @@
 <template>
   <div>
     <v-container>
+      <v-alert type="info" prominent dismissible>
+        Wegen der Corona-Pandemie können unsere Veranstaltungen und Gruppentreffs derzeit leider
+        nicht stattfinden. Wir freuen uns über Gespräche, Beratung und Austausch per
+        <a href="/kontakt">Kontaktformular</a> und Mail. Kontakt nach Absprache auch über Skype
+        möglich.
+      </v-alert>
+
       <v-card class="mb-4">
         <v-banner :single-line="$vuetify.breakpoint.mdAndUp" color="primary" class="white--text">
           <span class="subtitle-1">
@@ -33,10 +40,6 @@ export default {
   components: {
     Posts,
     Events
-  },
-
-  data() {
-    return {};
   },
 
   computed: {

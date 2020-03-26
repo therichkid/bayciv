@@ -30,13 +30,13 @@
 
 <script>
 export default {
-  name: "SuccessErrorPopup",
   props: {
     dialog: Boolean,
     alertType: String,
     alertMessage: String,
     page: String
   },
+
   methods: {
     closeDialog() {
       this.$emit("dialog");
