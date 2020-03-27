@@ -1,11 +1,10 @@
 <template>
   <div>
     <v-container>
-      <v-alert type="info" prominent dismissible>
+      <v-alert type="info" prominent dismissible style="word-wrap: break-word; hyphens: auto;">
         Wegen der Corona-Pandemie können unsere Veranstaltungen und Gruppentreffs derzeit leider
         nicht stattfinden. Wir freuen uns über Gespräche, Beratung und Austausch per
-        <a href="/kontakt">Kontaktformular</a> und Mail. Kontakt nach Absprache auch über Skype
-        möglich.
+        <router-link to="/kontakt">Kontaktformular</router-link>, Mail und Skype (nach Absprache).
       </v-alert>
 
       <v-card class="mb-4">
@@ -23,9 +22,9 @@
       <Posts :page="1" />
     </v-container>
     <div class="text-center">
-      <v-btn :disabled="postPages < 2" large color="primary" @click="loadMorePosts()" class="mb-2">
-        Mehr Neuigkeiten
-      </v-btn>
+      <v-btn :disabled="postPages < 2" large color="primary" @click="loadMorePosts()" class="mb-2"
+        >Mehr Neuigkeiten</v-btn
+      >
     </div>
     <Events />
     <Events type="mainEvents" />
