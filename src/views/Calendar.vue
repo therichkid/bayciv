@@ -133,7 +133,7 @@
                       <span>Hauptevent</span>
                     </v-tooltip>
                   </span>
-                  <span>{{ event.name }}</span>
+                  <span v-html="event.name"></span>
                 </td>
                 <td v-if="$vuetify.breakpoint.mdAndUp">{{ event.group }}</td>
                 <td>
