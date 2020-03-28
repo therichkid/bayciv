@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Loading v-if="isLoading" :height="500" />
+    <LoadingSkeletonPosts v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPosts(page, groupName)" />
 
     <v-row v-if="!isLoading && !loadingError && posts.length">
@@ -54,13 +54,13 @@
 </template>
 
 <script>
-import Loading from "@/components/partials/Loading";
+import LoadingSkeletonPosts from "@/components/partials/LoadingSkeletonPosts";
 import LoadingError from "@/components/partials/LoadingError";
 import NoContentYet from "@/components/partials/NoContentYet";
 
 export default {
   components: {
-    Loading,
+    LoadingSkeletonPosts,
     LoadingError,
     NoContentYet
   },

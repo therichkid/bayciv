@@ -1,6 +1,6 @@
 <template>
   <v-container class="post-container">
-    <Loading v-if="isLoading" :height="500" />
+    <LoadingSkeleton v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPostBySlug(slug)" />
 
     <v-row v-if="!isLoading && !loadingError && Object.keys(post).length" align="center">
@@ -34,13 +34,13 @@
 </template>
 
 <script>
-import Loading from "@/components/partials/Loading";
+import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import LoadingError from "@/components/partials/LoadingError";
 import SocialMedia from "@/components/partials/SocialMedia";
 
 export default {
   components: {
-    Loading,
+    LoadingSkeleton,
     LoadingError,
     SocialMedia
   },

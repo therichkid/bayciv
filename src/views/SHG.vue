@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Loading v-if="isLoading" :height="500" />
-    <LoadingError v-if="loadingError" :height="500" @retryAgain="getGroup(groupName)" />
+    <LoadingSkeletonSHG v-if="isLoading" />
+    <LoadingError v-if="loadingError" :height="250" @retryAgain="getGroup(groupName)" />
 
     <v-row v-if="!isLoading && !loadingError && Object.keys(group).length">
       <v-col cols="12">
@@ -89,14 +89,14 @@
 </template>
 
 <script>
-import Loading from "@/components/partials/Loading";
+import LoadingSkeletonSHG from "@/components/partials/LoadingSkeletonSHG";
 import LoadingError from "@/components/partials/LoadingError";
 import Posts from "@/components/posts/Posts";
 import Events from "@/components/events/Events";
 
 export default {
   components: {
-    Loading,
+    LoadingSkeletonSHG,
     LoadingError,
     Posts,
     Events
