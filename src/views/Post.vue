@@ -4,9 +4,12 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPostBySlug(slug)" />
 
     <v-row v-if="!isLoading && !loadingError && Object.keys(post).length" align="center">
+      <!-- Header -->
       <v-col cols="12">
         <h1 class="display-1" v-html="post.title"></h1>
       </v-col>
+
+      <!-- Body -->
       <v-col cols="12">
         <v-icon color="primary" class="pr-1">mdi-calendar</v-icon>
         <span class="mr-2">{{ post.date }}</span>
@@ -14,6 +17,12 @@
         <span>{{ post.author }}</span>
       </v-col>
       <v-col cols="12" v-html="post.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
+      <!-- Social media -->
+      <v-col cols="12">
+        <SocialMedia :link="'/news/' + slug" :title="post.title" />
+      </v-col>
+
+      <!-- Actions -->
       <v-col cols="12">
         <v-btn @click="$router.go(-1)">
           <v-icon>mdi-chevron-left</v-icon>
@@ -27,11 +36,13 @@
 <script>
 import Loading from "@/components/partials/Loading";
 import LoadingError from "@/components/partials/LoadingError";
+import SocialMedia from "@/components/partials/SocialMedia";
 
 export default {
   components: {
     Loading,
-    LoadingError
+    LoadingError,
+    SocialMedia
   },
 
   props: {

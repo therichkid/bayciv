@@ -4,10 +4,19 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPageBySlug(slug)" />
 
     <v-row v-if="!isLoading && !loadingError && page" align="center">
+      <!-- Header -->
       <v-col cols="12">
         <h1 class="display-1" v-html="page.title"></h1>
       </v-col>
+
+      <!-- Body -->
       <v-col cols="12" v-html="page.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
+      <!-- Social media -->
+      <v-col cols="12">
+        <SocialMedia :link="'/' + slug" :title="page.title" />
+      </v-col>
+
+      <!-- Actions -->
       <v-col cols="12" v-if="page.formId && page.formData && page.formData.length">
         <Form type="page" :formIdProp="page.formId" :formDataProp="page.formData" />
       </v-col>
@@ -25,12 +34,14 @@
 import Loading from "@/components/partials/Loading";
 import LoadingError from "@/components/partials/LoadingError";
 import Form from "@/views/Form";
+import SocialMedia from "@/components/partials/SocialMedia";
 
 export default {
   components: {
     Loading,
     LoadingError,
-    Form
+    Form,
+    SocialMedia
   },
 
   props: {

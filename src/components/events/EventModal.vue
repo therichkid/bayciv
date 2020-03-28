@@ -16,7 +16,7 @@
         <v-spacer></v-spacer>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn icon dark v-on="on" :to="routerLink">
+            <v-btn icon dark v-on="on" :to="link">
               <v-icon>mdi-open-in-new</v-icon>
             </v-btn>
           </template>
@@ -68,8 +68,8 @@
         :style="{ fontSize: fontSize + 'px' }"
         class="mt-2 post-container"
       ></div>
-      <!-- Share -->
-      <ShareLink :routerLink="routerLink" />
+      <!-- Social media -->
+      <SocialMedia :link="link" :title="event.title" />
     </v-card-text>
 
     <!-- Actions -->
@@ -79,7 +79,7 @@
         <span>Zurück</span>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn right :to="`${routerLink}/anmeldung`" v-if="event.registration">
+      <v-btn right :to="`${link}/anmeldung`" v-if="event.registration">
         <span>Zur Anmeldung</span>
         <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
@@ -88,10 +88,10 @@
 </template>
 
 <script>
-import ShareLink from "@/components/partials/ShareLink.vue";
+import SocialMedia from "@/components/partials/SocialMedia.vue";
 export default {
   components: {
-    ShareLink
+    SocialMedia
   },
 
   props: {
@@ -106,7 +106,7 @@ export default {
   },
 
   computed: {
-    routerLink() {
+    link() {
       return `/events/${this.event.startDate}/${this.event.slug}`;
     },
     fontSize() {
