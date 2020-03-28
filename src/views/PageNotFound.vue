@@ -8,13 +8,23 @@
       <v-icon>mdi-magnify</v-icon>
       <span>
         &nbsp;oben rechts oder finden Sie weitere interessante Neuigkeiten rund um das
-        Cochlea-Implantat auf der Startseite.
+        Cochlea-Implantat auf der <router-link to="/">Startseite</router-link>.
       </span>
     </p>
-    <v-btn to="/">
-      <v-icon>mdi-chevron-left</v-icon>
-      <span>Home</span>
-    </v-btn>
+    <v-row>
+      <v-col>
+        <v-btn @click="$router.go(-1)">
+          <v-icon>mdi-chevron-left</v-icon>
+          <span>Zurück</span>
+        </v-btn>
+      </v-col>
+      <v-col class="text-right">
+        <v-btn to="/">
+          <span>Home</span>
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

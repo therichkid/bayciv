@@ -17,7 +17,7 @@
       <v-card-actions>
         <v-btn v-if="alertType === 'success' && page === 'form'" text to="/">
           <v-icon>mdi-chevron-left</v-icon>
-          <span>Start</span>
+          <span>Home</span>
         </v-btn>
         <v-btn v-else text @click="closeDialog">
           <v-icon>mdi-chevron-left</v-icon>
