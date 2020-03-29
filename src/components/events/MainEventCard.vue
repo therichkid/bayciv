@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="selectedOpen" scrollable max-width="600px">
+  <v-dialog v-model="isSelectedOpen" scrollable max-width="600px">
     <template v-slot:activator="{ on }">
       <v-card hover v-on="on" class="d-flex flex-column event-card" style="min-width: 250px">
         <v-img maxHeight="250px" :src="event.featuredImage.source"></v-img>
@@ -23,7 +23,7 @@
     </template>
 
     <!-- Event popup -->
-    <EventModal :event="event" type="popup" @onClose="selectedOpen = false" />
+    <EventModal :event="event" type="popup" @onClose="isSelectedOpen = false" />
   </v-dialog>
 </template>
 
@@ -41,7 +41,7 @@ export default {
 
   data() {
     return {
-      selectedOpen: false
+      isSelectedOpen: false
     };
   }
 };

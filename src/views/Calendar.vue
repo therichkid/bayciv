@@ -94,7 +94,7 @@
             scrollable
             max-width="600px"
           >
-            <EventModal :event="selectedEvent" type="popup" @close="isSelectedOpen = false" />
+            <EventModal :event="selectedEvent" type="popup" @onClose="isSelectedOpen = false" />
           </v-dialog>
         </v-sheet>
 
@@ -367,9 +367,9 @@ export default {
         this.groups = groupsFetched[1];
       } else {
         // Not fetched yet
-        this.groups = await this.$store
-          .dispatch("fetchGroups")
-          .catch(error => console.error(error));
+        this.groups = await this.$store.dispatch("fetchGroups").catch(error => {
+          console.error(error);
+        });
       }
     }
   },
