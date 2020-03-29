@@ -88,9 +88,12 @@ export default {
         this.page = pageFetched[1];
       } else {
         // Not fetched yet
-        this.page = await this.$store
-          .dispatch("fetchPageBySlug", slug)
-          .catch(error => console.error(error));
+        this.page = await this.$store.dispatch("fetchPageBySlug", slug).catch(error => {
+          console.error(error);
+        });
+      }
+      if (!document.title.includes(this.page.title)) {
+        document.title = this.page.title + " - " + document.title;
       }
     }
   },

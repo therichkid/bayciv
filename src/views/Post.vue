@@ -89,9 +89,12 @@ export default {
         this.post = postFetched[1];
       } else {
         // Not fetched yet
-        this.post = await this.$store
-          .dispatch("fetchPostBySlug", slug)
-          .catch(error => console.error(error));
+        this.post = await this.$store.dispatch("fetchPostBySlug", slug).catch(error => {
+          console.error(error);
+        });
+      }
+      if (!document.title.includes(this.post.title)) {
+        document.title = this.post.title + " - " + document.title;
       }
     }
   },

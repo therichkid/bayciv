@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import shared from "../services/shared";
 
 import Home from "../views/Home.vue";
 import Post from "../views/Post.vue";
@@ -144,9 +143,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   let title = "";
-  if (to.params.slug) {
-    title += `${shared.capitalize(to.params.slug.split("-").join(" "))} - `;
-  }
   if (to.meta.title) {
     title += `${to.meta.title} - `;
   }

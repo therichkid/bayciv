@@ -73,6 +73,9 @@ export default {
           console.error(error);
         });
       }
+      if (!document.title.includes(this.event.title)) {
+        document.title = this.event.title + " - " + document.title;
+      }
     }
   },
 
