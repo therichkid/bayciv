@@ -115,7 +115,7 @@
         </div>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="$router.go(-1)">
+        <v-btn @click="goBack()">
           <v-icon>mdi-chevron-left</v-icon>
           <span>Zurück</span>
         </v-btn>
@@ -337,6 +337,9 @@ export default {
       if (this.formDataProp) {
         this.forms = this.formatFormData(this.formDataProp);
       }
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
 

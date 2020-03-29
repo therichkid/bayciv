@@ -1,5 +1,5 @@
 <template>
-  <v-row dense style="cursor: pointer">
+  <v-row dense style="cursor: pointer;">
     <!-- Table -->
     <v-col cols="12" sm="6" md="5" lg="4">
       <v-card>
@@ -237,12 +237,12 @@ export default {
   },
 
   watch: {
-    isLoading: function(isLoading) {
+    isLoading(isLoading) {
       if (!isLoading) {
         this.getCurrentLocation();
       }
     },
-    selectedRegion: function(region) {
+    selectedRegion(region) {
       this.$store.commit("changeRegion", region);
     }
   },

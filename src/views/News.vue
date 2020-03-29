@@ -2,7 +2,7 @@
   <v-container>
     <h1 class="display-1 mb-2">Neuigkeiten</h1>
 
-    <v-btn-toggle v-model="selection" mandatory style="overflow-x: auto">
+    <v-btn-toggle v-model="selection" mandatory style="overflow-x: auto;">
       <v-btn value="all">Alle</v-btn>
       <v-btn value="bayciv">BayCIV</v-btn>
       <v-btn value="netzwerk">Netzwerk</v-btn>
@@ -34,12 +34,12 @@ export default {
   },
 
   watch: {
-    $route: function() {
+    $route() {
       this.disableSelection();
       this.page = parseInt(this.$route.params.page, 10);
       this.selection = this.$route.query.selection || "all";
     },
-    selection: function() {
+    selection() {
       if (this.isSelectionDisabled) {
         return;
       }

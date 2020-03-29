@@ -13,7 +13,7 @@
     </p>
     <v-row>
       <v-col>
-        <v-btn @click="$router.go(-1)">
+        <v-btn @click="goBack()">
           <v-icon>mdi-chevron-left</v-icon>
           <span>Zurück</span>
         </v-btn>
@@ -29,7 +29,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
+    }
+  }
+};
 </script>
 
 <style></style>

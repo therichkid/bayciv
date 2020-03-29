@@ -47,7 +47,7 @@ export default {
   },
 
   watch: {
-    event: function(event) {
+    event(event) {
       if (!event && !this.failedRequests) {
         this.$router.push("/404");
       }

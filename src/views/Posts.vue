@@ -28,7 +28,7 @@ export default {
   },
 
   watch: {
-    $route: function() {
+    $route() {
       this.page = parseInt(this.$route.params.page, 10);
     }
   },

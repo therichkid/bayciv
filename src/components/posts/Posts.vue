@@ -93,7 +93,7 @@ export default {
   },
 
   watch: {
-    $route: function() {
+    $route() {
       this.getPosts(this.page, this.groupName);
     }
   },

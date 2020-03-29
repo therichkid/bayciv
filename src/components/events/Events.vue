@@ -2,7 +2,7 @@
   <v-container>
     <v-row align="center">
       <v-col cols="auto" class="mr-auto">
-        <h2 class="display-1 my-2" style="word-break: break-all">
+        <h2 class="display-1 my-2" style="word-break: break-all;">
           <template v-if="type === 'mainEvents'">
             <span>Hauptveranstaltungen</span>
             <v-chip color="primary" text-color="white" class="ml-2 mb-1">Bitte anmelden!</v-chip>
@@ -41,7 +41,7 @@
           <v-btn icon large @click="prev()">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
-          <v-item-group mandatory v-model="window" class="text-center" style="width: auto">
+          <v-item-group mandatory v-model="window" class="text-center" style="width: auto;">
             <v-item v-for="i in pages" :key="i" v-slot:default="{ active, toggle }">
               <v-btn :input-value="active" icon @click="toggle">
                 <v-icon>mdi-record</v-icon>
@@ -115,7 +115,7 @@ export default {
   },
 
   watch: {
-    window: function() {
+    window() {
       this.changeEventsInView();
     }
   },

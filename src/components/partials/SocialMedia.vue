@@ -18,7 +18,7 @@
     </span>
 
     <!-- Clipboard -->
-    <v-tooltip bottom>
+    <v-tooltip bottom v-if="type !== 'popup'">
       <template v-slot:activator="{ on }">
         <v-btn icon v-on="on" @click="copyToClipboard()">
           <v-icon class="clipboard" :color="$vuetify.theme.dark ? '#121212' : '#fff'">
@@ -50,7 +50,8 @@ export default {
 
   props: {
     link: String,
-    title: String
+    title: String,
+    type: String
   },
 
   data() {

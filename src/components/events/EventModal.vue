@@ -11,7 +11,7 @@
         </v-tooltip>
       </div>
       <span class="headline pr-2">{{ event.dayFormatted }}.</span>
-      <span class="caption pt-2 text-truncate" style="flex: 10 0">{{ event.monthFormatted }}</span>
+      <span class="caption pt-2 text-truncate" style="flex: 10 0;">{{ event.monthFormatted }}</span>
       <template v-if="type === 'popup'">
         <v-spacer></v-spacer>
         <v-tooltip bottom>
@@ -69,12 +69,12 @@
         class="mt-2 post-container"
       ></div>
       <!-- Social media -->
-      <SocialMedia :link="link" :title="event.title" />
+      <SocialMedia :link="link" :title="event.title" :type="type" />
     </v-card-text>
 
     <!-- Actions -->
     <v-card-actions v-if="event.registration || type === 'page'">
-      <v-btn @click="$router.go(-1)" v-if="type === 'page'">
+      <v-btn @click="goBack()" v-if="type === 'page'">
         <v-icon>mdi-chevron-left</v-icon>
         <span>Zurück</span>
       </v-btn>
@@ -102,6 +102,9 @@ export default {
   methods: {
     closeModal() {
       this.$emit("onClose");
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
 

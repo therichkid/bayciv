@@ -21,7 +21,7 @@
         <Form type="page" :formIdProp="page.formId" :formDataProp="page.formData" />
       </v-col>
       <v-col cols="12" v-else>
-        <v-btn @click="$router.go(-1)">
+        <v-btn @click="goBack()">
           <v-icon>mdi-chevron-left</v-icon>
           <span>Zurück</span>
         </v-btn>
@@ -70,7 +70,7 @@ export default {
   },
 
   watch: {
-    page: function(page) {
+    page(page) {
       if (!page && !this.failedRequests) {
         this.$router.push("/404");
       }
@@ -95,6 +95,9 @@ export default {
       if (!document.title.includes(this.page.title)) {
         document.title = this.page.title + " - " + document.title;
       }
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
 

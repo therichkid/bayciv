@@ -36,9 +36,9 @@ export default {
         this.groups = groupsFetched[1];
       } else {
         // Not fetched yet
-        this.groups = await this.$store
-          .dispatch("fetchGroups")
-          .catch(error => console.error(error));
+        this.groups = await this.$store.dispatch("fetchGroups").catch(error => {
+          console.error(error);
+        });
       }
     }
   },

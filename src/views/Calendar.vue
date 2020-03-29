@@ -116,7 +116,7 @@
                 :key="event.slug"
                 :class="{ 'grey--text': event.startDate < today }"
                 @click="$router.push(`/events/${event.startDate}/${event.slug}`)"
-                style="cursor: pointer"
+                style="cursor: pointer;"
               >
                 <td>
                   <span class="title pr-1">{{ event.dayFormatted }}.</span>
@@ -263,7 +263,7 @@ export default {
   },
 
   watch: {
-    focus: function(focus) {
+    focus(focus) {
       this.onFocusChange(focus);
     }
   },

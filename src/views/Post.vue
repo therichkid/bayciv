@@ -24,7 +24,7 @@
 
       <!-- Actions -->
       <v-col cols="12">
-        <v-btn @click="$router.go(-1)">
+        <v-btn @click="goBack()">
           <v-icon>mdi-chevron-left</v-icon>
           <span>Zurück</span>
         </v-btn>
@@ -71,7 +71,7 @@ export default {
   },
 
   watch: {
-    post: function(post) {
+    post(post) {
       if (!post && !this.failedRequests) {
         this.$router.push("/404");
       }
@@ -96,6 +96,9 @@ export default {
       if (!document.title.includes(this.post.title)) {
         document.title = this.post.title + " - " + document.title;
       }
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
 
