@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" clipped app overflow width="300px">
+  <v-navigation-drawer v-model="drawer" clipped app overflow width="300">
     <template v-if="$vuetify.breakpoint.mdAndDown">
       <v-list-item>
         <v-list-item-content>
