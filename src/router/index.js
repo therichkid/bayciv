@@ -102,6 +102,9 @@ const routes = [
     path: "/erfahrungen/page/:page",
     name: "posts",
     component: Posts,
+    meta: {
+      title: "Erfahrungen"
+    },
     props: route => ({
       routerPage: "erfahrungen",
       page: route.params.page
@@ -112,7 +115,7 @@ const routes = [
     name: "facilities",
     component: Facilities,
     meta: {
-      title: "Einrichtungen"
+      title: "Kliniken, Rehas, Beratungsstellen"
     }
   },
   {
