@@ -1,5 +1,5 @@
 <template>
-  <v-row dense>
+  <v-row dense style="cursor: pointer">
     <!-- Table -->
     <v-col cols="12" sm="6" md="5" lg="4">
       <v-card>

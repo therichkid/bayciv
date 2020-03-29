@@ -115,6 +115,8 @@
                 v-for="event in filteredEvents"
                 :key="event.slug"
                 :class="{ 'grey--text': event.startDate < today }"
+                @click="$router.push(`/events/${event.startDate}/${event.slug}`)"
+                style="cursor: pointer"
               >
                 <td>
                   <span class="title pr-1">{{ event.dayFormatted }}.</span>
@@ -139,7 +141,7 @@
                 <td>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn icon right :to="`/events/${event.startDate}/${event.slug}`" v-on="on">
+                      <v-btn icon right v-on="on">
                         <v-icon>mdi-open-in-new</v-icon>
                       </v-btn>
                     </template>
