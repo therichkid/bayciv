@@ -13,9 +13,27 @@
             ></component>
           </v-btn>
         </template>
-        <span>Über {{ child.name || child.component }} teilen!</span>
+        <span>Per {{ child.name || child.component }} teilen</span>
       </v-tooltip>
     </span>
+
+    <!-- Clipboard -->
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on }">
+        <v-btn icon v-on="on" @click="copyToClipboard()">
+          <v-icon class="clipboard" :color="$vuetify.theme.dark ? '#121212' : '#fff'">
+            mdi-content-copy
+          </v-icon>
+        </v-btn>
+      </template>
+      <span>In die Zwischenablage kopieren</span>
+    </v-tooltip>
+    <v-snackbar v-model="snackbar">
+      Link erfolgreich in die Zwischenablage kopiert.
+      <v-btn icon dark @click="snackbar = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -56,7 +74,8 @@ export default {
           titleProp: "title"
         }
       ],
-      linkPrefix: "https://www.bayciv.de"
+      linkPrefix: "https://www.bayciv.de",
+      snackbar: false
     };
   },
 
@@ -64,14 +83,33 @@ export default {
     url() {
       return this.linkPrefix + this.link;
     }
+  },
+
+  methods: {
+    copyToClipboard() {
+      // copy needs a dom element
+      const el = document.createElement("textarea");
+      el.value = this.url;
+      // Make the element invisible to the user
+      el.style.position = "absolute";
+      el.style.left = "-9999px";
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      this.snackbar = true;
+    }
   }
 };
 </script>
 
 <style scoped>
-/* .social-media > span {
-  padding: 5px;
-  vertical-align: middle;
-  display: inline-block;
-} */
+.clipboard {
+  background-color: #607d8b;
+  /* color: transparent !important; */
+  height: 28px !important;
+  width: 28px !important;
+  border-radius: 3px;
+  margin-bottom: 4px;
+}
 </style>
