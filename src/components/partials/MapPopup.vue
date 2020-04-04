@@ -4,26 +4,26 @@
     <!-- Address -->
     <div class="align-center mb-2">
       <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
-      <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">{{ group.address }}</span>
+      <span style="color: rgba(0, 0, 0, 0.6);" class="body-2 text">{{ group.address }}</span>
     </div>
     <!-- Telephone -->
     <div class="align-center mb-2" v-if="group.phone">
       <v-icon color="primary" class="icon">mdi-phone</v-icon>
-      <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">
+      <span style="color: rgba(0, 0, 0, 0.6);" class="body-2 text">
         <a :href="`tel:${group.phone}`">{{ group.phone }}</a>
       </span>
     </div>
     <!-- Fax -->
     <div class="align-center mb-2" v-if="group.fax">
       <v-icon color="primary" class="icon">mdi-fax</v-icon>
-      <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">
+      <span style="color: rgba(0, 0, 0, 0.6);" class="body-2 text">
         <a :href="`tel:${group.fax}`">{{ group.fax }}</a>
       </span>
     </div>
     <!-- E-Mail -->
     <div class="align-center mb-2" v-if="group.email">
       <v-icon color="primary" class="icon">mdi-email</v-icon>
-      <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">{{ group.email }}</span>
+      <span style="color: rgba(0, 0, 0, 0.6);" class="body-2 text">{{ group.email }}</span>
     </div>
     <!-- Link -->
     <div class="d-flex" v-if="type === 'shgs' || (type === 'facilities' && group.homepage)">

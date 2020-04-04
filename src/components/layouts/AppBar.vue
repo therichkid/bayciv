@@ -37,8 +37,8 @@
           @click="onFontSizeChange(item.action)"
           :disabled="
             (i === 0 && fontSize >= 30) ||
-              (i === 1 && fontSize <= 10) ||
-              (i === 2 && fontSize === 16)
+            (i === 1 && fontSize <= 10) ||
+            (i === 2 && fontSize === 16)
           "
         >
           <v-list-item-icon>

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isSelectedOpen" scrollable max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-card hover v-on="on" class="d-flex flex-column event-card" style="min-width: 220px">
+      <v-card hover v-on="on" class="d-flex flex-column event-card" style="min-width: 220px;">
         <!-- Header -->
         <v-card-title class="primary white--text">
           <div v-if="event.featured">
@@ -13,7 +13,7 @@
             </v-tooltip>
           </div>
           <span class="headline pr-2">{{ event.dayFormatted }}.</span>
-          <span class="caption pt-2 text-truncate" style="flex: 10 0">
+          <span class="caption pt-2 text-truncate" style="flex: 10 0;">
             {{ event.monthFormatted }}
           </span>
         </v-card-title>

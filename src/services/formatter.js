@@ -210,10 +210,7 @@ const addAddress = input => {
     str += `${input.acf.adressname}, `;
   }
   if (input.acf.adresse.address.includes("Deutschland")) {
-    str += input.acf.adresse.address
-      .split(",")
-      .slice(0, -1)
-      .join(",");
+    str += input.acf.adresse.address.split(",").slice(0, -1).join(",");
   } else {
     str += input.acf.adresse.address;
   }
@@ -230,10 +227,7 @@ const addMailingAddress = input => {
     str += `${input.acf.postanschriftsname}, `;
   }
   if (input.acf.postanschrift.address.includes("Deutschland")) {
-    str += input.acf.postanschrift.address
-      .split(",")
-      .slice(0, -1)
-      .join(",");
+    str += input.acf.postanschrift.address.split(",").slice(0, -1).join(",");
   } else {
     str += input.acf.postanschrift.address;
   }
