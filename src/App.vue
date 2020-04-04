@@ -84,6 +84,7 @@ export default {
 [class*="wp-image"],
 .wp-caption {
   height: auto;
+  max-width: 100%;
 }
 .alignleft {
   float: left;
