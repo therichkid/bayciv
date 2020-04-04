@@ -93,8 +93,9 @@ export default {
           console.error(error);
         });
       }
-      if (!document.title.includes(this.post.title)) {
-        document.title = this.post.title + " - " + document.title;
+      const title = this.post.title.replace(/(&.*?;)/g, " ");
+      if (!document.title.includes(title)) {
+        document.title = title + " - " + document.title;
       }
     },
     goBack() {

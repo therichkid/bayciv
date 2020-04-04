@@ -92,8 +92,9 @@ export default {
           console.error(error);
         });
       }
-      if (!document.title.includes(this.page.title)) {
-        document.title = this.page.title + " - " + document.title;
+      const title = this.page.title.replace(/(&.*?;)/g, " ");
+      if (!document.title.includes(title)) {
+        document.title = title + " - " + document.title;
       }
     },
     goBack() {
