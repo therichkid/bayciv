@@ -110,7 +110,7 @@ export default {
     return {
       group: {},
       hasOptionalInfo: false,
-      page: parseInt(this.$route.params.page, 10),
+      page: parseInt(this.$route.params.page, 10) || 1,
       postPages: 0
     };
   },

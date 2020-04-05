@@ -22,14 +22,14 @@ export default {
 
   data() {
     return {
-      page: parseInt(this.$route.params.page, 10),
+      page: parseInt(this.$route.params.page, 10) || 1,
       postPages: 0
     };
   },
 
   watch: {
     $route() {
-      this.page = parseInt(this.$route.params.page, 10);
+      this.page = parseInt(this.$route.params.page, 10) || 1;
     }
   },
 

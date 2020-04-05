@@ -52,7 +52,7 @@ export default {
         {
           icon: "mdi-newspaper",
           title: "Neuigkeiten",
-          to: "/news/page/1"
+          to: "/news"
         },
         {
           icon: "mdi-calendar",

@@ -26,7 +26,7 @@ export default {
 
   data() {
     return {
-      page: parseInt(this.$route.params.page, 10),
+      page: parseInt(this.$route.params.page, 10) || 1,
       selection: this.$route.query.selection || "all",
       postPages: 0,
       isSelectionDisabled: false
@@ -36,7 +36,7 @@ export default {
   watch: {
     $route() {
       this.disableSelection();
-      this.page = parseInt(this.$route.params.page, 10);
+      this.page = parseInt(this.$route.params.page, 10) || 1;
       this.selection = this.$route.query.selection || "all";
     },
     selection() {

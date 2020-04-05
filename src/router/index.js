@@ -31,12 +31,13 @@ const routes = [
     }
   },
   {
-    path: "/news/page/:page",
+    path: "/news/page/:page?",
     name: "news",
     component: News,
     meta: {
       title: "Neuigkeiten"
-    }
+    },
+    alias: "/news"
   },
   {
     path: "/news/:slug",
@@ -87,19 +88,18 @@ const routes = [
       title: "Selbsthilfegruppen"
     }
   },
-  { path: "/shgs/:groupName", redirect: "/shgs/:groupName/page/1" },
   {
-    path: "/shgs/:groupName/page/:page",
+    path: "/shgs/:groupName/page/:page?",
     name: "shg",
     component: SHG,
     meta: {
       title: "Selbsthilfegruppen"
     },
-    props: true
+    props: true,
+    alias: "/shgs/:groupName"
   },
-  { path: "/erfahrungen", redirect: "/erfahrungen/page/1" },
   {
-    path: "/erfahrungen/page/:page",
+    path: "/erfahrungen/page/:page?",
     name: "posts",
     component: Posts,
     meta: {
@@ -108,7 +108,8 @@ const routes = [
     props: route => ({
       routerPage: "erfahrungen",
       page: route.params.page
-    })
+    }),
+    alias: "/erfahrungen"
   },
   {
     path: "/einrichtungen",
