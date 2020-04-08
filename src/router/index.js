@@ -16,6 +16,8 @@ import Posts from "../views/Posts";
 
 Vue.use(Router);
 
+// TODO: use alias array for redirects after updating vue-router to v4
+
 // Chunking:
 // () => import(/* webpackChunkName: "shgs" */ "../views/SHGs.vue")
 
@@ -30,6 +32,9 @@ const routes = [
       title: "Home"
     }
   },
+  { path: "/bayciv", redirect: "/news" },
+  { path: "/aktuelle-meldungen", redirect: "/news" },
+  { path: "/aktuelle-meldungen-gruppen", redirect: "/news" },
   {
     path: "/news/page/:page?",
     name: "news",
@@ -38,6 +43,31 @@ const routes = [
       title: "Neuigkeiten"
     },
     alias: "/news"
+  },
+  // News redirects
+  {
+    path: "/aktuelles-lesen/*",
+    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+  },
+  {
+    path: "/pressespiegel/articles/*",
+    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+  },
+  {
+    path: "/erfahrungen/articles/*",
+    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+  },
+  {
+    path: "/videos/articles/*",
+    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+  },
+  {
+    path: "/texte/articles/*",
+    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+  },
+  {
+    path: "/gedichte/articles/*",
+    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
   },
   {
     path: "/news/:slug",
@@ -48,6 +78,9 @@ const routes = [
     },
     props: true
   },
+  { path: "/anmeldungen", redirect: "/events" },
+  { path: "/veranstaltungen", redirect: "/events" },
+  { path: "/kalender", redirect: "/events" },
   {
     path: "/events",
     name: "events",
@@ -78,8 +111,7 @@ const routes = [
       type: "event"
     })
   },
-  // SHG redirects
-  { path: "/shg-allgaeu", redirect: "/shgs/ci-shg-allgaeu/page/1" },
+  { path: "/selbsthilfe", redirect: "/shgs" },
   {
     path: "/shgs",
     name: "shgs",
@@ -88,6 +120,8 @@ const routes = [
       title: "Selbsthilfegruppen"
     }
   },
+  // SHG redirects
+  { path: "/shg-allgaeu", redirect: "/shgs/ci-shg-allgaeu" },
   {
     path: "/shgs/:groupName/page/:page?",
     name: "shg",
@@ -111,6 +145,9 @@ const routes = [
     }),
     alias: "/erfahrungen"
   },
+  { path: "/kliniken", redirect: "/einrichtungen" },
+  { path: "/rehabilation", redirect: "/einrichtungen" },
+  { path: "/beratungsstellen", redirect: "/einrichtungen" },
   {
     path: "/einrichtungen",
     name: "facilities",
@@ -127,6 +164,13 @@ const routes = [
       title: "404"
     }
   },
+  // Page redirects
+  { path: "/cochlea", redirect: "/was-ist-ein-ci" },
+  { path: "/implantate", redirect: "/ci-systeme" },
+  { path: "/ziele", redirect: "/verband" },
+  { path: "/taetigkeitsberichte", redirect: "/infos-dokumente" },
+  { path: "/infomaterial", redirect: "/infos-dokumente" },
+  { path: "/mitglied_werden", redirect: "/mitglied-werden" },
   {
     path: "/:slug",
     name: "page",
