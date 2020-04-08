@@ -14,6 +14,8 @@
     <FAB />
 
     <CookieAlert />
+
+    <InfoSnackbar />
   </v-app>
 </template>
 
@@ -23,9 +25,10 @@ import AppBar from "@/components/layouts/AppBar";
 import Footer from "@/components/layouts/Footer";
 import FAB from "@/components/partials/FAB";
 import CookieAlert from "@/components/partials/CookieAlert";
+import InfoSnackbar from "@/components/partials/InfoSnackbar";
 
 export default {
-  components: { NavigationDrawer, AppBar, Footer, FAB, CookieAlert },
+  components: { NavigationDrawer, AppBar, Footer, FAB, CookieAlert, InfoSnackbar },
 
   methods: {
     onToggleEmit() {

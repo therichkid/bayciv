@@ -1,19 +1,13 @@
 <template>
   <div>
     <v-container>
-      <v-alert type="info" prominent dismissible style="word-wrap: break-word; hyphens: auto;">
-        Wegen der Corona-Pandemie können unsere Veranstaltungen und Gruppentreffs derzeit leider
-        nicht stattfinden. Wir freuen uns über Gespräche, Beratung und Austausch per
-        <router-link to="/kontakt">Kontaktformular</router-link>, Mail und Skype (nach Absprache).
-      </v-alert>
-
       <v-card class="mb-4">
         <v-banner :single-line="$vuetify.breakpoint.mdAndUp" color="primary" class="white--text">
           <span class="subtitle-1">
             Wir beraten, informieren und vertreten Ihre Interessen. Gemeinsam sind wir stark!
           </span>
           <template v-slot:actions>
-            <v-btn text color="secondary" :to="'/verband'">Mehr Infos</v-btn>
+            <v-btn text dark :to="'/verband'">Mehr Infos</v-btn>
           </template>
         </v-banner>
       </v-card>
