@@ -1,7 +1,7 @@
 <template>
   <v-row dense style="cursor: pointer;">
     <!-- Table -->
-    <v-col cols="12" sm="6" md="5" lg="4">
+    <v-col cols="12" sm="5" md="4">
       <v-card>
         <v-card-title>
           <v-text-field v-model="search" append-icon="mdi-magnify" label="Suche"></v-text-field>
@@ -22,7 +22,7 @@
         <v-data-table
           :headers="table.headers"
           :items="filteredGroups"
-          :items-per-page="$vuetify.breakpoint.smAndDown ? 5 : 10"
+          :items-per-page="$vuetify.breakpoint.xsOnly ? 5 : 10"
           :sort-by="table.sortBy"
           :loading="isLoading"
           :mobile-breakpoint="NaN"
@@ -61,7 +61,7 @@
     </v-col>
 
     <!-- Map -->
-    <v-col cols="12" sm="6" md="7" lg="8">
+    <v-col cols="12" sm="7" md="8">
       <div id="map">
         <l-map :zoom="zoom" :center="center">
           <l-tile-layer
