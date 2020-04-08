@@ -79,7 +79,8 @@ export default {
       model: null,
       includePosts: true,
       includeEvents: true,
-      timeout: null
+      timeout: null,
+      isInit: false
     };
   },
 
@@ -104,6 +105,12 @@ export default {
       this.isHidden = !this.isHidden;
       if (this.isHidden) {
         this.model = null;
+      } else {
+        // Already present search results on first open
+        if (!this.isInit) {
+          this.search();
+          this.isInit = true;
+        }
       }
     },
     async search(value) {
