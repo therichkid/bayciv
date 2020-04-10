@@ -9,9 +9,14 @@
     style="z-index: 100;"
   >
     <span style="word-wrap: break-word; hyphens: auto;" v-html="info.content"></span>
-    <v-btn icon dark @click="snackbar = false" v-if="$vuetify.breakpoint.smAndUp">
-      <v-icon>mdi-close</v-icon>
-    </v-btn>
+    <v-tooltip top v-if="$vuetify.breakpoint.smAndUp">
+      <template v-slot:activator="{ on }">
+        <v-btn icon dark @click="snackbar = false" v-on="on">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+      <span>Schließen</span>
+    </v-tooltip>
     <v-btn text dark @click="snackbar = false" v-else>
       Schließen
     </v-btn>

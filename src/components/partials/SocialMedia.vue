@@ -1,27 +1,35 @@
 <template>
   <div class="text-right">
-    <span v-for="child in socialMedia" :key="child.component">
+    <span v-for="network in networks" :key="network.component">
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
-          <v-btn icon v-on="on">
-            <component
-              :is="child.component"
-              :url="url"
-              scale="2"
-              v-bind="{ [child.titleProp]: title }"
-              v-on="on"
-            ></component>
+          <v-btn
+            icon
+            v-on="on"
+            :href="createLink(network.name)"
+            target="_blank"
+            rel="nofollow"
+            class="mx-1 white--text"
+            :style="{ backgroundColor: network.color }"
+          >
+            <v-icon>mdi-{{ network.name }}</v-icon>
           </v-btn>
         </template>
-        <span>Per {{ child.name || child.component }} teilen</span>
+        <span>Per {{ network.label }} teilen</span>
       </v-tooltip>
     </span>
 
     <!-- Clipboard -->
     <v-tooltip bottom v-if="type !== 'popup'">
       <template v-slot:activator="{ on }">
-        <v-btn icon v-on="on" @click="copyToClipboard()">
-          <v-icon class="clipboard" :color="$vuetify.theme.dark ? '#121212' : '#fff'">
+        <v-btn
+          icon
+          v-on="on"
+          @click="copyToClipboard()"
+          class="ml-1 white--text"
+          style="background-color: #607d8b;"
+        >
+          <v-icon>
             mdi-content-copy
           </v-icon>
         </v-btn>
@@ -38,16 +46,7 @@
 </template>
 
 <script>
-import { Email, Facebook, Twitter, WhatsApp } from "vue-socialmedia-share";
-
 export default {
-  components: {
-    Email,
-    Facebook,
-    Twitter,
-    WhatsApp
-  },
-
   props: {
     link: String,
     title: String,
@@ -56,23 +55,26 @@ export default {
 
   data() {
     return {
-      showLink: false,
-      socialMedia: [
+      networks: [
         {
-          component: "Email",
-          titleProp: "subject",
-          name: "E-Mail"
+          name: "email",
+          label: "E-Mail",
+          color: "#d44638"
         },
         {
-          component: "Facebook"
+          name: "facebook",
+          label: "Facebook",
+          color: "#4267b2"
         },
         {
-          component: "Twitter",
-          titleProp: "title"
+          name: "twitter",
+          label: "Twitter",
+          color: "#1da1f2"
         },
         {
-          component: "WhatsApp",
-          titleProp: "title"
+          name: "whatsapp",
+          label: "WhatsApp",
+          color: "#4ac959"
         }
       ],
       linkPrefix: "https://www.bayciv.de",
@@ -87,6 +89,20 @@ export default {
   },
 
   methods: {
+    createLink(network) {
+      const url = encodeURIComponent(this.url);
+      const title = encodeURIComponent(this.title);
+      switch (network) {
+        case "email":
+          return `mailto:?subject=${title}&body=${url}`;
+        case "facebook":
+          return `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        case "twitter":
+          return `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+        case "whatsapp":
+          return `https://wa.me/?text=${url}`;
+      }
+    },
     copyToClipboard() {
       // copy needs a dom element
       const el = document.createElement("textarea");
@@ -104,13 +120,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.clipboard {
-  background-color: #607d8b;
-  /* color: transparent !important; */
-  height: 28px !important;
-  width: 28px !important;
-  border-radius: 3px;
-  margin-bottom: 4px;
-}
-</style>
+<style></style>
