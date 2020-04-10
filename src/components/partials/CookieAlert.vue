@@ -1,21 +1,32 @@
 <template>
   <v-bottom-sheet v-model="hasNotAcceptedCookies" dark persistent hide-overlay>
-    <v-sheet class="primary text-center">
-      <div class="pa-5">
-        Mit der Nutzung dieser Webseite erklären Sie sich damit einverstanden, dass wir Cookies
-        verwenden.
-        <v-btn text to="/datenschutz">Weiterlesen</v-btn>
-      </div>
-      <v-row justify="center">
-        <v-checkbox
-          v-model="hasUnderstood"
-          color="secondary"
-          label="Ich habe verstanden"
-        ></v-checkbox>
-      </v-row>
-      <v-btn :disabled="!hasUnderstood" @click="acceptCookies()" color="success" class="mb-5"
-        >Akzeptieren</v-btn
-      >
+    <v-sheet
+      class="primary text-center"
+      style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;"
+    >
+      <v-container>
+        <v-row dense justify="center">
+          <v-col cols="12">
+            <span
+              >Mit der Nutzung dieser Webseite erklären Sie sich damit einverstanden, dass wir
+              Cookies verwenden.</span
+            >
+            <v-btn text to="/datenschutz">Weiterlesen</v-btn>
+          </v-col>
+          <v-checkbox
+            v-model="hasUnderstood"
+            color="secondary"
+            label="Ich habe verstanden"
+            hide-details
+            class="mt-0 mb-4"
+          ></v-checkbox>
+          <v-col cols="12">
+            <v-btn :disabled="!hasUnderstood" @click="acceptCookies()" color="success" class="mb-2"
+              >Akzeptieren</v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-container>
     </v-sheet>
   </v-bottom-sheet>
 </template>
