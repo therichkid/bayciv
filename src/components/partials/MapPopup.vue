@@ -31,7 +31,7 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn icon right light :to="`/shgs/${group.slug}`" v-on="on" v-if="type === 'shgs'">
-            <v-icon>mdi-open-in-new</v-icon>
+            <v-icon>mdi-open-in-app</v-icon>
           </v-btn>
           <v-btn
             icon
@@ -43,7 +43,7 @@
             v-on="on"
             v-if="type === 'facilities' && group.homepage"
           >
-            <v-icon>mdi-open-in-new</v-icon>
+            <v-icon>mdi-open-in-app</v-icon>
           </v-btn>
         </template>
         <span>Seite öffnen</span>

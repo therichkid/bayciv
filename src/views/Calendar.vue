@@ -4,11 +4,11 @@
 
     <LoadingError v-if="loadingError" @retryAgain="forceUpdate()" />
 
-    <v-row>
-      <v-col>
-        <!-- Header -->
-        <v-card class="mb-3">
-          <v-card-title>
+    <!-- Header -->
+    <v-card class="mb-3">
+      <v-card-text>
+        <v-row dense align="center">
+          <v-col cols="auto" class="mr-auto">
             <v-btn outlined class="mr-2" @click="setToday()" :disabled="isLoading">
               Heute
             </v-btn>
@@ -18,8 +18,9 @@
             <v-btn fab text small @click="next()" :disabled="isLoading">
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
-            <span class="headline text-truncate">{{ title }}</span>
-            <v-spacer></v-spacer>
+            <span class="headline" style="vertical-align: middle;">{{ title }}</span>
+          </v-col>
+          <v-col cols="auto">
             <v-menu bottom right>
               <template v-slot:activator="{ on }">
                 <v-btn outlined v-on="on">
@@ -33,127 +34,117 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-          </v-card-title>
+          </v-col>
+        </v-row>
 
-          <!-- Settings -->
-          <v-expansion-panels>
-            <v-expansion-panel>
-              <v-expansion-panel-header>Filter</v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-row>
-                  <v-col cols="12" sm="6">
-                    <v-select
-                      v-model="selectedGroups"
-                      :items="groups"
-                      item-text="name"
-                      item-value="name"
-                      multiple
-                      clearable
-                      label="Selbsthilfegruppen"
-                    ></v-select>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <v-checkbox
-                      v-model="onlyMainEvents"
-                      label="Nur Hauptveranstaltungen"
-                    ></v-checkbox>
-                  </v-col>
-                </v-row>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </v-card>
+        <!-- Settings -->
+        <v-row dense align="center">
+          <v-col cols="12" sm="6">
+            <v-autocomplete
+              v-model="selectedGroups"
+              :items="groups"
+              item-text="name"
+              item-value="name"
+              multiple
+              clearable
+              label="Selbsthilfegruppen"
+              hide-details
+            ></v-autocomplete>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-checkbox
+              v-model="onlyMainEvents"
+              label="Nur Hauptveranstaltungen"
+              hide-details
+            ></v-checkbox>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
 
-        <!-- Calendar -->
-        <!-- v-show here because the calendar ref is needed -->
-        <v-sheet height="600" v-show="selectedType !== 'list'">
-          <v-calendar
-            ref="calendar"
-            v-model="focus"
-            color="primary"
-            locale="de-DE"
-            firstInterval="8"
-            intervalCount="14"
-            eventMoreText="Mehr"
-            :events="filteredEvents"
-            :event-margin-bottom="3"
-            :now="today"
-            :type="selectedType !== 'list' ? selectedType : 'month'"
-            :weekdays="weekdays"
-            :intervalFormat="intervalFormat"
-            @click:event="showEvent"
-            @click:date="viewDay"
-            @click:more="viewDay"
-            @change="updateRange"
-          ></v-calendar>
+    <!-- Calendar -->
+    <!-- v-show here because the calendar ref is needed -->
+    <v-sheet height="600" v-show="selectedType !== 'list'">
+      <v-calendar
+        ref="calendar"
+        v-model="focus"
+        color="primary"
+        locale="de-DE"
+        firstInterval="8"
+        intervalCount="14"
+        eventMoreText="Mehr"
+        :events="filteredEvents"
+        :event-margin-bottom="3"
+        :now="today"
+        :type="selectedType !== 'list' ? selectedType : 'month'"
+        :weekdays="weekdays"
+        :intervalFormat="intervalFormat"
+        @click:event="showEvent"
+        @click:date="viewDay"
+        @click:more="viewDay"
+        @change="updateRange"
+      ></v-calendar>
 
-          <!-- Event popup -->
-          <v-dialog
-            v-model="isSelectedOpen"
-            :activator="selectedElement"
-            scrollable
-            max-width="600px"
+      <!-- Event popup -->
+      <v-dialog v-model="isSelectedOpen" :activator="selectedElement" scrollable max-width="600px">
+        <EventModal :event="selectedEvent" type="popup" @onClose="isSelectedOpen = false" />
+      </v-dialog>
+    </v-sheet>
+
+    <!-- Table list -->
+    <v-simple-table class="elevation-2" v-if="selectedType === 'list'">
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">Datum</th>
+            <th class="text-left">Zeit</th>
+            <th class="text-left">Veranstaltung</th>
+            <th class="text-left" v-if="$vuetify.breakpoint.mdAndUp">Selbsthilfegruppe</th>
+            <th style="width: 1px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="event in filteredEvents"
+            :key="event.slug"
+            :class="{ 'grey--text': event.startDate < today }"
+            @click="$router.push(`/events/${event.startDate}/${event.slug}`)"
+            style="cursor: pointer;"
           >
-            <EventModal :event="selectedEvent" type="popup" @onClose="isSelectedOpen = false" />
-          </v-dialog>
-        </v-sheet>
-
-        <!-- Table list -->
-        <v-simple-table class="elevation-2" v-if="selectedType === 'list'">
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th class="text-left">Datum</th>
-                <th class="text-left">Zeit</th>
-                <th class="text-left">Veranstaltung</th>
-                <th class="text-left" v-if="$vuetify.breakpoint.mdAndUp">Selbsthilfegruppe</th>
-                <th style="width: 1px;"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="event in filteredEvents"
-                :key="event.slug"
-                :class="{ 'grey--text': event.startDate < today }"
-                @click="$router.push(`/events/${event.startDate}/${event.slug}`)"
-                style="cursor: pointer;"
-              >
-                <td>
-                  <span class="title pr-1">{{ event.dayFormatted }}.</span>
-                  <span class="caption pt-2">{{ event.monthFormatted }}</span>
-                </td>
-                <td>
-                  {{ event.startTime }}
-                  <span v-if="event.endTime">bis {{ event.endTime }}</span>
-                </td>
-                <td>
-                  <span v-if="event.featured">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-icon color="secondary" class="mr-1" v-on="on">mdi-star</v-icon>
-                      </template>
-                      <span>Hauptevent</span>
-                    </v-tooltip>
-                  </span>
-                  <span v-html="event.name"></span>
-                </td>
-                <td v-if="$vuetify.breakpoint.mdAndUp">{{ event.group }}</td>
-                <td>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-btn icon right v-on="on">
-                        <v-icon>mdi-open-in-new</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>Event öffnen</span>
-                  </v-tooltip>
-                </td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
-      </v-col>
-    </v-row>
+            <td>
+              <span class="title pr-1">{{ event.dayFormatted }}.</span>
+              <span class="caption pt-2">{{ event.monthFormatted }}</span>
+            </td>
+            <td>
+              {{ event.startTime }}
+              <span v-if="event.endTime">bis {{ event.endTime }}</span>
+            </td>
+            <td>
+              <span v-if="event.featured">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-icon color="secondary" class="mr-1" v-on="on">mdi-star</v-icon>
+                  </template>
+                  <span>Hauptevent</span>
+                </v-tooltip>
+              </span>
+              <span v-html="event.name"></span>
+            </td>
+            <td v-if="$vuetify.breakpoint.mdAndUp">{{ event.group }}</td>
+            <td>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon right v-on="on">
+                    <v-icon>mdi-open-in-app</v-icon>
+                  </v-btn>
+                </template>
+                <span>Event öffnen</span>
+              </v-tooltip>
+            </td>
+          </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
   </v-container>
 </template>
 
@@ -391,8 +382,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.v-expansion-panel:before {
-  box-shadow: none !important;
-}
-</style>
+<style></style>

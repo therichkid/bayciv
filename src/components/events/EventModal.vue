@@ -17,7 +17,7 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon dark v-on="on" :to="link">
-              <v-icon>mdi-open-in-new</v-icon>
+              <v-icon>mdi-window-maximize</v-icon>
             </v-btn>
           </template>
           <span>Maximieren</span>
