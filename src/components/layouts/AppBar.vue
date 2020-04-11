@@ -52,10 +52,10 @@
         <!-- Dark mode -->
         <v-list-item @click="toggleDarkMode()">
           <v-list-item-icon>
-            <v-icon>{{ toggleIcon }}</v-icon>
+            <v-icon :color="toggle.color">{{ toggle.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title>Nachtmodus</v-list-item-title>
+            <v-list-item-title>Thema</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -97,8 +97,16 @@ export default {
     fontSize() {
       return this.$store.state.fontSize;
     },
-    toggleIcon() {
-      return this.$vuetify.theme.dark ? "mdi-toggle-switch" : "mdi-toggle-switch-off";
+    toggle() {
+      let icon, color;
+      if (this.$vuetify.theme.dark) {
+        icon = "mdi-weather-night";
+        color = "#03a9f4";
+      } else {
+        icon = "mdi-weather-sunny";
+        color = "#ffc107";
+      }
+      return { icon, color };
     },
     prominentBanner() {
       if (this.$vuetify.breakpoint.smAndDown) {
