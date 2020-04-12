@@ -32,7 +32,8 @@
 export default {
   data() {
     return {
-      fabVisible: false
+      fabVisible: false,
+      isIE: /MSIE|Trident|EdgeHTML/.test(window.navigator.userAgent)
     };
   },
 
@@ -58,11 +59,15 @@ export default {
       });
     },
     scrollDown() {
-      window.scrollBy({
-        top: 150,
-        left: 0,
-        behavior: "smooth"
-      });
+      if (this.isIE) {
+        window.scrollBy(0, 150);
+      } else {
+        window.scrollBy({
+          top: 150,
+          left: 0,
+          behavior: "smooth"
+        });
+      }
     }
   },
 

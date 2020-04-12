@@ -1,24 +1,31 @@
 <template>
-  <v-row dense style="cursor: pointer;">
+  <v-row dense>
     <!-- Table -->
     <v-col cols="12" sm="5" md="4">
       <v-card>
-        <v-card-title>
-          <v-text-field v-model="search" append-icon="mdi-magnify" label="Suche"></v-text-field>
-          <v-select
-            :items="facilityTypes"
-            v-model="selectedFacilityType"
-            label="Typ"
-            clearable
-            v-if="type === 'facilities'"
-          ></v-select>
-          <v-select
-            :items="regions"
-            v-model="selectedRegion"
-            label="Regierungsbezirk"
-            clearable
-          ></v-select>
-        </v-card-title>
+        <v-card-text>
+          <v-row dense>
+            <v-col cols="12">
+              <v-text-field v-model="search" append-icon="mdi-magnify" label="Suche"></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-select
+                :items="facilityTypes"
+                v-model="selectedFacilityType"
+                label="Typ"
+                clearable
+                v-if="type === 'facilities'"
+              ></v-select>
+              <v-select
+                :items="regions"
+                v-model="selectedRegion"
+                label="Regierungsbezirk"
+                clearable
+              ></v-select>
+            </v-col>
+          </v-row>
+        </v-card-text>
+
         <v-data-table
           :headers="table.headers"
           :items="filteredGroups"
@@ -28,8 +35,8 @@
           :mobile-breakpoint="NaN"
           disable-filtering
           must-sort
-          class="elevation-2"
           @click:row="setGroupToActive"
+          style="cursor: pointer;"
         >
           <template v-slot:item.action="{ item }">
             <v-tooltip bottom>
@@ -51,10 +58,6 @@
               </template>
               <span>Seite öffnen</span>
             </v-tooltip>
-          </template>
-
-          <template v-slot:item.name="{ item }">
-            <span>{{ item.name }}</span>
           </template>
         </v-data-table>
       </v-card>
