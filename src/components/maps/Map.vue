@@ -54,7 +54,7 @@
           </template>
 
           <template v-slot:item.name="{ item }">
-            <span v-html="item.name"></span>
+            <span>{{ item.name }}</span>
           </template>
         </v-data-table>
       </v-card>

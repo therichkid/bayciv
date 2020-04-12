@@ -16,16 +16,16 @@
             :maxHeight="dynamicImageHeight"
             :alt="article.featuredImage.title"
           >
-            <v-row v-if="article.group">
+            <v-row v-if="article.category">
               <v-col class="ml-3">
                 <v-chip color="primary" class="text-truncate" text-color="white">
-                  {{ article.group }}
+                  {{ article.category }}
                 </v-chip>
               </v-col>
             </v-row>
           </v-img>
           <v-card-title>
-            <h3 class="headline" v-html="article.title"></h3>
+            <h3 class="headline">{{ article.title }}</h3>
           </v-card-title>
           <v-card-subtitle>
             <v-row align="center">

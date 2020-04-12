@@ -6,7 +6,7 @@
     <v-row v-if="!isLoading && !loadingError && page" align="center">
       <!-- Header -->
       <v-col cols="12">
-        <h1 class="display-1" v-html="page.title"></h1>
+        <h1 class="display-1">{{ page.title }}</h1>
       </v-col>
 
       <!-- Body -->
@@ -92,9 +92,8 @@ export default {
           console.error(error);
         });
       }
-      const title = this.page.title.replace(/(&.*?;)/g, " ");
-      if (!document.title.includes(title)) {
-        document.title = title + " - " + document.title;
+      if (this.page) {
+        document.title = this.page.title + " - " + document.title;
       }
     },
     goBack() {

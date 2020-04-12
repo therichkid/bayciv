@@ -1,6 +1,6 @@
 <template>
   <l-popup>
-    <h3 class="headline mb-2" v-html="group.name"></h3>
+    <h3 class="headline mb-2">{{ group.name }}</h3>
     <!-- Address -->
     <div class="align-center mb-2">
       <v-icon color="primary" class="icon">mdi-map-marker</v-icon>

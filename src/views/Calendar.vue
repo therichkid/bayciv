@@ -43,8 +43,8 @@
             <v-autocomplete
               v-model="selectedGroups"
               :items="groups"
-              item-text="name"
-              item-value="name"
+              item-text="title"
+              item-value="category"
               multiple
               clearable
               label="Selbsthilfegruppen"
@@ -128,7 +128,7 @@
                   <span>Hauptevent</span>
                 </v-tooltip>
               </span>
-              <span v-html="event.name"></span>
+              <span>{{ event.title }}</span>
             </td>
             <td v-if="$vuetify.breakpoint.mdAndUp">{{ event.group }}</td>
             <td>

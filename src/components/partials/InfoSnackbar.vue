@@ -1,15 +1,13 @@
 <template>
   <v-snackbar
     v-model="snackbar"
-    bottom
-    :multi-line="$vuetify.breakpoint.smAndUp"
-    :vertical="$vuetify.breakpoint.xsOnly"
+    v-bind="responsiveProps"
     :timeout="0"
     color="info"
     style="z-index: 100;"
   >
     <span style="word-wrap: break-word; hyphens: auto;" v-html="info.content"></span>
-    <v-tooltip top v-if="$vuetify.breakpoint.smAndUp">
+    <v-tooltip bottom v-if="$vuetify.breakpoint.smAndUp">
       <template v-slot:activator="{ on }">
         <v-btn icon dark @click="snackbar = false" v-on="on">
           <v-icon>mdi-close</v-icon>
@@ -47,8 +45,25 @@ export default {
     }
   },
 
+  computed: {
+    responsiveProps() {
+      const props = {};
+      if (this.$vuetify.breakpoint.xsOnly) {
+        props.vertical = true;
+      } else {
+        props.multiLine = true;
+      }
+      if (this.$vuetify.breakpoint.smAndDown) {
+        props.bottom = true;
+      } else {
+        props.top = true;
+      }
+      return props;
+    }
+  },
+
   created() {
-    if (localStorage.getItem("cookiesAccepted") === "true") {
+    if (this.$vuetify.breakpoint.mdAndUp || localStorage.getItem("cookiesAccepted") === "true") {
       this.getInfo();
     } else {
       const interval = setInterval(() => {

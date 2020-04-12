@@ -73,9 +73,8 @@ export default {
           console.error(error);
         });
       }
-      const title = this.event.title.replace(/(&.*?;)/g, " ");
-      if (!document.title.includes(title)) {
-        document.title = title + " - " + document.title;
+      if (this.event) {
+        document.title = this.event.title + " - " + document.title;
       }
     }
   },

@@ -6,7 +6,7 @@
     <v-row v-if="!isLoading && !loadingError && Object.keys(post).length" align="center">
       <!-- Header -->
       <v-col cols="12">
-        <h1 class="display-1" v-html="post.title"></h1>
+        <h1 class="display-1">{{ post.title }}</h1>
       </v-col>
 
       <!-- Body -->
@@ -93,9 +93,8 @@ export default {
           console.error(error);
         });
       }
-      const title = this.post.title.replace(/(&.*?;)/g, " ");
-      if (!document.title.includes(title)) {
-        document.title = title + " - " + document.title;
+      if (this.post) {
+        document.title = this.post.title + " - " + document.title;
       }
     },
     goBack() {

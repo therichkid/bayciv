@@ -5,7 +5,7 @@
     dark
     color="primary"
     src="@/assets/banner.png"
-    v-bind="prominentBanner"
+    v-bind="responsiveProps"
   >
     <v-app-bar-nav-icon
       @click.stop="onMenuToggleClick()"
@@ -108,14 +108,14 @@ export default {
       }
       return { icon, color };
     },
-    prominentBanner() {
+    responsiveProps() {
       if (this.$vuetify.breakpoint.smAndDown) {
         return {};
       } else {
         return {
           prominent: true,
-          "shrink-on-scroll": true,
-          "fade-img-on-scroll": true
+          shrinkOnScroll: true,
+          fadeImgOnScroll: true
         };
       }
     }

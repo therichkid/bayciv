@@ -9,13 +9,13 @@ export default {
       const article = {
         id: orig.id,
         slug: orig.slug,
-        title: orig.title.rendered,
+        title: decodeHtml(orig.title.rendered),
         author: orig.acf.abweichender_autor || orig._embedded.author[0].name,
         excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
         dateOrig: orig.date.slice(0, 10),
         date: formatDate(null, orig.date),
-        group: addGroup(orig, "post"),
+        category: addCategory(orig, "post"),
         featuredImage: addFeaturedImage(orig)
       };
       posts.push(article);
@@ -33,7 +33,7 @@ export default {
       const event = {
         id: orig.id,
         slug: orig.slug,
-        title: orig.title.rendered,
+        title: decodeHtml(orig.title.rendered),
         content: orig.content.rendered,
         link: orig.link,
         startDate: orig.acf.event_datum,
@@ -44,7 +44,7 @@ export default {
         featured: !!orig.acf.hauptevent,
         registration: !!orig.acf.anmeldung,
         address: addAddress(orig),
-        group: addGroup(orig, "event"),
+        group: addCategory(orig, "event"),
         featuredImage: orig.acf.hauptevent ? addFeaturedImage(orig) : null
       };
       // Format the date
@@ -89,7 +89,7 @@ export default {
     const page = {
       id: orig.id,
       slug: orig.slug,
-      title: orig.title.rendered,
+      title: decodeHtml(orig.title.rendered),
       author: orig.acf.abweichender_autor || orig._embedded.author[0].name,
       content: orig.content.rendered,
       dateOrig: orig.date.slice(0, 10),
@@ -111,7 +111,7 @@ export default {
       const group = {
         id: orig.id,
         slug: orig.slug,
-        name: orig.title.rendered,
+        name: decodeHtml(orig.title.rendered),
         content: orig.content ? orig.content.rendered : null,
         address: addAddress(orig),
         latlng: [orig.acf.adresse.lat, orig.acf.adresse.lng],
@@ -123,7 +123,8 @@ export default {
         homepage: orig.acf.homepage,
         region: orig.acf.region,
         featuredImage: addFeaturedImage(orig),
-        type: orig.acf.typ
+        type: orig.acf.typ,
+        category: addCategory(orig, "event")
       };
       groups.push(group);
     }
@@ -260,8 +261,8 @@ const addFeaturedImage = input => {
   return obj;
 };
 
-// Add the group to an event or an article
-const addGroup = (input, type) => {
+// Add the category to an event or an article
+const addCategory = (input, type) => {
   let str = "";
   if (input._embedded && input._embedded["wp:term"] && input._embedded["wp:term"][0]) {
     const taxonomies = input._embedded["wp:term"][0];
@@ -277,4 +278,10 @@ const addGroup = (input, type) => {
     }
   }
   return str;
+};
+
+const decodeHtml = str => {
+  return str.replace(/&#(\d+);/g, (match, dec) => {
+    return String.fromCharCode(dec);
+  });
 };

@@ -19,7 +19,7 @@
         </v-card-title>
 
         <v-card-title>
-          <h3 class="headline" v-html="event.title"></h3>
+          <h3 class="headline">{{ event.title }}</h3>
         </v-card-title>
 
         <!-- Body -->

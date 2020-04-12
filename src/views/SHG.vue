@@ -5,7 +5,7 @@
 
     <v-row v-if="!isLoading && !loadingError && Object.keys(group).length">
       <v-col cols="12">
-        <h1 class="display-1" v-html="group.name"></h1>
+        <h1 class="display-1">{{ group.name }}</h1>
       </v-col>
       <!-- 1st column -->
       <v-col cols="12" sm="4">
@@ -150,7 +150,7 @@ export default {
           break;
         }
       }
-      if (!document.title.includes(this.group.name)) {
+      if (this.group) {
         document.title = this.group.name + " - " + document.title;
       }
     },

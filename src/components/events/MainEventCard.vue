@@ -4,7 +4,7 @@
       <v-card hover v-on="on" class="d-flex flex-column event-card" style="min-width: 250px;">
         <v-img maxHeight="250px" :src="event.featuredImage.source"></v-img>
         <v-card-title>
-          <h3 class="headline" v-html="event.title"></h3>
+          <h3 class="headline">{{ event.title }}</h3>
         </v-card-title>
         <v-card-subtitle>
           <v-row align="center">
