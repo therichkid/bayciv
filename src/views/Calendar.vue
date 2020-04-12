@@ -44,7 +44,7 @@
               v-model="selectedGroups"
               :items="groups"
               item-text="name"
-              item-value="category"
+              item-value="category.name"
               multiple
               clearable
               label="Selbsthilfegruppen"
@@ -235,8 +235,17 @@ export default {
         if (this.onlyMainEvents && !event.featured) {
           continue;
         }
-        if (this.selectedGroups.length && !this.selectedGroups.includes(event.group)) {
-          continue;
+        if (this.selectedGroups.length) {
+          let hasMatchedGroup = false;
+          for (const group of event.groups) {
+            if (this.selectedGroups.includes(group.name)) {
+              hasMatchedGroup = true;
+              break;
+            }
+          }
+          if (!hasMatchedGroup) {
+            continue;
+          }
         }
         if (this.selectedType === "list") {
           const [eventYear, eventMonth] = this.shared.splitDate(event.start, true);
@@ -354,16 +363,25 @@ export default {
       this.$store.commit("changeCalendarFocus", focus);
     },
     async getGroups() {
+      let groups = [];
       const groupsFetched = this.$store.getters.getFetchedGroups();
       if (groupsFetched[0]) {
         // Already fetched
-        this.groups = groupsFetched[1];
+        groups = groupsFetched[1];
       } else {
         // Not fetched yet
-        this.groups = await this.$store.dispatch("fetchGroups").catch(error => {
+        groups = await this.$store.dispatch("fetchGroups").catch(error => {
           console.error(error);
         });
       }
+      this.groups = groups.sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        } else if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
     }
   },
 

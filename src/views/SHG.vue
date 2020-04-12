@@ -127,6 +127,12 @@ export default {
     }
   },
 
+  watch: {
+    $route() {
+      this.getGroup(this.groupName);
+    }
+  },
+
   methods: {
     changePage() {
       this.$router.push(`/shgs/${this.groupName}/page/${this.page}`);

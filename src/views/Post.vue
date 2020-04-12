@@ -14,7 +14,18 @@
         <v-icon color="primary" class="pr-1">mdi-calendar</v-icon>
         <span class="mr-2">{{ post.date }}</span>
         <v-icon color="primary" class="pr-1">mdi-account</v-icon>
-        <span>{{ post.author }}</span>
+        <span class="mr-2">{{ post.author }}</span>
+        <!-- Categories -->
+        <template v-if="post.categories.length">
+          <v-icon color="primary" class="pr-1">mdi-tag</v-icon>
+          <span v-for="(category, i) in post.categories" :key="i">
+            <span v-if="i !== 0">, </span>
+            <router-link :to="'/shgs/' + category.slug" v-if="category.type === 'shg'">{{
+              category.name
+            }}</router-link>
+            <span v-else>{{ category.name }}</span>
+          </span>
+        </template>
       </v-col>
       <v-col cols="12" v-html="post.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
       <!-- Social media -->

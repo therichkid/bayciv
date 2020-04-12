@@ -28,10 +28,13 @@
             Bitte anmelden!
           </v-chip>
           <v-row align="center" dense>
-            <!-- Group -->
-            <v-col cols="12" v-if="event.group">
+            <!-- Groups -->
+            <v-col cols="12" v-if="event.groups.length">
               <v-icon color="primary" class="pr-1">mdi-account-multiple</v-icon>
-              <span>{{ event.group }}</span>
+              <span v-for="(group, i) in event.groups" :key="i">
+                <span v-if="i !== 0">, </span>
+                {{ group.name }}
+              </span>
             </v-col>
             <!-- Address -->
             <v-col cols="12">

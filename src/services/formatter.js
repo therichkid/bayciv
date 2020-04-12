@@ -15,7 +15,7 @@ export default {
         content: orig.content.rendered,
         dateOrig: orig.date.slice(0, 10),
         date: formatDate(null, orig.date),
-        category: addCategory(orig, "post"),
+        categories: addCategories(orig, false),
         featuredImage: addFeaturedImage(orig)
       };
       posts.push(article);
@@ -44,7 +44,7 @@ export default {
         featured: !!orig.acf.hauptevent,
         registration: !!orig.acf.anmeldung,
         address: addAddress(orig),
-        group: addCategory(orig, "event"),
+        groups: addCategories(orig, true),
         featuredImage: orig.acf.hauptevent ? addFeaturedImage(orig) : null
       };
       // Format the date
@@ -124,7 +124,7 @@ export default {
         region: orig.acf.region,
         featuredImage: addFeaturedImage(orig),
         type: orig.acf.typ,
-        category: addCategory(orig, "event")
+        category: addCategories(orig, true)[0]
       };
       groups.push(group);
     }
@@ -261,9 +261,9 @@ const addFeaturedImage = input => {
   return obj;
 };
 
-// Add the category to an event or an article
-const addCategory = (input, type) => {
-  let str = "";
+// Add categories to an event, article or group
+const addCategories = (input, onlyGroups) => {
+  const categories = [];
   if (input._embedded && input._embedded["wp:term"] && input._embedded["wp:term"][0]) {
     const taxonomies = input._embedded["wp:term"][0];
     for (const taxonomy of taxonomies) {
@@ -271,13 +271,17 @@ const addCategory = (input, type) => {
         taxonomy.taxonomy === "category" &&
         !["uncategorized", "selbsthilfegruppen"].includes(taxonomy.slug)
       ) {
-        if ((type === "event" && taxonomy.link.includes("selbsthilfegruppen")) || type === "post") {
-          str += (str ? ", " : "") + taxonomy.name;
+        if ((onlyGroups && taxonomy.link.includes("selbsthilfegruppen")) || !onlyGroups) {
+          categories.push({
+            name: taxonomy.name,
+            slug: taxonomy.slug,
+            type: taxonomy.link.includes("selbsthilfegruppen") ? "shg" : ""
+          });
         }
       }
     }
   }
-  return str;
+  return categories;
 };
 
 const decodeHtml = str => {
