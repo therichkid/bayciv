@@ -8,8 +8,9 @@
             <v-col cols="12">
               <v-text-field
                 v-model="search"
-                append-icon="mdi-magnify"
-                label="Suche"
+                prepend-inner-icon="mdi-magnify"
+                label="Nach Gruppen suchen"
+                clearable
                 hide-details
               ></v-text-field>
             </v-col>

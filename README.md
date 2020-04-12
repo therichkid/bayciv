@@ -44,17 +44,17 @@
 
 ## WordPress plugins
 
-| Plugin                              | Purpose                                        | Mandatory |
-| ----------------------------------- | ---------------------------------------------- | --------- |
-| [Advanced Custom Fields (ACF)](acf) | Adding additional fields to posts and pages    | &#9989;   |
-| [ACF to REST API]                   | Exposes the ACFs to the WordPress REST API     | &#9989;   |
-| [Custom Post Type Maker]            | Creating additional custom post types          | &#9989;   |
-| [WP REST Filter]                    | Restores the filter parameter for the REST API | &#9989;   |
-| [Contact Form 7]                    | Creating forms with REST endpoints             | &#10060;  |
-| [EWWW Image Optimizer]              | Optimizing images for the web                  | &#10060;  |
-| [WP REST Cache]                     | Caches REST API responses for faster requests  | &#10060;  |
+| Plugin                         | Purpose                                        | Mandatory |
+| ------------------------------ | ---------------------------------------------- | --------- |
+| [Advanced Custom Fields (ACF)] | Adding additional fields to posts and pages    | &#9989;   |
+| [ACF to REST API]              | Exposes the ACFs to the WordPress REST API     | &#9989;   |
+| [Custom Post Type Maker]       | Creating additional custom post types          | &#9989;   |
+| [WP REST Filter]               | Restores the filter parameter for the REST API | &#9989;   |
+| [Contact Form 7]               | Creating forms with REST endpoints             | &#10060;  |
+| [EWWW Image Optimizer]         | Optimizing images for the web                  | &#10060;  |
+| [WP REST Cache]                | Caches REST API responses for faster requests  | &#10060;  |
 
-[acf]: https://github.com/AdvancedCustomFields/acf
+[advanced custom fields (acf)]: https://github.com/AdvancedCustomFields/acf
 [acf to rest api]: https://github.com/airesvsg/acf-to-rest-api
 [custom post type maker]: https://github.com/Graffino/Custom-Post-Type-Maker
 [wp rest filter]: https://github.com/wp-api/rest-filter
