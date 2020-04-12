@@ -130,7 +130,14 @@
               </span>
               <span>{{ event.title }}</span>
             </td>
-            <td v-if="$vuetify.breakpoint.mdAndUp">{{ event.group }}</td>
+            <td v-if="$vuetify.breakpoint.mdAndUp">
+              <span v-for="(group, i) in event.groups" :key="i">
+                <span v-if="i !== 0">, </span>
+                <router-link :to="'/shgs/' + group.slug">
+                  {{ group.name }}
+                </router-link>
+              </span>
+            </td>
             <td>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
