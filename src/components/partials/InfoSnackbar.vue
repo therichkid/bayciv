@@ -40,13 +40,24 @@ export default {
       if (this.info) {
         // Remove paragraph tags that WordPress is adding automatically
         this.info.content = this.info.content.replace(/<\/?p[^>]*>/gm, "");
-        this.snackbar = true;
+        setTimeout(() => {
+          this.snackbar = true;
+        }, 1000);
       }
     }
   },
 
   created() {
-    this.getInfo();
+    if (localStorage.getItem("cookiesAccepted") === "true") {
+      this.getInfo();
+    } else {
+      const interval = setInterval(() => {
+        if (localStorage.getItem("cookiesAccepted") === "true") {
+          this.getInfo();
+          clearInterval(interval);
+        }
+      }, 1000);
+    }
   }
 };
 </script>
