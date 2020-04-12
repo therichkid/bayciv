@@ -43,7 +43,7 @@
             <v-autocomplete
               v-model="selectedGroups"
               :items="groups"
-              item-text="title"
+              item-text="name"
               item-value="category"
               multiple
               clearable
