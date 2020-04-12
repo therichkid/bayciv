@@ -6,7 +6,12 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-text-field v-model="search" append-icon="mdi-magnify" label="Suche"></v-text-field>
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Suche"
+                hide-details
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-select
@@ -14,6 +19,7 @@
                 v-model="selectedFacilityType"
                 label="Typ"
                 clearable
+                hide-details
                 v-if="type === 'facilities'"
               ></v-select>
               <v-select
@@ -21,6 +27,7 @@
                 v-model="selectedRegion"
                 label="Regierungsbezirk"
                 clearable
+                hide-details
               ></v-select>
             </v-col>
           </v-row>
