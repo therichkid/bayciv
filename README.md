@@ -42,6 +42,26 @@
 [vue-analytics-package]: https://www.npmjs.com/package/vue-analytics
 [vue-recaptcha-v3-package]: https://www.npmjs.com/package/vue-recaptcha-v3
 
+## WordPress plugins
+
+| Plugin                              | Purpose                                        | Mandatory |
+| ----------------------------------- | ---------------------------------------------- | --------- |
+| [Advanced Custom Fields (ACF)](acf) | Adding additional fields to posts and pages    | &#9989;   |
+| [ACF to REST API]                   | Exposes the ACFs to the WordPress REST API     | &#9989;   |
+| [Custom Post Type Maker]            | Creating additional custom post types          | &#9989;   |
+| [WP REST Filter]                    | Restores the filter parameter for the REST API | &#9989;   |
+| [Contact Form 7]                    | Creating forms with REST endpoints             | &#10060;  |
+| [EWWW Image Optimizer]              | Optimizing images for the web                  | &#10060;  |
+| [WP REST Cache]                     | Caches REST API responses for faster requests  | &#10060;  |
+
+[acf]: https://github.com/AdvancedCustomFields/acf
+[acf to rest api]: https://github.com/airesvsg/acf-to-rest-api
+[custom post type maker]: https://github.com/Graffino/Custom-Post-Type-Maker
+[wp rest filter]: https://github.com/wp-api/rest-filter
+[contact form 7]: https://wordpress.org/plugins/contact-form-7/
+[ewww image optimizer]: https://github.com/nosilver4u/ewww-image-optimizer
+[wp rest cache]: https://wordpress.org/plugins/wp-rest-cache/
+
 ## Project setup
 
 ```
