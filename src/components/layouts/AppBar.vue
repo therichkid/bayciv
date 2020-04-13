@@ -4,27 +4,44 @@
     app
     dark
     color="primary"
-    src="@/assets/banner.png"
+    src="@/assets/banner.svg"
     v-bind="responsiveProps"
   >
     <v-app-bar-nav-icon
       @click.stop="onMenuToggleClick()"
       class="hidden-lg-and-up"
-      aria-label="Menu"
+      aria-label="Menü"
     ></v-app-bar-nav-icon>
 
     <router-link to="/">
-      <v-img class="mx-2 mt-1" src="@/assets/logo_white.png" max-height="40" max-width="40"></v-img>
+      <v-img
+        class="mx-2 mt-1"
+        src="@/assets/logo_white.png"
+        max-height="40"
+        max-width="40"
+        alt="BayCIV-Logo"
+      ></v-img>
     </router-link>
-    <v-toolbar-title class="ml-2 hidden-xs-only">BayCIV</v-toolbar-title>
 
-    <v-spacer></v-spacer>
+    <!-- Has ref and height prop to measure the title dimensions -->
+    <v-spacer ref="spacer" style="height: 100%;"></v-spacer>
+
+    <v-slide-x-transition>
+      <v-toolbar-title
+        v-show="showTitle"
+        class="px-3 py-0 align-self-start display-2"
+        style="border-left: 2px solid white; max-height: 100%; overflow: visible;"
+      >
+        <span v-show="showLongTitle">Bayerischer Cochlea<br />Implantat Verband e.V.</span>
+        <span v-show="!showLongTitle">BayCIV e.V.</span>
+      </v-toolbar-title>
+    </v-slide-x-transition>
 
     <SearchBar />
 
     <v-menu left bottom :close-on-content-click="false">
       <template v-slot:activator="{ on }">
-        <v-btn icon v-on="on" aria-label="Settings">
+        <v-btn icon v-on="on" aria-label="Einstellungen">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
@@ -89,7 +106,9 @@ export default {
           icon: "mdi-undo",
           action: null
         }
-      ]
+      ],
+      showTitle: false,
+      showLongTitle: false
     };
   },
 
@@ -114,8 +133,7 @@ export default {
       } else {
         return {
           prominent: true,
-          shrinkOnScroll: true,
-          fadeImgOnScroll: true
+          shrinkOnScroll: true
         };
       }
     }
@@ -138,6 +156,27 @@ export default {
       } else {
         localStorage.setItem("darkMode", true);
       }
+    },
+    checkTitleDimensions() {
+      if (!this.$refs.spacer) {
+        return;
+      }
+      const preWidthThreshold = this.showTitle ? 0 : 275;
+      if (this.$refs.spacer.clientWidth <= preWidthThreshold) {
+        this.showTitle = false;
+        this.showLongTitle = false;
+      } else {
+        this.showTitle = true;
+        const titleWidthThreshold = this.showLongTitle ? 100 : 350;
+        if (
+          this.$refs.spacer.clientHeight > 100 &&
+          this.$refs.spacer.clientWidth > titleWidthThreshold
+        ) {
+          this.showLongTitle = true;
+        } else {
+          this.showLongTitle = false;
+        }
+      }
     }
   },
 
@@ -148,6 +187,10 @@ export default {
     if (localStorage.getItem("darkMode") === "true") {
       this.$vuetify.theme.dark = true;
     }
+    this.checkTitleDimensions();
+    setInterval(() => {
+      this.checkTitleDimensions();
+    }, 250);
   }
 };
 </script>

@@ -53,16 +53,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-btn
-      icon
-      text
-      :style="{
-        float: 'right',
-        'background-color': getButtonBackgroundColor()
-      }"
-      v-if="isHidden"
-      @click.stop="toggleSearchBar()"
-    >
+    <v-btn icon text v-if="isHidden" @click.stop="toggleSearchBar()">
       <v-icon>mdi-magnify</v-icon>
     </v-btn>
   </div>
@@ -145,12 +136,6 @@ export default {
       });
       this.items.posts = posts;
       this.items.events = events;
-    },
-    getButtonBackgroundColor() {
-      if (this.$vuetify.breakpoint.mdAndUp) {
-        return null;
-      }
-      return this.$vuetify.theme.dark ? "var(--v-primary-base)" : "var(--v-secondary-base)";
     },
     formatDate(item, type) {
       const date = type === "post" ? item.date : item.acf.event_datum;
