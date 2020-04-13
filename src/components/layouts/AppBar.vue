@@ -23,17 +23,22 @@
       ></v-img>
     </router-link>
 
+    <v-slide-x-reverse-transition>
+      <v-toolbar-title class="ml-2" v-show="showTitle && !showLongTitle">
+        BayCIV
+      </v-toolbar-title>
+    </v-slide-x-reverse-transition>
+
     <!-- Has ref and height prop to measure the title dimensions -->
     <v-spacer ref="spacer" style="height: 100%;"></v-spacer>
 
     <v-slide-x-transition>
       <v-toolbar-title
-        v-show="showTitle"
-        class="px-3 py-0 align-self-start display-2"
-        style="border-left: 2px solid white; max-height: 100%; overflow: visible;"
+        v-show="showTitle && showLongTitle"
+        class="mr-5 px-3 py-0 align-self-center display-2"
+        style="border-left: 2px solid white; max-height: 100%;"
       >
-        <span v-show="showLongTitle">Bayerischer Cochlea<br />Implantat Verband e.V.</span>
-        <span v-show="!showLongTitle">BayCIV e.V.</span>
+        Bayerischer Cochlea<br />Implantat Verband e.V.
       </v-toolbar-title>
     </v-slide-x-transition>
 
@@ -161,13 +166,13 @@ export default {
       if (!this.$refs.spacer) {
         return;
       }
-      const preWidthThreshold = this.showTitle ? 0 : 275;
+      const preWidthThreshold = this.showTitle ? 0 : 100;
       if (this.$refs.spacer.clientWidth <= preWidthThreshold) {
         this.showTitle = false;
         this.showLongTitle = false;
       } else {
         this.showTitle = true;
-        const titleWidthThreshold = this.showLongTitle ? 100 : 350;
+        const titleWidthThreshold = this.showLongTitle ? 100 : 650;
         if (
           this.$refs.spacer.clientHeight > 100 &&
           this.$refs.spacer.clientWidth > titleWidthThreshold
