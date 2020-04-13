@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn icon @click="onCloseButtonClick()" dark v-on="on">
+            <v-btn icon @click="onCloseButtonClick()" dark v-on="on" aria-label="Schließen">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </template>

@@ -9,7 +9,7 @@
     <span style="word-wrap: break-word; hyphens: auto;" v-html="info.content"></span>
     <v-tooltip bottom v-if="$vuetify.breakpoint.smAndUp">
       <template v-slot:activator="{ on }">
-        <v-btn icon dark @click="snackbar = false" v-on="on">
+        <v-btn icon dark @click="snackbar = false" v-on="on" aria-label="Schließen">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </template>

@@ -38,17 +38,17 @@
         </v-window>
         <!-- Action bar -->
         <v-card-actions class="justify-space-between">
-          <v-btn icon large @click="prev()">
+          <v-btn icon large @click="prev()" aria-label="Vorherige Veranstaltungen">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-item-group mandatory v-model="window" class="text-center" style="width: auto;">
             <v-item v-for="i in pages" :key="i" v-slot:default="{ active, toggle }">
-              <v-btn :input-value="active" icon @click="toggle">
+              <v-btn :input-value="active" icon @click="toggle" aria-hidden="true">
                 <v-icon>mdi-record</v-icon>
               </v-btn>
             </v-item>
           </v-item-group>
-          <v-btn icon large @click="next()">
+          <v-btn icon large @click="next()" aria-label="Nächste Veranstaltungen">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </v-card-actions>

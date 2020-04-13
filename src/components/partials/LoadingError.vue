@@ -6,7 +6,7 @@
         <v-col class="shrink">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn icon large @click="retryAgain()" v-on="on">
+              <v-btn icon large @click="retryAgain()" v-on="on" aria-label="Neu laden">
                 <v-icon large>mdi-reload</v-icon>
               </v-btn>
             </template>

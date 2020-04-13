@@ -16,7 +16,7 @@
         <v-spacer></v-spacer>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn icon dark v-on="on" :to="link">
+            <v-btn icon dark v-on="on" :to="link" aria-label="Maximieren">
               <v-icon>mdi-window-maximize</v-icon>
             </v-btn>
           </template>
@@ -24,7 +24,7 @@
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn icon @click="closeModal()" dark v-on="on">
+            <v-btn icon @click="closeModal()" dark v-on="on" aria-label="Schließen">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </template>

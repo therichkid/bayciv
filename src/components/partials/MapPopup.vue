@@ -30,7 +30,15 @@
       <v-spacer></v-spacer>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
-          <v-btn icon right light :to="`/shgs/${group.slug}`" v-on="on" v-if="type === 'shgs'">
+          <v-btn
+            icon
+            right
+            light
+            :to="`/shgs/${group.slug}`"
+            v-on="on"
+            v-if="type === 'shgs'"
+            aria-label="Öffnen"
+          >
             <v-icon>mdi-open-in-app</v-icon>
           </v-btn>
           <v-btn
@@ -42,6 +50,7 @@
             rel="noopener noreferrer"
             v-on="on"
             v-if="type === 'facilities' && group.homepage"
+            aria-label="Öffnen"
           >
             <v-icon>mdi-open-in-app</v-icon>
           </v-btn>

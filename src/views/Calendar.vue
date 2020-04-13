@@ -12,10 +12,24 @@
             <v-btn outlined class="mr-2" @click="setToday()" :disabled="isLoading">
               Heute
             </v-btn>
-            <v-btn fab text small @click="prev()" :disabled="isLoading">
+            <v-btn
+              fab
+              text
+              small
+              @click="prev()"
+              :disabled="isLoading"
+              aria-label="Vorherige Veranstaltungen"
+            >
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
-            <v-btn fab text small @click="next()" :disabled="isLoading">
+            <v-btn
+              fab
+              text
+              small
+              @click="next()"
+              :disabled="isLoading"
+              aria-label="Nächste Veranstaltungen"
+            >
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
             <span class="headline" style="vertical-align: middle;">{{ title }}</span>
@@ -141,7 +155,7 @@
             <td>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn icon right v-on="on">
+                  <v-btn icon right v-on="on" aria-label="Öffnen">
                     <v-icon>mdi-open-in-app</v-icon>
                   </v-btn>
                 </template>

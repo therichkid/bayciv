@@ -11,6 +11,7 @@
             rel="nofollow"
             class="mx-1 white--text"
             :style="{ backgroundColor: network.color }"
+            :aria-label="`Per ${network.label} teilen`"
           >
             <v-icon>mdi-{{ network.name }}</v-icon>
           </v-btn>
@@ -28,6 +29,7 @@
           @click="copyToClipboard()"
           class="ml-1 white--text"
           style="background-color: #607d8b;"
+          aria-label="In die Zwischenablage kopieren"
         >
           <v-icon>
             mdi-content-copy
@@ -38,7 +40,7 @@
     </v-tooltip>
     <v-snackbar v-model="snackbar">
       Link erfolgreich in die Zwischenablage kopiert.
-      <v-btn icon dark @click="snackbar = false">
+      <v-btn icon dark @click="snackbar = false" aria-label="Schließen">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-snackbar>
