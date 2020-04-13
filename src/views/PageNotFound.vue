@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h1 class="display-1">404: Seite nicht gefunden!</h1>
-    <v-img src="@/assets/ghost.svg" contain height="250px" class="my-5"></v-img>
+    <v-img src="@/assets/ghost.svg" contain height="250px" class="my-5" alt="Geist"></v-img>
     <p>Diese Seite gibt es nicht mehr oder hat es nie gegeben.</p>
     <p>
       <span>Benutzen Sie die Suche&nbsp;</span>

@@ -9,7 +9,7 @@
       </v-col>
       <!-- 1st column -->
       <v-col cols="12" sm="4">
-        <v-img :src="group.featuredImage.source" maxHeight="300px" contain></v-img>
+        <v-img :src="group.featuredImage.source" maxHeight="300px" contain alt="SHG-Logo"></v-img>
       </v-col>
       <!-- 2nd column -->
       <v-col cols="12" sm="4">
