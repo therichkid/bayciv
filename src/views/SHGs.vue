@@ -8,7 +8,8 @@
 
 <script>
 import Map from "@/components/maps/Map";
-import LoadingError from "@/components/partials/LoadingError";
+const LoadingError = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 
 export default {
   components: {

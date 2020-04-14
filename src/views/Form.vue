@@ -138,9 +138,11 @@
 
 <script>
 import Loading from "@/components/partials/Loading";
-import LoadingError from "@/components/partials/LoadingError";
-import AlertModal from "@/components/partials/AlertModal";
 import api from "@/services/api";
+const LoadingError = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const AlertModal = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/AlertModal");
 
 export default {
   components: {

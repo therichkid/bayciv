@@ -90,9 +90,10 @@
 
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
-import LoadingError from "@/components/partials/LoadingError";
 import Posts from "@/components/posts/Posts";
 const Events = () => import(/* webpackChunkName: "events" */ "@/components/events/Events");
+const LoadingError = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 
 export default {
   components: {

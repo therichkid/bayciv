@@ -69,10 +69,11 @@
 
 <script>
 import Loading from "@/components/partials/Loading";
-import LoadingError from "@/components/partials/LoadingError";
-import EventCard from "@/components/events/EventCard.vue";
-import MainEventCard from "@/components/events/MainEventCard.vue";
+import EventCard from "@/components/events/EventCard";
+import MainEventCard from "@/components/events/MainEventCard";
 import NoContentYet from "@/components/partials/NoContentYet";
+const LoadingError = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 
 export default {
   components: {

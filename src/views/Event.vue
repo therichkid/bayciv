@@ -12,9 +12,10 @@
 </template>
 
 <script>
-import EventModal from "@/components/events/EventModal.vue";
 import Loading from "@/components/partials/Loading";
-import LoadingError from "@/components/partials/LoadingError";
+const LoadingError = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const EventModal = () => import(/* webpackChunkName: "dialog" */ "@/components/events/EventModal");
 
 export default {
   components: {

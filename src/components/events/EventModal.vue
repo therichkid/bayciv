@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import SocialMedia from "@/components/partials/SocialMedia.vue";
+import SocialMedia from "@/components/partials/SocialMedia";
 export default {
   components: {
     SocialMedia

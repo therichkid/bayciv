@@ -32,9 +32,10 @@
 
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
-import LoadingError from "@/components/partials/LoadingError";
-import Form from "@/views/Form";
 import SocialMedia from "@/components/partials/SocialMedia";
+const LoadingError = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const Form = () => import(/* webpackChunkName: "form" */ "@/views/Form");
 
 export default {
   components: {

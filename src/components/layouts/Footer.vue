@@ -73,8 +73,9 @@
 </template>
 
 <script>
-import AlertModal from "@/components/partials/AlertModal";
 import api from "@/services/api";
+const AlertModal = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/AlertModal");
 
 export default {
   components: {

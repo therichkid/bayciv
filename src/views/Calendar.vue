@@ -170,8 +170,9 @@
 </template>
 
 <script>
-import LoadingError from "@/components/partials/LoadingError";
-import EventModal from "@/components/events/EventModal";
+const LoadingError = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
+const EventModal = () => import(/* webpackChunkName: "dialog" */ "@/components/events/EventModal");
 
 export default {
   components: {

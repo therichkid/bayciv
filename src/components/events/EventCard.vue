@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import EventModal from "@/components/events/EventModal.vue";
+const EventModal = () => import(/* webpackChunkName: "dialog" */ "@/components/events/EventModal");
 
 export default {
   components: {
