@@ -1,25 +1,24 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import Home from "../views/Home.vue";
-import Post from "../views/Post.vue";
-import News from "../views/News.vue";
-import Calendar from "../views/Calendar";
+import Home from "../views/Home";
+import Post from "../views/Post";
+import News from "../views/News";
 import Event from "../views/Event";
-import Form from "../views/Form.vue";
-import SHGs from "../views/SHGs";
 import SHG from "../views/SHG";
-import Facilities from "../views/Facilities";
 import PageNotFound from "../views/PageNotFound";
-import Page from "../views/Page";
 import Posts from "../views/Posts";
+
+// Chunks
+const Calendar = () => import(/* webpackChunkName: "calendar" */ "../views/Calendar");
+const Form = () => import(/* webpackChunkName: "form" */ "../views/Form");
+const SHGs = () => import(/* webpackChunkName: "map" */ "../views/SHGs");
+const Facilities = () => import(/* webpackChunkName: "map" */ "../views/Facilities");
+const Page = () => import(/* webpackChunkName: "page" */ "../views/Page");
 
 Vue.use(Router);
 
 // TODO: use alias array for redirects after updating vue-router to v4
-
-// Chunking:
-// () => import(/* webpackChunkName: "shgs" */ "../views/SHGs.vue")
 
 const routes = [
   { path: "/*.html", redirect: "/*" },

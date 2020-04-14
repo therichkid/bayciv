@@ -27,7 +27,7 @@
 
 <script>
 import Posts from "@/components/posts/Posts";
-import Events from "@/components/events/Events";
+const Events = () => import(/* webpackChunkName: "events" */ "@/components/events/Events");
 
 export default {
   components: {

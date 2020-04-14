@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LoadingSkeletonSHG v-if="isLoading" />
+    <LoadingSkeleton type="shg" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="250" @retryAgain="getGroup(groupName)" />
 
     <v-row v-if="!isLoading && !loadingError && Object.keys(group).length">
@@ -89,14 +89,14 @@
 </template>
 
 <script>
-import LoadingSkeletonSHG from "@/components/partials/LoadingSkeletonSHG";
+import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import LoadingError from "@/components/partials/LoadingError";
 import Posts from "@/components/posts/Posts";
-import Events from "@/components/events/Events";
+const Events = () => import(/* webpackChunkName: "events" */ "@/components/events/Events");
 
 export default {
   components: {
-    LoadingSkeletonSHG,
+    LoadingSkeleton,
     LoadingError,
     Posts,
     Events
