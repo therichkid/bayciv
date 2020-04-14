@@ -1,16 +1,7 @@
 <template>
   <div>
     <v-container>
-      <v-card class="mb-4">
-        <v-banner :single-line="$vuetify.breakpoint.mdAndUp" color="primary" class="white--text">
-          <span class="subtitle-1">
-            Wir beraten, informieren und vertreten Ihre Interessen. Gemeinsam sind wir stark!
-          </span>
-          <template v-slot:actions>
-            <v-btn text dark :to="'/verband'">Mehr Infos</v-btn>
-          </template>
-        </v-banner>
-      </v-card>
+      <InfoMessage />
 
       <h1 class="display-1 mb-2">Neuigkeiten</h1>
       <Posts :page="1" />
@@ -27,12 +18,14 @@
 
 <script>
 import Posts from "@/components/posts/Posts";
+import InfoMessage from "@/components/partials/InfoMessage";
 const Events = () => import(/* webpackChunkName: "events" */ "@/components/events/Events");
 
 export default {
   components: {
     Posts,
-    Events
+    Events,
+    InfoMessage
   },
 
   computed: {

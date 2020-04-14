@@ -101,6 +101,21 @@ export default {
       formId: parseInt(orig.acf.formular_id, 10),
       formData: orig.acf.formular_code
     });
+    // Add info message specific fields
+    if (page.slug === "info-meldung") {
+      const typeRemap = {
+        Primär: "primary",
+        Sekundär: "secondary",
+        Erfolg: "success",
+        Info: "info"
+      };
+      Object.assign(page, {
+        type: typeRemap[orig.acf.typ] || "primary",
+        teaser: orig.acf.teaser,
+        link: orig.acf.link,
+        buttonText: orig.acf["button-text"]
+      });
+    }
     return page;
   },
 
