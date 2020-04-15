@@ -13,7 +13,7 @@
         >
           <v-img
             :src="article.featuredImage.source"
-            :maxHeight="dynamicImageHeight"
+            maxHeight="300px"
             :alt="article.featuredImage.title"
           >
             <v-row v-if="article.categories.length">
@@ -90,13 +90,6 @@ export default {
     },
     loadingError() {
       return this.$store.state.postsLoadingError;
-    },
-    dynamicImageHeight() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return "150px";
-      } else {
-        return "300px";
-      }
     }
   },
 
