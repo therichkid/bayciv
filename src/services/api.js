@@ -26,7 +26,7 @@ export default {
         await cf7PostRequest(data, path).catch(error => {
           throw error;
         });
-        return "Die Anmeldung war erfolgreich. Vielen Dank!";
+        return "Ihr Formular wurde erfolgreich versendet. Vielen Dank!";
       } else if (type === "newsletter") {
         await n2gPostRequest(data, path);
         return "Registrierung erfolgreich! Sie erhalten in Kürze eine E-Mail.";

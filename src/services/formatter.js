@@ -257,7 +257,8 @@ const addFeaturedImage = input => {
     input._embedded &&
     input._embedded["wp:featuredmedia"] &&
     input._embedded["wp:featuredmedia"][0] &&
-    input._embedded["wp:featuredmedia"][0].code !== "rest_forbidden"
+    input._embedded["wp:featuredmedia"][0].code !== "rest_forbidden" &&
+    input._embedded["wp:featuredmedia"][0].code !== "rest_post_invalid_id"
   ) {
     const featuredImage = input._embedded["wp:featuredmedia"][0];
     obj.title = featuredImage.title.rendered;

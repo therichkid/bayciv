@@ -161,6 +161,7 @@ export default {
 }
 .icon {
   float: left;
+  margin-top: -3px;
 }
 .text {
   display: block;
