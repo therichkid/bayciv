@@ -17,8 +17,8 @@
       <v-img
         class="mx-2 mt-1"
         src="@/assets/logo_white.png"
-        max-height="40"
-        max-width="40"
+        height="40"
+        width="40"
         alt="BayCIV-Logo"
       ></v-img>
     </router-link>
