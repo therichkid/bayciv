@@ -50,9 +50,9 @@
             rel="noopener noreferrer"
             v-on="on"
             v-if="type === 'facilities' && group.homepage"
-            aria-label="Öffnen"
+            aria-label="In neuem Tab öffnen"
           >
-            <v-icon>mdi-open-in-app</v-icon>
+            <v-icon>mdi-open-in-new</v-icon>
           </v-btn>
         </template>
         <span>Seite öffnen</span>
