@@ -116,6 +116,10 @@ export default {
             {
               title: "Infos & Dokumente",
               to: "/infos-dokumente"
+            },
+            {
+              title: "HörGut",
+              to: "/hoergut"
             }
           ]
         },
