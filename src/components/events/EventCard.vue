@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="isSelectedOpen" scrollable max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-card hover v-on="on" class="d-flex flex-column event-card" style="min-width: 220px;">
+      <v-card hover v-on="on" class="d-flex flex-column event-card">
         <!-- Header -->
         <v-card-title class="primary white--text">
           <div v-if="event.featured">

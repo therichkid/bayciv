@@ -4,12 +4,12 @@
 
     <AppBar @toggleClicked="onToggleEmit()" />
 
-    <v-content>
+    <v-main>
       <v-container fluid class="main-container">
         <router-view />
       </v-container>
       <Footer />
-    </v-content>
+    </v-main>
 
     <FAB />
 
@@ -74,7 +74,7 @@ export default {
   max-width: 275px;
 }
 .v-card__title {
-  word-break: normal;
+  word-break: break-word;
 }
 .v-banner__wrapper {
   border-bottom: none !important;
