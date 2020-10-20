@@ -2,7 +2,7 @@
   <v-container>
     <h1 class="display-1 mb-2">Neuigkeiten</h1>
 
-    <v-btn-toggle v-model="selection" mandatory style="overflow-x: auto;">
+    <v-btn-toggle v-model="selection" mandatory style="overflow-x: auto">
       <v-btn value="all">Alle</v-btn>
       <v-btn value="bayciv">BayCIV</v-btn>
       <v-btn value="netzwerk">Netzwerk</v-btn>

@@ -9,9 +9,7 @@
       <v-card-text>
         <v-row dense align="center">
           <v-col cols="auto" class="mr-auto">
-            <v-btn outlined class="mr-2" @click="setToday()" :disabled="isLoading">
-              Heute
-            </v-btn>
+            <v-btn outlined class="mr-2" @click="setToday()" :disabled="isLoading"> Heute </v-btn>
             <v-btn
               fab
               text
@@ -32,7 +30,7 @@
             >
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
-            <span class="headline" style="vertical-align: middle;">{{ title }}</span>
+            <span class="headline" style="vertical-align: middle">{{ title }}</span>
           </v-col>
           <v-col cols="auto">
             <v-menu bottom right>
@@ -114,7 +112,7 @@
             <th class="text-left">Zeit</th>
             <th class="text-left">Veranstaltung</th>
             <th class="text-left" v-if="$vuetify.breakpoint.mdAndUp">Selbsthilfegruppe</th>
-            <th style="width: 1px;"></th>
+            <th style="width: 1px"></th>
           </tr>
         </thead>
         <tbody>
@@ -123,7 +121,7 @@
             :key="event.slug"
             :class="{ 'grey--text': event.startDate < today }"
             @click="$router.push(`/events/${event.startDate}/${event.slug}`)"
-            style="cursor: pointer;"
+            style="cursor: pointer"
           >
             <td>
               <span class="title pr-1">{{ event.dayFormatted }}.</span>

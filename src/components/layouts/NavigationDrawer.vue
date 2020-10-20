@@ -6,9 +6,7 @@
           <v-img src="@/assets/logo_blue.png" alt="BayCIV-Logo"></v-img>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title class="title">
-            BayCIV
-          </v-list-item-title>
+          <v-list-item-title class="title"> BayCIV </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>

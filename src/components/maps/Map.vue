@@ -44,7 +44,7 @@
           disable-filtering
           must-sort
           @click:row="setGroupToActive"
-          style="cursor: pointer;"
+          style="cursor: pointer"
         >
           <template v-slot:item.action="{ item }">
             <v-tooltip bottom>

@@ -11,7 +11,7 @@
         </v-tooltip>
       </div>
       <span class="headline pr-2">{{ event.dayFormatted }}.</span>
-      <span class="caption pt-2 text-truncate" style="flex: 10 0;">{{ event.monthFormatted }}</span>
+      <span class="caption pt-2 text-truncate" style="flex: 10 0">{{ event.monthFormatted }}</span>
       <template v-if="type === 'popup'">
         <v-spacer></v-spacer>
         <v-tooltip bottom>

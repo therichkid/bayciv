@@ -24,19 +24,17 @@
     </router-link>
 
     <v-slide-x-reverse-transition>
-      <v-toolbar-title class="ml-2" v-show="showTitle && !showLongTitle">
-        BayCIV
-      </v-toolbar-title>
+      <v-toolbar-title class="ml-2" v-show="showTitle && !showLongTitle"> BayCIV </v-toolbar-title>
     </v-slide-x-reverse-transition>
 
     <!-- Has ref and height prop to measure the title dimensions -->
-    <v-spacer ref="spacer" style="height: 100%;"></v-spacer>
+    <v-spacer ref="spacer" style="height: 100%"></v-spacer>
 
     <v-slide-x-transition>
       <v-toolbar-title
         v-show="showTitle && showLongTitle"
         class="mr-5 px-3 py-0 align-self-center display-2"
-        style="border-left: 2px solid white; max-height: 100%;"
+        style="border-left: 2px solid white; max-height: 100%"
       >
         Bayerischer Cochlea<br />Implantat Verband e.V.
       </v-toolbar-title>
