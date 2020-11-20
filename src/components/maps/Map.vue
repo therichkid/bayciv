@@ -40,7 +40,7 @@
           :items-per-page="$vuetify.breakpoint.xsOnly ? 5 : 10"
           :sort-by="table.sortBy"
           :loading="isLoading"
-          :mobile-breakpoint="NaN"
+          :mobile-breakpoint="0"
           disable-filtering
           must-sort
           @click:row="setGroupToActive"
@@ -82,7 +82,7 @@
     <!-- Map -->
     <v-col cols="12" sm="7" md="8">
       <div id="map">
-        <l-map :zoom="zoom" :center="center">
+        <l-map :zoom.sync="zoom" :center="center">
           <l-tile-layer
             :url="tileProvider.url"
             :attribution="tileProvider.attribution"
@@ -278,7 +278,8 @@ export default {
             this.addDistanceToGroups();
             this.table.headers.splice(1, 0, {
               text: "Distanz [km]",
-              value: "distance"
+              value: "distance",
+              align: "right"
             });
             this.allowGeolocation = true;
             this.center = this.currentLocation.center;
@@ -299,16 +300,22 @@ export default {
     },
     setGroupToActive(group) {
       if (this.timeout) {
-        this.timeout = null;
+        clearTimeout(this.timeout);
       }
       this.activeGroup = group;
       this.center = group.latlng;
+      setTimeout(() => {
+        this.zoom = 12;
+      }, 1000);
       // Set the activeGroup to null after the bouncing animation
       // Else the icon would bounce again after each filter change
       this.timeout = setTimeout(() => {
         this.activeGroup = null;
-      }, 2250);
+      }, 750 * 5);
     }
+    // updateZoom(event) {
+    //   this.$emit("update:zoom", event);
+    // }
   },
 
   mounted() {
@@ -348,6 +355,6 @@ export default {
   }
 }
 .bounce {
-  animation: bounce 0.75s 3;
+  animation: bounce 0.75s 5;
 }
 </style>
