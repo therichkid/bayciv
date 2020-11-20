@@ -37,9 +37,9 @@ export default {
         this.facilities = facilitiesFetched[1];
       } else {
         // Not fetched yet
-        this.facilities = await this.$store
-          .dispatch("fetchFacilities")
-          .catch(error => console.error(error));
+        this.facilities =
+          (await this.$store.dispatch("fetchFacilities").catch(error => console.error(error))) ||
+          [];
       }
     }
   },

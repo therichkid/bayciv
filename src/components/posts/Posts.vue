@@ -111,9 +111,10 @@ export default {
         this.posts = postsFetched[1];
       } else {
         // Not fetched yet
-        this.posts = await this.$store
-          .dispatch("fetchPosts", { page, groupName })
-          .catch(error => console.error(error));
+        this.posts =
+          (await this.$store
+            .dispatch("fetchPosts", { page, groupName })
+            .catch(error => console.error(error))) || [];
       }
       if (groupName) {
         this.$emit("postPagesInit", this.$store.state.totalPostPagesPerGroup[groupName]);
