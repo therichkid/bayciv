@@ -16,20 +16,16 @@
             maxHeight="300px"
             :alt="article.featuredImage.title"
           >
-            <v-row v-if="article.categories.length">
-              <v-col class="ml-3">
-                <v-chip-group column>
-                  <v-chip
-                    color="primary"
-                    text-color="white"
-                    v-for="category in article.categories"
-                    :key="category.name"
-                  >
-                    {{ category.name }}
-                  </v-chip>
-                </v-chip-group>
-              </v-col>
-            </v-row>
+            <v-chip-group column class="mt-1 ml-3" v-if="article.categories.length">
+              <v-chip
+                color="primary"
+                text-color="white"
+                v-for="category in article.categories"
+                :key="category.name"
+              >
+                {{ category.name }}
+              </v-chip>
+            </v-chip-group>
           </v-img>
           <v-card-title>
             <h3 class="headline">{{ article.title }}</h3>
