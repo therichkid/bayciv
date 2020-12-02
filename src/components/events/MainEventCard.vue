@@ -8,7 +8,7 @@
           :alt="event.featuredImage.title"
         ></v-img>
         <v-card-title>
-          <h3 class="headline">{{ event.title }}</h3>
+          <h3 :class="$vuetify.breakpoint.mdAndUp ? 'headline' : 'title'">{{ event.title }}</h3>
         </v-card-title>
         <v-card-subtitle>
           <v-row align="center">
