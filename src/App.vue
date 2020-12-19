@@ -160,6 +160,30 @@ table.tablepress tr:last-child > td:first-child {
 table.tablepress tr:last-child > td:last-child {
   border-bottom-right-radius: 10px;
 }
+.bayciv-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.bayciv-grid > img,
+.bayciv-grid > div {
+  margin: 0;
+  padding: 0 5px;
+}
+@media screen and (min-width: 750px) {
+  .bayciv-grid > img,
+  .bayciv-grid > div {
+    flex-basis: 33%;
+  }
+}
+@media screen and (max-width: 749px) {
+  .bayciv-grid > img,
+  .bayciv-grid > div {
+    flex-basis: 50%;
+  }
+}
 /* Remove certain areas when printing the document */
 @media print {
   nav,

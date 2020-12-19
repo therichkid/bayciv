@@ -167,6 +167,7 @@ const routes = [
   { path: "/cochlea", redirect: "/was-ist-ein-ci" },
   { path: "/implantate", redirect: "/ci-systeme" },
   { path: "/ziele", redirect: "/verband" },
+  { path: "/vorstand", redirect: "/unser-team" },
   { path: "/taetigkeitsberichte", redirect: "/infos-dokumente" },
   { path: "/infomaterial", redirect: "/infos-dokumente" },
   { path: "/mitglied_werden", redirect: "/mitglied-werden" },

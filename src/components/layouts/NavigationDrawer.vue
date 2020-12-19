@@ -100,8 +100,8 @@ export default {
               to: "/beratung"
             },
             {
-              title: "Vorstand",
-              to: "/vorstand"
+              title: "Unser Team",
+              to: "/unser-team"
             },
             {
               title: "Förderer",
