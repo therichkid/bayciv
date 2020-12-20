@@ -34,8 +34,8 @@ export default {
         id: orig.id,
         slug: orig.slug,
         title: decodeHtml(orig.title.rendered),
+        excerpt: orig.excerpt.rendered,
         content: orig.content.rendered,
-        link: orig.link,
         startDate: orig.acf.event_datum,
         endDate:
           orig.acf.event_datum !== orig.acf.event_datum_ende ? orig.acf.event_datum_ende : null,

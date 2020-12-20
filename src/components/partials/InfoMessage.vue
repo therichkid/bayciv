@@ -54,7 +54,7 @@ export default {
             };
           }
         } else {
-          const content = this.stripHtml(this.info.content);
+          const content = this.shared.stripHtml(this.info.content);
           if (content) {
             this.info.link = this.info.slug;
             // Add a link to itself to show as a page
@@ -64,12 +64,6 @@ export default {
           }
         }
       }
-    },
-    stripHtml(content) {
-      const div = document.createElement("div");
-      div.innerHTML = content;
-      const text = div.textContent;
-      return text.trim();
     }
   },
 

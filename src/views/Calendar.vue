@@ -9,7 +9,7 @@
       <v-card-text>
         <v-row dense align="center">
           <v-col cols="auto" class="mr-auto">
-            <v-btn outlined class="mr-2" @click="setToday()" :disabled="isLoading"> Heute </v-btn>
+            <v-btn outlined class="mr-2" @click="setToday()" :disabled="isLoading">Heute</v-btn>
             <v-btn
               fab
               text
@@ -53,22 +53,31 @@
         <v-row dense align="center">
           <v-col cols="12" sm="6">
             <v-autocomplete
-              v-model="selectedGroups"
+              v-model="selectedGroup"
               :items="groups"
               item-text="name"
               item-value="category.name"
-              multiple
               clearable
-              label="Selbsthilfegruppen"
+              label="Selbsthilfegruppe"
               hide-details
+              @change="resetMainEventFilter()"
+              class="mt-2 pt-0"
             ></v-autocomplete>
           </v-col>
-          <v-col cols="12" sm="6">
+          <v-col cols="6" sm="auto">
             <v-checkbox
               v-model="onlyMainEvents"
               label="Nur Hauptveranstaltungen"
               hide-details
+              @click="resetGroupFilter()"
+              class="mt-2 pt-0"
             ></v-checkbox>
+          </v-col>
+          <v-col cols="auto" class="ml-auto">
+            <v-btn outlined @click="isExportOpen = true" :disabled="isLoading" class="mt-2">
+              Export
+              <v-icon right>mdi-export</v-icon>
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-text>
@@ -153,7 +162,7 @@
             <td>
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-btn icon right v-on="on" aria-label="Öffnen">
+                  <v-btn icon v-on="on" aria-label="Öffnen">
                     <v-icon>mdi-open-in-app</v-icon>
                   </v-btn>
                 </template>
@@ -164,6 +173,8 @@
         </tbody>
       </template>
     </v-simple-table>
+
+    <ExportModal :dialog="isExportOpen" :groups="groups" @dialog="isExportOpen = false" />
   </v-container>
 </template>
 
@@ -171,11 +182,14 @@
 const LoadingError = () =>
   import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 const EventModal = () => import(/* webpackChunkName: "dialog" */ "@/components/events/EventModal");
+const ExportModal = () =>
+  import(/* webpackChunkName: "dialog" */ "@/components/events/ExportModal");
 
 export default {
   components: {
     LoadingError,
-    EventModal
+    EventModal,
+    ExportModal
   },
 
   data() {
@@ -195,7 +209,7 @@ export default {
         month: "Monat",
         list: "Terminübersicht"
       },
-      selectedGroups: [],
+      selectedGroup: null,
       groups: [],
       onlyMainEvents: false,
       weekdays: [1, 2, 3, 4, 5, 6, 0],
@@ -204,6 +218,7 @@ export default {
       selectedEvent: {},
       selectedElement: null,
       isSelectedOpen: false,
+      isExportOpen: false,
       isIE: /MSIE|Trident/.test(window.navigator.userAgent)
     };
   },
@@ -252,18 +267,13 @@ export default {
     filteredEvents() {
       const filteredEvents = [];
       for (const event of this.events) {
+        // Main event filter
         if (this.onlyMainEvents && !event.featured) {
           continue;
         }
-        if (this.selectedGroups.length) {
-          let hasMatchedGroup = false;
-          for (const group of event.groups) {
-            if (this.selectedGroups.includes(group.name)) {
-              hasMatchedGroup = true;
-              break;
-            }
-          }
-          if (!hasMatchedGroup) {
+        // Group filter
+        else if (this.selectedGroup) {
+          if (!event.groups.find(group => group.name === this.selectedGroup)) {
             continue;
           }
         }
@@ -367,8 +377,9 @@ export default {
         events =
           (await this.$store
             .dispatch("fetchEvents", {
-              startDate: `${year}${month < 10 ? "0" + month : month}01`,
-              endDate: `${year}${month < 9 ? "0" + (month + 1) : month + 1}01`
+              startDate: this.shared.getStartOfMonthDate(year, month),
+              endDate: this.shared.getEndOfMonthDate(year, month),
+              storeEvents: true
             })
             .catch(error => console.error(error))) || [];
       }
@@ -423,6 +434,16 @@ export default {
           }
         }, 250);
       });
+    },
+    resetMainEventFilter() {
+      if (this.selectedGroup) {
+        this.onlyMainEvents = false;
+      }
+    },
+    resetGroupFilter() {
+      if (this.onlyMainEvents) {
+        this.selectedGroup = null;
+      }
     }
   },
 

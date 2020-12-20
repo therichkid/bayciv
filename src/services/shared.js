@@ -33,5 +33,18 @@ export default {
       day = parseInt(date.slice(6), 10);
     }
     return [year, month, day];
+  },
+  getStartOfMonthDate(year, month) {
+    return new Date(Date.UTC(year, month - 1)).toISOString().substring(0, 10).split("-").join("");
+  },
+  getEndOfMonthDate(year, month) {
+    return new Date(Date.UTC(year, month, 0)).toISOString().substring(0, 10).split("-").join("");
+  },
+
+  stripHtml(content) {
+    const div = document.createElement("div");
+    div.innerHTML = content;
+    const text = div.textContent;
+    return text.trim();
   }
 };

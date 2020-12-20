@@ -99,18 +99,19 @@ export default {
       );
     });
   },
-  fetchEvents(context, { startDate, endDate, onlyMainEvents, groupName }) {
+  async fetchEvents(context, { startDate, endDate, onlyMainEvents, groupName, storeEvents }) {
     context.commit("changeEventsLoading", { value: true, onlyMainEvents });
     context.commit("changeEventsLoadingError", {
       value: false,
       onlyMainEvents
     });
+    let page = 1;
     let year, month;
     const path = "wp/v2/events";
     const params = {
       _embed: true,
-      per_page: 100
-      // "filter[meta_query][relation]": "OR"
+      per_page: 100,
+      page
     };
     if (startDate) {
       Object.assign(params, {
@@ -139,39 +140,41 @@ export default {
         "filter[category_name]": groupName
       });
     }
-    return new Promise((resolve, reject) => {
-      api
-        .fetchData(path, params)
-        .then(
-          response => {
-            let { data } = response;
-            const events = formatter.formatEvents(data);
-            if (year && month && !onlyMainEvents && !groupName) {
-              context.commit("storeEvents", { events, year, month });
-            } else if (onlyMainEvents) {
-              context.commit("storeMainEvents", events);
-            } else if (groupName) {
-              context.commit("storeEventsPerGroup", { events, groupName });
-            }
-            context.commit("incrementFailedRequests", 0);
-            resolve(events);
-          },
-          error => {
-            context.commit("changeEventsLoadingError", {
-              value: true,
-              onlyMainEvents
-            });
-            context.commit("incrementFailedRequests", 1);
-            reject(error);
-          }
-        )
-        .finally(() => {
-          context.commit("changeEventsLoading", {
-            value: false,
-            onlyMainEvents
-          });
-        });
-    });
+    try {
+      const response = await api.fetchData(path, params);
+      const { data, headers } = response;
+      let events = formatter.formatEvents(data);
+      const totalPages = headers["x-wp-totalpages"];
+      while (page < totalPages) {
+        page++;
+        params.page = page;
+        const response = await api.fetchData(path, params);
+        const { data } = response;
+        events.push(...formatter.formatEvents(data));
+      }
+      if (storeEvents) {
+        if (onlyMainEvents) {
+          context.commit("storeMainEvents", events);
+        } else if (groupName) {
+          context.commit("storeEventsPerGroup", { events, groupName });
+        } else {
+          context.commit("storeEvents", { events, year, month });
+        }
+      }
+      context.commit("incrementFailedRequests", 0);
+      return events;
+    } catch (error) {
+      context.commit("changeEventsLoadingError", {
+        value: true,
+        onlyMainEvents
+      });
+      context.commit("incrementFailedRequests", 1);
+    } finally {
+      context.commit("changeEventsLoading", {
+        value: false,
+        onlyMainEvents
+      });
+    }
   },
   fetchEventBySlug(context, slug) {
     context.commit("changeEventsLoading", true);

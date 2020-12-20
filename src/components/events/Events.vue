@@ -137,8 +137,9 @@ export default {
         events =
           (await this.$store
             .dispatch("fetchEvents", {
-              startDate: `${year}${month < 10 ? "0" : ""}${month}01`,
-              endDate: `${year}${month + 1 < 10 ? "0" : ""}${month + 1}01`
+              startDate: this.shared.getStartOfMonthDate(year, month),
+              endDate: this.shared.getEndOfMonthDate(year, month),
+              storeEvents: true
             })
             .catch(error => console.error(error))) || [];
       }
@@ -164,7 +165,8 @@ export default {
           (await this.$store
             .dispatch("fetchEvents", {
               startDate: `${year}${month < 10 ? "0" : ""}${month}01`,
-              onlyMainEvents: true
+              onlyMainEvents: true,
+              storeEvents: true
             })
             .catch(error => console.error(error))) || [];
       }
@@ -184,7 +186,8 @@ export default {
           (await this.$store
             .dispatch("fetchEvents", {
               startDate: `${year}${month < 10 ? "0" : ""}${month}01`,
-              groupName
+              groupName,
+              storeEvents: true
             })
             .catch(error => console.error(error))) || [];
       }
