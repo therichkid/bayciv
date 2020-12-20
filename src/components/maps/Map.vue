@@ -51,7 +51,6 @@
               <template v-slot:activator="{ on }">
                 <v-btn
                   icon
-                  right
                   :to="`/shgs/${item.slug}`"
                   v-on="on"
                   v-if="type === 'shgs'"
@@ -61,7 +60,6 @@
                 </v-btn>
                 <v-btn
                   icon
-                  right
                   :href="item.homepage"
                   target="_blank"
                   rel="noopener noreferrer"

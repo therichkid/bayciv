@@ -32,7 +32,6 @@
         <template v-slot:activator="{ on }">
           <v-btn
             icon
-            right
             light
             :to="`/shgs/${group.slug}`"
             v-on="on"
@@ -43,7 +42,6 @@
           </v-btn>
           <v-btn
             icon
-            right
             light
             :href="group.homepage"
             target="_blank"
