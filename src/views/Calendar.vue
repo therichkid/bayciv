@@ -57,7 +57,6 @@
               :items="groups"
               item-text="name"
               item-value="category.name"
-              clearable
               label="Selbsthilfegruppe"
               hide-details
               @change="resetMainEventFilter()"
@@ -209,7 +208,7 @@ export default {
         month: "Monat",
         list: "Terminübersicht"
       },
-      selectedGroup: null,
+      selectedGroup: "all",
       groups: [],
       onlyMainEvents: false,
       weekdays: [1, 2, 3, 4, 5, 6, 0],
@@ -272,7 +271,7 @@ export default {
           continue;
         }
         // Group filter
-        else if (this.selectedGroup) {
+        else if (this.selectedGroup !== "all") {
           if (!event.groups.find(group => group.name === this.selectedGroup)) {
             continue;
           }
@@ -410,14 +409,9 @@ export default {
         groups =
           (await this.$store.dispatch("fetchGroups").catch(error => console.error(error))) || [];
       }
-      this.groups = groups.sort((a, b) => {
-        if (a.name < b.name) {
-          return -1;
-        } else if (a.name > b.name) {
-          return 1;
-        }
-        return 0;
-      });
+      groups = groups.sort((a, b) => a.name.localeCompare(b.name, "de", { sensitivity: "base" }));
+      groups.unshift({ name: "Alle", category: { name: "all" } });
+      this.groups = groups;
     },
     isFinishedLoading() {
       return new Promise((resolve, reject) => {
@@ -436,13 +430,13 @@ export default {
       });
     },
     resetMainEventFilter() {
-      if (this.selectedGroup) {
+      if (this.selectedGroup !== "all") {
         this.onlyMainEvents = false;
       }
     },
     resetGroupFilter() {
       if (this.onlyMainEvents) {
-        this.selectedGroup = null;
+        this.selectedGroup = "all";
       }
     }
   },
