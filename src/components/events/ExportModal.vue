@@ -37,6 +37,7 @@
                   readonly
                   hide-details
                   v-on="on"
+                  class="date-select"
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -63,6 +64,7 @@
                   readonly
                   hide-details
                   v-on="on"
+                  class="date-select"
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -85,12 +87,13 @@
               <v-row align="start">
                 <v-col cols="12" sm="6">
                   <v-autocomplete
-                    v-model="selectedGroup"
+                    v-model="selectedGroups"
                     :items="groups"
                     item-text="name"
                     item-value="category.slug"
                     clearable
-                    label="Selbsthilfegruppe"
+                    multiple
+                    label="Selbsthilfegruppen"
                     hide-details
                     :disabled="groupFilter === 'all'"
                     class="mt-0 pt-0"
@@ -169,7 +172,7 @@ export default {
       endDate: null,
       isEndDateOpen: false,
       groupFilter: "all",
-      selectedGroup: null,
+      selectedGroups: [],
       includeMainEvents: true,
       formatOptions: [
         { text: "iCalendar", value: "iCal" },
@@ -220,7 +223,7 @@ export default {
     },
     resetGroupFilter() {
       if (this.groupFilter === "all") {
-        this.selectedGroup = null;
+        this.selectedGroups = [];
         this.includeMainEvents = true;
       }
     },
@@ -244,9 +247,11 @@ export default {
         const icsString = this.createIcsData(events);
         this.openDownloadPrompt(icsString, "ics");
       } else if (this.format === "csv") {
+        const bom = "\uFEFF"; // Byte order mark: force excel to use utf-8 encoding
         const csvString = this.createCsvData(events);
-        this.openDownloadPrompt(csvString, "csv");
+        this.openDownloadPrompt(bom + csvString, "csv");
       }
+      this.showAlert("success");
     },
     async getGroupEvents() {
       let events = [];
@@ -255,8 +260,8 @@ export default {
       const [endYear, endMonth] = this.shared.splitDate(this.endDate, true);
       const endDate = this.shared.getEndOfMonthDate(endYear, endMonth);
       const nowDate = new Date().toISOString().substr(0, 7).split("-").join("") + "01";
-      if (this.selectedGroup) {
-        const eventsFetched = this.$store.getters.getFetchedEventsPerGroup(this.selectedGroup);
+      for (const group of this.selectedGroups) {
+        const eventsFetched = this.$store.getters.getFetchedEventsPerGroup(group);
         if (eventsFetched[0] && startDate >= nowDate) {
           // Already fetched
           events.push(...this.filterEvents(eventsFetched[1], startDate, endDate));
@@ -267,7 +272,7 @@ export default {
               .dispatch("fetchEvents", {
                 startDate,
                 endDate,
-                groupName: this.selectedGroup
+                groupName: group
               })
               .catch(error => {
                 throw error;
@@ -439,4 +444,8 @@ END:VCALENDAR`.replace(/\r?\n/g, "\r\n");
 };
 </script>
 
-<style></style>
+<style scoped>
+.date-select >>> input {
+  cursor: pointer;
+}
+</style>
