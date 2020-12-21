@@ -27,9 +27,6 @@ export default {
   formatEvents: input => {
     const events = [];
     for (const orig of input) {
-      if (!orig.acf || !Object.keys(orig.acf.adresse).length) {
-        throw "Formatting of Events went wrong, please check if ACF-Plugin is enabled and all Events are valid!";
-      }
       const event = {
         id: orig.id,
         slug: orig.slug,
@@ -129,7 +126,7 @@ export default {
         name: decodeHtml(orig.title.rendered),
         content: orig.content ? orig.content.rendered : null,
         address: addAddress(orig),
-        latlng: [orig.acf.adresse.lat, orig.acf.adresse.lng],
+        latlng: orig.acf.adresse ? [orig.acf.adresse.lat, orig.acf.adresse.lng] : [0, 0],
         mailingAddress: addMailingAddress(orig),
         email: orig.acf.email,
         phone: orig.acf.telefon,
@@ -223,29 +220,30 @@ const checkDateFormat = (type, ...input) => {
 const addAddress = input => {
   let str = "";
   if (input.acf.adressname) {
-    str += `${input.acf.adressname}, `;
+    str += input.acf.adressname + (input.acf.adresse ? ", " : "");
   }
-  if (input.acf.adresse.address.includes("Deutschland")) {
-    str += input.acf.adresse.address.split(",").slice(0, -1).join(",");
-  } else {
-    str += input.acf.adresse.address;
+  if (input.acf.adresse) {
+    if (input.acf.adresse.address.includes("Deutschland")) {
+      str += input.acf.adresse.address.split(",").slice(0, -1).join(",");
+    } else {
+      str += input.acf.adresse.address;
+    }
   }
   return str;
 };
 
 // Add the address to an event or a Selbsthilfegruppe
 const addMailingAddress = input => {
-  if (!input.acf.postanschrift) {
-    return null;
-  }
   let str = "";
   if (input.acf.postanschriftsname) {
-    str += `${input.acf.postanschriftsname}, `;
+    str += input.acf.postanschriftsname + (input.acf.postanschrift ? ", " : "");
   }
-  if (input.acf.postanschrift.address.includes("Deutschland")) {
-    str += input.acf.postanschrift.address.split(",").slice(0, -1).join(",");
-  } else {
-    str += input.acf.postanschrift.address;
+  if (input.acf.postanschrift) {
+    if (input.acf.postanschrift.address.includes("Deutschland")) {
+      str += input.acf.postanschrift.address.split(",").slice(0, -1).join(",");
+    } else {
+      str += input.acf.postanschrift.address;
+    }
   }
   return str;
 };

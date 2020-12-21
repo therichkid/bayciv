@@ -2,7 +2,7 @@
   <l-popup>
     <h3 class="headline mb-2">{{ group.name }}</h3>
     <!-- Address -->
-    <div class="align-center mb-2">
+    <div class="align-center mb-2" v-if="group.address">
       <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
       <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">{{ group.address }}</span>
     </div>

@@ -12,7 +12,7 @@
         <v-img :src="group.featuredImage.source" maxHeight="300px" contain alt="SHG-Logo"></v-img>
       </v-col>
       <!-- 2nd column -->
-      <v-col cols="12" sm="4">
+      <v-col cols="12" sm="4" v-if="group.address">
         <v-card-title>Gruppentreffen</v-card-title>
         <v-card-text>
           <div class="align-center mb-2">

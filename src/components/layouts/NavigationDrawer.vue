@@ -61,11 +61,6 @@ export default {
           to: "/shgs"
         },
         {
-          icon: "mdi-newspaper",
-          title: "Neuigkeiten",
-          to: "/news"
-        },
-        {
           icon: "mdi-ear-hearing",
           title: "Cochlea-Implantat",
           to: [
@@ -116,6 +111,11 @@ export default {
               to: "/infos-dokumente"
             }
           ]
+        },
+        {
+          icon: "mdi-newspaper",
+          title: "Neuigkeiten",
+          to: "/news"
         },
         {
           icon: "mdi-clipboard-account",

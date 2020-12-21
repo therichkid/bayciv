@@ -33,21 +33,19 @@
               <v-icon color="primary" class="pr-1">mdi-account-multiple</v-icon>
               <span v-for="(group, i) in event.groups" :key="i">
                 <span v-if="i !== 0">, </span>
-                {{ group.name }}
+                <span>{{ group.name }}</span>
               </span>
             </v-col>
             <!-- Address -->
-            <v-col cols="12">
+            <v-col cols="12" v-if="event.address">
               <v-icon color="primary" class="pr-1">mdi-map-marker</v-icon>
-              <span class="mr-2">{{ event.address }}</span>
+              <span>{{ event.address }}</span>
             </v-col>
             <!-- Time -->
             <v-col cols="12">
               <v-icon color="primary" class="pr-1">mdi-clock</v-icon>
-              <span class="mr-2">
-                {{ event.startTime }}
-                <span v-if="event.endTime">bis {{ event.endTime }}</span>
-              </span>
+              <span>{{ event.startTime }}</span>
+              <span v-if="event.endTime"> bis {{ event.endTime }}</span>
             </v-col>
           </v-row>
         </v-card-text>
