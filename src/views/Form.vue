@@ -41,6 +41,7 @@
               :label="form.label"
               :rules="addFormRule(form)"
               v-model="form.value"
+              v-show="form.id !== '_hp'"
             ></v-text-field>
             <!-- Text area -->
             <v-textarea
@@ -58,6 +59,7 @@
                   locale="de-DE"
                   :first-day-of-week="1"
                   color="primary"
+                  class="elevation-2"
                 ></v-date-picker>
               </div>
               <v-btn text v-if="form.value" @click="form.value = ''">
@@ -286,6 +288,13 @@ export default {
           arr.push(obj);
         }
       }
+      // Add honeypot
+      arr.push({
+        label: "HP",
+        type: "text",
+        id: "_hp",
+        value: ""
+      });
       return arr;
     },
     addFormRule(form) {
@@ -306,7 +315,7 @@ export default {
       this.isPosting = true;
       const data = {};
       for (const form of this.forms) {
-        if (form.value && form.value.length > 0) {
+        if ((form.value || form.value === 0) && form.value.length > 0) {
           if (form.type === "url" && !form.value.includes("http")) {
             form.value = `https://${form.value}`;
           }
@@ -331,14 +340,6 @@ export default {
     },
     closeDialog() {
       this.dialog = false;
-    },
-    addProps() {
-      if (this.formIdProp) {
-        this.formId = this.formIdProp;
-      }
-      if (this.formDataProp) {
-        this.forms = this.formatFormData(this.formDataProp);
-      }
     },
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");

@@ -15,9 +15,9 @@
       <!-- Right -->
       <v-col cols="12" sm="6">
         <!-- Newsletter -->
-        <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'"
-          >Newsletter abonnieren</v-card-title
-        >
+        <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'">
+          Newsletter abonnieren
+        </v-card-title>
         <v-form v-model="valid">
           <v-card-text>
             <v-text-field
@@ -27,9 +27,10 @@
               :rules="emailRules"
               required
             ></v-text-field>
-            <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm"
-              >Abonnieren</v-btn
-            >
+            <v-text-field solo-inverted label="HP" v-model="hp" v-show="false"></v-text-field>
+            <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm">
+              Abonnieren
+            </v-btn>
           </v-card-text>
         </v-form>
       </v-col>
@@ -73,6 +74,7 @@ export default {
       valid: false,
       email: "",
       emailRules: [v => /\S+@\S+\.\S+/.test(v) || !v || "Diese E-Mail ist ungültig!"],
+      hp: "",
       dialog: false,
       alertMessage: "",
       alertType: "",
@@ -123,6 +125,10 @@ export default {
         },
         _timer: Date.now() - this.initTime
       };
+      // Honeypot
+      if (this.hp && this.hp.length) {
+        data._hp = this.hp;
+      }
       await api
         .postData("newsletter", data)
         .then(response => {
