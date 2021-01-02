@@ -21,4 +21,4 @@ yarn-error.log*
 *.sw?
 
 public/.htaccess
-public/includes/**/*
+public/includes/credentials.php

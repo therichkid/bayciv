@@ -103,17 +103,6 @@
             </v-radio-group>
           </div>
         </v-form>
-        <div class="caption mt-2">
-          Diese Website ist durch reCAPTCHA geschützt und es gelten die
-          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer"
-            >Datenschutzbestimmungen</a
-          >
-          und
-          <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer"
-            >Nutzungsbedingungen</a
-          >
-          von Google.
-        </div>
       </v-card-text>
       <v-card-actions>
         <v-btn @click="goBack()">
@@ -121,7 +110,7 @@
           <span>Zurück</span>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="success" :disabled="!valid" :loading="isSending" @click="sendForm"
+        <v-btn color="success" :disabled="!valid" :loading="isPosting" @click="postForm"
           >Senden</v-btn
         >
       </v-card-actions>
@@ -177,7 +166,8 @@ export default {
           "Diese Telefonnummer ist ungültig!"
       ],
       urlRules: [v => /\S+\.\S{2,}/.test(v) || !v || "Die URL ist ungültig!"],
-      isSending: false,
+      isPosting: false,
+      initTime: 0,
       dialog: false,
       alertType: "",
       alertMessage: ""
@@ -312,8 +302,8 @@ export default {
       }
       return arr;
     },
-    async sendForm() {
-      this.isSending = true;
+    async postForm() {
+      this.isPosting = true;
       const data = {};
       for (const form of this.forms) {
         if (form.value && form.value.length > 0) {
@@ -323,23 +313,21 @@ export default {
           data[form.id] = form.value.trim();
         }
       }
-      try {
-        // Create token for reCAPTCHA
-        const token = await this.$recaptcha("login");
-        await api.postData(data, token, "form", this.formId).then(response => {
+      data._timer = Date.now() - this.initTime;
+      await api
+        .postData("form", data, this.formId)
+        .then(response => {
           this.alertType = "success";
           this.alertMessage = response;
+        })
+        .catch(error => {
+          this.alertType = "error";
+          this.alertMessage = error;
+        })
+        .finally(() => {
+          this.isPosting = false;
+          this.dialog = true;
         });
-      } catch (error) {
-        this.alertType = "error";
-        this.alertMessage =
-          error?.data?.message ||
-          error ||
-          "reCAPTCHA-Prüfung war nicht erfolgreich. Bitte versuchen Sie es noch einmal.";
-      } finally {
-        this.isSending = false;
-        this.dialog = true;
-      }
     },
     closeDialog() {
       this.dialog = false;
@@ -385,6 +373,7 @@ export default {
   },
 
   mounted() {
+    this.initTime = Date.now();
     this.initForm();
   }
 };

@@ -30,20 +30,6 @@
             <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm"
               >Abonnieren</v-btn
             >
-            <div class="caption link mt-2">
-              Diese Website ist durch reCAPTCHA geschützt und es gelten die
-              <a
-                href="https://policies.google.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Datenschutzbestimmungen</a
-              >
-              und
-              <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer"
-                >Nutzungsbedingungen</a
-              >
-              von Google.
-            </div>
           </v-card-text>
         </v-form>
       </v-col>
@@ -124,19 +110,21 @@ export default {
           name: "Impressum",
           to: "/impressum"
         }
-      ]
+      ],
+      initTime: 0
     };
   },
 
   methods: {
     async sendForm() {
       const data = {
-        email: this.email.trim()
+        recipient: {
+          email: this.email.trim()
+        },
+        _timer: Date.now() - this.initTime
       };
-      // Create token for reCAPTCHA
-      const token = await this.$recaptcha("login");
       await api
-        .postData(data, token, "newsletter")
+        .postData("newsletter", data)
         .then(response => {
           this.alertType = "success";
           this.alertMessage = response;
@@ -145,9 +133,15 @@ export default {
         .catch(error => {
           this.alertType = "error";
           this.alertMessage = error;
+        })
+        .finally(() => {
+          this.dialog = true;
         });
-      this.dialog = true;
     }
+  },
+
+  mounted() {
+    this.initTime = Date.now();
   }
 };
 </script>

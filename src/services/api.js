@@ -4,10 +4,6 @@ const wpInstance = axios.create({
   baseURL: "https://admin.bayciv.de/wp-json/",
   timeout: 7500
 });
-const n2gInstance = axios.create({
-  baseURL: "https://api.newsletter2go.com/",
-  timeout: 7500
-});
 
 export default {
   async fetchData(path, params) {
@@ -17,95 +13,73 @@ export default {
     return { data: response.data, headers: response.headers };
   },
 
-  // Post requests with reCAPTCHA check
-  async postData(data, token, type, id) {
-    // Get the path when reCAPTCHA is successful
-    const path = await verify(token, type, id);
-    if (path) {
-      if (type === "form") {
-        await cf7PostRequest(data, path).catch(error => {
-          throw error;
-        });
-        return "Ihr Formular wurde erfolgreich versendet. Vielen Dank!";
-      } else if (type === "newsletter") {
-        await n2gPostRequest(data, path);
-        return "Registrierung erfolgreich! Sie erhalten in Kürze eine E-Mail.";
+  async postData(type, data, id) {
+    const response = await axios.post("/includes/submit.php", { type, data, id }).catch(error => {
+      if (typeof error === "string") {
+        // Validation errors
+        throw error;
+      } else {
+        console.error(error);
+        throw defaultErrorMessage;
       }
+    });
+    const { success, message } = handleResponse(type, response);
+    if (success) {
+      return message;
     } else {
-      throw "Unbekannter Fehler.";
+      throw message;
     }
   }
 };
 
-// Verify if the user is human
-const verify = async (token, type, id) => {
-  const response = await axios
-    .post("/includes/verify.php", {
-      token,
-      type,
-      id
-    })
-    .catch(error => {
-      console.error(error);
-      // Somehow catching the error message from the php file is not working...
-      throw "reCAPTCHA-Prüfung war nicht erfolgreich. Bitte versuchen Sie es noch einmal.";
-    });
-  return response.data;
+const defaultErrorMessage =
+  "Leider ist etwas schiefgegangen. Bitte versuchen Sie es später noch einmal.";
+
+const handleResponse = (type, response) => {
+  if (type === "form") {
+    return handleFormResponse(response);
+  } else if (type === "newsletter") {
+    return handleNewsletterResponse(response);
+  }
 };
 
-// CF7
-const cf7PostRequest = async (data, restParam) => {
-  const bodyFormData = new FormData();
-  for (const key in data) {
-    bodyFormData.set(key, data[key]);
-  }
-  const response = await wpInstance.post(restParam, bodyFormData).catch(error => {
-    throw error;
-  });
-  // console.log("Post CF7 Data Successful", response);
+const handleFormResponse = response => {
   if (response.data.status === "mail_sent") {
-    // Success
-    return null;
+    return {
+      success: true,
+      message: "Ihr Formular wurde erfolgreich versendet. Vielen Dank!"
+    };
   } else {
-    // Error handling CF7
-    throw response;
+    console.error(response);
+    return {
+      success: false,
+      message: response.data.message || defaultErrorMessage
+    };
   }
 };
 
-// Newsletter2Go
-const n2gPostRequest = async (fields, restParam) => {
-  const email = fields["email"];
-  const response = await n2gInstance
-    .post(restParam, {
-      recipient: {
-        email
-      }
-    })
-    .catch(error => {
-      throw error;
-    });
-  // console.log("Post Newsletter2Go Data Successful", response);
+const handleNewsletterResponse = response => {
   if (response.data.status === 201) {
-    // Success
-    return null;
+    return {
+      success: true,
+      message: "Registrierung erfolgreich! Sie erhalten in Kürze eine E-Mail."
+    };
   } else {
-    let errorMessage;
-    if (response.data.status === 200) {
-      if (response.data.value.length) {
-        // Only one recipient for each request -> 1st value of Array
-        const errors = response.data.value[0].result.error;
-        if (errors.failed) {
-          if (errors.recipients.invalid.length) {
-            errorMessage = "Die eingegebene E-Mail-Addresse ist ungültig.";
-          } else if (errors.recipients.duplicate.length) {
-            errorMessage = "Die eingegebene E-Mail-Addresse ist bereits registriert.";
-          }
+    let message;
+    if (response.data.status === 200 && response.data.value.length) {
+      // Only one recipient for each request -> 1st value of Array
+      const error = response.data.value[0].result.error;
+      if (error.failed) {
+        if (error.recipients.invalid.length) {
+          message = "Die eingegebene E-Mail-Addresse ist ungültig.";
+        } else if (error.recipients.duplicate.length) {
+          message = "Die eingegebene E-Mail-Addresse ist bereits registriert.";
         }
       }
     }
-    if (!errorMessage) {
-      errorMessage = "Unbekannter Fehler.";
-    }
-    throw errorMessage;
+    return {
+      success: false,
+      message: message || defaultErrorMessage
+    };
   }
 };
