@@ -13,19 +13,17 @@ export default {
     return { data: response.data, headers: response.headers };
   },
 
-  async postData(type, data, endpoint) {
-    const response = await axios
-      .post("/includes/submit.php", { type, data, endpoint })
-      .catch(error => {
-        if (typeof error === "string") {
-          // Validation errors
-          throw error;
-        } else {
-          console.error(error);
-          throw defaultErrorMessage;
-        }
-      });
-    const { success, message } = handleResponse(response, type, endpoint);
+  async postData(type, data, id) {
+    const response = await axios.post("/includes/submit.php", { type, data, id }).catch(error => {
+      if (typeof error === "string") {
+        // Validation errors
+        throw error;
+      } else {
+        console.error(error);
+        throw defaultErrorMessage;
+      }
+    });
+    const { success, message } = handleResponse(response, type, id);
     if (success) {
       return message;
     } else {
@@ -37,11 +35,11 @@ export default {
 const defaultErrorMessage =
   "Leider ist etwas schiefgegangen. Bitte versuchen Sie es später noch einmal.";
 
-const handleResponse = (response, type, endpoint) => {
+const handleResponse = (response, type, id) => {
   if (type === "form") {
     return handleFormResponse(response);
   } else if (type === "newsletter") {
-    return handleNewsletterResponse(response, endpoint);
+    return handleNewsletterResponse(response, id);
   }
 };
 
@@ -60,10 +58,10 @@ const handleFormResponse = response => {
   }
 };
 
-const handleNewsletterResponse = (response, endpoint) => {
+const handleNewsletterResponse = (response, id) => {
   if (response.data.status === 201) {
     let successMessage;
-    if (endpoint === "subscribe") {
+    if (id === "subscribe") {
       successMessage = "Registrierung erfolgreich! Sie erhalten in Kürze eine E-Mail.";
     } else {
       successMessage = "Sie haben sich erfolgreich vom Newsletter abgemeldet.";
@@ -79,7 +77,7 @@ const handleNewsletterResponse = (response, endpoint) => {
       if (error.failed) {
         if (error.recipients.invalid.email) {
           errorMessage = "Die eingegebene E-Mail-Addresse ist ungültig.";
-        } else if (endpoint === "subscribe" && error.recipients.duplicate.length) {
+        } else if (id === "subscribe" && error.recipients.duplicate.length) {
           errorMessage = "Die eingegebene E-Mail-Addresse ist bereits registriert.";
         }
       }

@@ -22,7 +22,7 @@
             Newsletter abonnieren
           </v-card-title>
           <v-card-text>
-            <Newsletter type="subscribe" />
+            <Newsletter method="subscribe" />
           </v-card-text>
         </v-col>
         <v-col cols="12">

@@ -16,11 +16,11 @@
           Anschluss können Sie Ihre Wahl zu den Cookies erneut treffen.
         </div>
         <v-btn @click="resetCookies()" class="mt-2">Cookies zurücksetzen</v-btn>
-        <div class="mt-5 mb-2">
+        <div class="mt-6 mb-2">
           Wenn Sie sich vom Newsletter abmelden möchten, geben Sie Ihre E-Mail-Adresse in das
-          folgende Feld ein und drücken sie den "Abmelden"-Knopf.
+          folgende Feld ein und klicken Sie auf den "Abmelden"-Knopf.
         </div>
-        <Newsletter type="unsubscribe" />
+        <Newsletter method="unsubscribe" />
       </v-col>
 
       <v-col cols="12" v-html="page.content" :style="{ fontSize: fontSize + 'px' }"></v-col>

@@ -6,16 +6,16 @@
         v-model="email"
         :rules="emailRules"
         required
-        :solo-inverted="type === 'subscribe'"
+        :solo-inverted="method === 'subscribe'"
       ></v-text-field>
       <v-text-field label="HP" v-model="hp" v-show="false"></v-text-field>
       <v-btn
-        :class="{ secondary: type === 'subscribe' }"
+        :class="{ secondary: method === 'subscribe' }"
         :disabled="!valid || !email"
         :loading="isPosting"
         @click="postForm"
       >
-        {{ type === "subscribe" ? "Abonnieren" : "Abmelden" }}
+        {{ method === "subscribe" ? "Abonnieren" : "Abmelden" }}
       </v-btn>
     </v-form>
 
@@ -40,7 +40,7 @@ export default {
   },
 
   props: {
-    type: String
+    method: String
   },
 
   data() {
@@ -71,7 +71,7 @@ export default {
         data._hp = this.hp;
       }
       await api
-        .postData("newsletter", data, this.type)
+        .postData("newsletter", data, this.method)
         .then(response => {
           this.alertType = "success";
           this.alertMessage = response;
