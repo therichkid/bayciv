@@ -2,6 +2,7 @@
   <div>
     <v-form v-model="valid">
       <v-text-field
+        type="email"
         label="E-Mail"
         v-model="email"
         :rules="emailRules"
