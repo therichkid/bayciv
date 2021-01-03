@@ -16,6 +16,11 @@
           Anschluss können Sie Ihre Wahl zu den Cookies erneut treffen.
         </div>
         <v-btn @click="resetCookies()" class="mt-2">Cookies zurücksetzen</v-btn>
+        <div class="mt-5 mb-2">
+          Wenn Sie sich vom Newsletter abmelden möchten, geben Sie Ihre E-Mail-Adresse in das
+          folgende Feld ein und drücken sie den "Abmelden"-Knopf.
+        </div>
+        <Newsletter type="unsubscribe" />
       </v-col>
 
       <v-col cols="12" v-html="page.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
@@ -44,12 +49,14 @@ import SocialMedia from "@/components/partials/SocialMedia";
 const LoadingError = () =>
   import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 const Form = () => import(/* webpackChunkName: "form" */ "@/views/Form");
+const Newsletter = () => import(/* webpackChunkName: "form" */ "@/components/partials/Newsletter");
 
 export default {
   components: {
     LoadingSkeleton,
     LoadingError,
     Form,
+    Newsletter,
     SocialMedia
   },
 

@@ -16,12 +16,16 @@
     $header = "Content-Type: application/x-www-form-urlencoded";
     $content = http_build_query($data);
     $base_url = "https://admin.bayciv.de/wp-json/";
-    $path = "contact-form-7/v1/contact-forms/" . $_POST["id"] . "/feedback";
+    $path = "contact-form-7/v1/contact-forms/" . $_POST["endpoint"] . "/feedback";
   } else if ($_POST["type"] === "newsletter") {
     $header = "Content-Type: application/json";
     $content = json_encode($data);
     $base_url = "https://api.newsletter2go.com/";
-    $path = "forms/submit/" . $newsletter2go_api_key;
+    if ($_POST["endpoint"] === "unsubscribe") {
+      $path = "forms/submit/" . $n2g_unsubscribe_key . "?type=unsubscribe";
+    } else {
+      $path = "forms/submit/" . $n2g_subscribe_key . "?type=subscribe";
+    }
   } else {
     throw new Exception("Unbekannter POST-Typ.");
   }

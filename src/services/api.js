@@ -13,17 +13,19 @@ export default {
     return { data: response.data, headers: response.headers };
   },
 
-  async postData(type, data, id) {
-    const response = await axios.post("/includes/submit.php", { type, data, id }).catch(error => {
-      if (typeof error === "string") {
-        // Validation errors
-        throw error;
-      } else {
-        console.error(error);
-        throw defaultErrorMessage;
-      }
-    });
-    const { success, message } = handleResponse(type, response);
+  async postData(type, data, endpoint) {
+    const response = await axios
+      .post("/includes/submit.php", { type, data, endpoint })
+      .catch(error => {
+        if (typeof error === "string") {
+          // Validation errors
+          throw error;
+        } else {
+          console.error(error);
+          throw defaultErrorMessage;
+        }
+      });
+    const { success, message } = handleResponse(response, type, endpoint);
     if (success) {
       return message;
     } else {
@@ -35,11 +37,11 @@ export default {
 const defaultErrorMessage =
   "Leider ist etwas schiefgegangen. Bitte versuchen Sie es später noch einmal.";
 
-const handleResponse = (type, response) => {
+const handleResponse = (response, type, endpoint) => {
   if (type === "form") {
     return handleFormResponse(response);
   } else if (type === "newsletter") {
-    return handleNewsletterResponse(response);
+    return handleNewsletterResponse(response, endpoint);
   }
 };
 
@@ -58,28 +60,33 @@ const handleFormResponse = response => {
   }
 };
 
-const handleNewsletterResponse = response => {
+const handleNewsletterResponse = (response, endpoint) => {
   if (response.data.status === 201) {
+    let successMessage;
+    if (endpoint === "subscribe") {
+      successMessage = "Registrierung erfolgreich! Sie erhalten in Kürze eine E-Mail.";
+    } else {
+      successMessage = "Sie haben sich erfolgreich vom Newsletter abgemeldet.";
+    }
     return {
       success: true,
-      message: "Registrierung erfolgreich! Sie erhalten in Kürze eine E-Mail."
+      message: successMessage
     };
   } else {
-    let message;
+    let errorMessage;
     if (response.data.status === 200 && response.data.value.length) {
-      // Only one recipient for each request -> 1st value of Array
       const error = response.data.value[0].result.error;
       if (error.failed) {
-        if (error.recipients.invalid.length) {
-          message = "Die eingegebene E-Mail-Addresse ist ungültig.";
-        } else if (error.recipients.duplicate.length) {
-          message = "Die eingegebene E-Mail-Addresse ist bereits registriert.";
+        if (error.recipients.invalid.email) {
+          errorMessage = "Die eingegebene E-Mail-Addresse ist ungültig.";
+        } else if (endpoint === "subscribe" && error.recipients.duplicate.length) {
+          errorMessage = "Die eingegebene E-Mail-Addresse ist bereits registriert.";
         }
       }
     }
     return {
       success: false,
-      message: message || defaultErrorMessage
+      message: errorMessage || defaultErrorMessage
     };
   }
 };

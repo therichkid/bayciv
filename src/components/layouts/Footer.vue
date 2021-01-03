@@ -21,21 +21,9 @@
           <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'">
             Newsletter abonnieren
           </v-card-title>
-          <v-form v-model="valid">
-            <v-card-text>
-              <v-text-field
-                solo-inverted
-                label="E-Mail"
-                v-model="email"
-                :rules="emailRules"
-                required
-              ></v-text-field>
-              <v-text-field solo-inverted label="HP" v-model="hp" v-show="false"></v-text-field>
-              <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm">
-                Abonnieren
-              </v-btn>
-            </v-card-text>
-          </v-form>
+          <v-card-text>
+            <Newsletter type="subscribe" />
+          </v-card-text>
         </v-col>
         <v-col cols="12">
           <v-divider></v-divider>
@@ -52,36 +40,19 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <AlertModal
-      :dialog="dialog"
-      :alertType="alertType"
-      :alertMessage="alertMessage"
-      page="newsletter"
-      @dialog="dialog = false"
-    />
   </v-footer>
 </template>
 
 <script>
-import api from "@/services/api";
-const AlertModal = () =>
-  import(/* webpackChunkName: "dialog" */ "@/components/partials/AlertModal");
+const Newsletter = () => import(/* webpackChunkName: "form" */ "@/components/partials/Newsletter");
 
 export default {
   components: {
-    AlertModal
+    Newsletter
   },
 
   data() {
     return {
-      valid: false,
-      email: "",
-      emailRules: [v => /\S+@\S+\.\S+/.test(v) || !v || "Diese E-Mail ist ungültig!"],
-      hp: "",
-      dialog: false,
-      alertMessage: "",
-      alertType: "",
       contact: [
         {
           icon: "mdi-map-marker",
@@ -116,42 +87,8 @@ export default {
           name: "Impressum",
           to: "/impressum"
         }
-      ],
-      initTime: 0
+      ]
     };
-  },
-
-  methods: {
-    async sendForm() {
-      const data = {
-        recipient: {
-          email: this.email.trim()
-        },
-        _timer: Date.now() - this.initTime
-      };
-      // Honeypot
-      if (this.hp && this.hp.length) {
-        data._hp = this.hp;
-      }
-      await api
-        .postData("newsletter", data)
-        .then(response => {
-          this.alertType = "success";
-          this.alertMessage = response;
-          this.email = "";
-        })
-        .catch(error => {
-          this.alertType = "error";
-          this.alertMessage = error;
-        })
-        .finally(() => {
-          this.dialog = true;
-        });
-    }
-  },
-
-  mounted() {
-    this.initTime = Date.now();
   }
 };
 </script>
