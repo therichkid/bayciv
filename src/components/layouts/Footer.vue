@@ -23,7 +23,51 @@
           </v-card-title>
           <v-card-text>
             <Newsletter method="subscribe" />
+            <p class="mt-5 link">
+              Newsletter <router-link to="/datenkontrolle">abbestellen</router-link>.
+            </p>
           </v-card-text>
+        </v-col>
+        <v-col cols="12">
+          <div style="display: flex; justify-content: center">
+            <a
+              href="https://www.rzille.de"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="text-decoration: none"
+            >
+              <div
+                style="
+                  background-color: #242424;
+                  border: 2px solid #363636;
+                  border-radius: 4px;
+                  padding: 8px;
+                  display: flex;
+                  align-items: center;
+                "
+              >
+                <img
+                  src="https://www.rzille.de/img/favicon.png"
+                  alt="Thrive Media Logo"
+                  width="32"
+                  height="32"
+                />
+                <div
+                  style="
+                    margin-left: 8px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                  "
+                >
+                  <span style="font-size: 12px; color: #b5b5b5">Webseite erstellt von</span>
+                  <span style="font-size: 16px; color: #009688; font-weight: 700">
+                    Thrive Media
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
         </v-col>
         <v-col cols="12">
           <v-divider></v-divider>
@@ -86,6 +130,10 @@ export default {
         {
           name: "Impressum",
           to: "/impressum"
+        },
+        {
+          name: "Datenkontrolle",
+          to: "/datenkontrolle"
         }
       ]
     };

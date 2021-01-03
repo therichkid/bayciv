@@ -7,6 +7,7 @@ import Posts from "../views/Posts";
 import Post from "../views/Post";
 import Event from "../views/Event";
 import SHG from "../views/SHG";
+import DataControl from "../views/DataControl";
 import Page from "../views/Page";
 import PageNotFound from "../views/PageNotFound";
 
@@ -171,6 +172,14 @@ const routes = [
   { path: "/taetigkeitsberichte", redirect: "/infos-dokumente" },
   { path: "/infomaterial", redirect: "/infos-dokumente" },
   { path: "/mitglied_werden", redirect: "/mitglied-werden" },
+  {
+    path: "/datenkontrolle",
+    name: "datenkontrolle",
+    component: DataControl,
+    meta: {
+      title: "Datenkontrolle"
+    }
+  },
   {
     path: "/:slug",
     name: "page",

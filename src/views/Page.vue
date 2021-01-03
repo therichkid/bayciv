@@ -10,19 +10,6 @@
       </v-col>
 
       <!-- Body -->
-      <v-col cols="12" v-if="page.slug === 'datenschutz'">
-        <div>
-          Klicken Sie auf den folgenden Knopf, um alle Cookies auf dieser Seite zurückzusetzen. Im
-          Anschluss können Sie Ihre Wahl zu den Cookies erneut treffen.
-        </div>
-        <v-btn @click="resetCookies()" class="mt-2">Cookies zurücksetzen</v-btn>
-        <div class="mt-6 mb-2">
-          Wenn Sie sich vom Newsletter abmelden möchten, geben Sie Ihre E-Mail-Adresse in das
-          folgende Feld ein und klicken Sie auf den "Abmelden"-Knopf.
-        </div>
-        <Newsletter method="unsubscribe" />
-      </v-col>
-
       <v-col cols="12" v-html="page.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
       <!-- Social media -->
       <v-col cols="12">
@@ -49,14 +36,12 @@ import SocialMedia from "@/components/partials/SocialMedia";
 const LoadingError = () =>
   import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
 const Form = () => import(/* webpackChunkName: "form" */ "@/views/Form");
-const Newsletter = () => import(/* webpackChunkName: "form" */ "@/components/partials/Newsletter");
 
 export default {
   components: {
     LoadingSkeleton,
     LoadingError,
     Form,
-    Newsletter,
     SocialMedia
   },
 
@@ -114,15 +99,6 @@ export default {
     },
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
-    },
-    resetCookies() {
-      document.cookie.split(";").forEach(cookie => {
-        document.cookie = cookie
-          .replace(/^ +/, "")
-          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-      });
-      localStorage.clear();
-      window.location.href = "/";
     }
   },
 
