@@ -1,53 +1,57 @@
 <template>
   <v-footer dark :class="$vuetify.theme.dark ? 'dark-gradient' : 'light-gradient'">
-    <v-row align="center">
-      <!-- Left -->
-      <v-col cols="12" sm="6">
-        <!-- Contact -->
-        <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'">Kontakt</v-card-title>
-        <v-card-text>
-          <div class="align-center mb-2" v-for="(item, i) in contact" :key="i">
-            <v-icon color="secondary" class="icon">{{ item.icon }}</v-icon>
-            <span class="body-2 text link" v-html="item.text"></span>
-          </div>
-        </v-card-text>
-      </v-col>
-      <!-- Right -->
-      <v-col cols="12" sm="6">
-        <!-- Newsletter -->
-        <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'">
-          Newsletter abonnieren
-        </v-card-title>
-        <v-form v-model="valid">
+    <v-container>
+      <v-row align="center">
+        <!-- Left -->
+        <v-col cols="12" sm="6">
+          <!-- Contact -->
+          <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'">
+            Kontakt
+          </v-card-title>
           <v-card-text>
-            <v-text-field
-              solo-inverted
-              label="E-Mail"
-              v-model="email"
-              :rules="emailRules"
-              required
-            ></v-text-field>
-            <v-text-field solo-inverted label="HP" v-model="hp" v-show="false"></v-text-field>
-            <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm">
-              Abonnieren
-            </v-btn>
+            <div class="align-center mb-2" v-for="(item, i) in contact" :key="i">
+              <v-icon color="secondary" class="icon">{{ item.icon }}</v-icon>
+              <span class="body-2 text link" v-html="item.text"></span>
+            </div>
           </v-card-text>
-        </v-form>
-      </v-col>
-      <v-col cols="12">
-        <v-divider></v-divider>
-      </v-col>
-      <!-- Bottom links and copyright -->
-      <v-col cols="12" sm="6" class="text-center text-sm-left">
-        <v-btn v-for="(item, i) in menu" :key="i" text :to="item.to">
-          {{ item.name }}
-        </v-btn>
-      </v-col>
-      <v-col cols="12" sm="6" class="text-center text-sm-right">
-        &copy; {{ new Date().getFullYear() }} &minus;
-        <strong>Bayerischer Cochlea Implantat Verband e.V.</strong>
-      </v-col>
-    </v-row>
+        </v-col>
+        <!-- Right -->
+        <v-col cols="12" sm="6">
+          <!-- Newsletter -->
+          <v-card-title :class="$vuetify.breakpoint.xsOnly && 'justify-center'">
+            Newsletter abonnieren
+          </v-card-title>
+          <v-form v-model="valid">
+            <v-card-text>
+              <v-text-field
+                solo-inverted
+                label="E-Mail"
+                v-model="email"
+                :rules="emailRules"
+                required
+              ></v-text-field>
+              <v-text-field solo-inverted label="HP" v-model="hp" v-show="false"></v-text-field>
+              <v-btn class="secondary" :disabled="!valid || !email" @click="sendForm">
+                Abonnieren
+              </v-btn>
+            </v-card-text>
+          </v-form>
+        </v-col>
+        <v-col cols="12">
+          <v-divider></v-divider>
+        </v-col>
+        <!-- Bottom links and copyright -->
+        <v-col cols="12" sm="6" class="text-center text-sm-left">
+          <v-btn v-for="(item, i) in menu" :key="i" text :to="item.to">
+            {{ item.name }}
+          </v-btn>
+        </v-col>
+        <v-col cols="12" sm="6" class="text-center text-sm-right">
+          &copy; {{ new Date().getFullYear() }} &minus;
+          <strong>Bayerischer Cochlea Implantat Verband e.V.</strong>
+        </v-col>
+      </v-row>
+    </v-container>
 
     <AlertModal
       :dialog="dialog"
