@@ -1,5 +1,10 @@
 # bayciv
 
+[![logo]][website]
+
+[logo]: https://user-images.githubusercontent.com/39305770/103773828-f3db8d80-502b-11eb-8bc5-03d59f3eae5c.jpg
+[website]: https://www.bayciv.de
+
 ## Used libraries
 
 | Project         | Status                                           |
