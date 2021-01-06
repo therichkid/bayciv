@@ -47,27 +47,63 @@ const routes = [
   // News redirects
   {
     path: "/aktuelles-lesen/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/news/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/pressespiegel/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/news/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/erfahrungen/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/news/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/videos/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/news/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/texte/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/news/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/gedichte/articles/*",
-    redirect: route => "/news/" + route.path.split("/").pop().replace(".html", "")
+    redirect: route =>
+      "/news/" +
+      route.path
+        .split("/")
+        .filter(path => path)
+        .pop()
+        .replace(".html", "")
   },
   {
     path: "/news/:slug",
