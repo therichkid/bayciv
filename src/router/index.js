@@ -40,7 +40,8 @@ const routes = [
     name: "news",
     component: News,
     meta: {
-      title: "Neuigkeiten"
+      title: "Neuigkeiten",
+      description: "Neuigkeiten, aktuelle Berichte und Veranstaltungen."
     },
     alias: "/news"
   },
@@ -110,7 +111,8 @@ const routes = [
     name: "post",
     component: Post,
     meta: {
-      title: "Neuigkeiten"
+      title: "Neuigkeiten",
+      description: "Hier geht's zum vollständigen Artikel \u201E{slug}\u201C."
     },
     props: true
   },
@@ -122,7 +124,9 @@ const routes = [
     name: "events",
     component: Calendar,
     meta: {
-      title: "Veranstaltungen"
+      title: "Veranstaltungen",
+      description:
+        "Hier geht's zum Kalender des BayCIV's, der Auskunft über Veranstaltungen des BayCIV's und unserer SHGs gibt."
     }
   },
   {
@@ -130,7 +134,8 @@ const routes = [
     name: "event",
     component: Event,
     meta: {
-      title: "Veranstaltungen"
+      title: "Veranstaltungen",
+      description: "{slug} am {date}: Alle Infos zur Veranstaltung."
     },
     props: true
   },
@@ -139,7 +144,8 @@ const routes = [
     name: "Anmeldung",
     component: Form,
     meta: {
-      title: "Anmeldung"
+      title: "Anmeldung",
+      description: "Anmeldung zur Veranstaltung {slug} am {date}."
     },
     props: route => ({
       date: route.params.date,
@@ -163,7 +169,9 @@ const routes = [
     name: "shg",
     component: SHG,
     meta: {
-      title: "Selbsthilfegruppen"
+      title: "Selbsthilfegruppen",
+      description:
+        "Der BayCIV ist Dachverband von 29 Selbsthilfegruppen in Bayern. Eine interaktive Karte verrät Kontaktinformationen der einzelnen SHGs."
     },
     props: true,
     alias: "/shgs/:groupName"
@@ -173,7 +181,8 @@ const routes = [
     name: "posts",
     component: Posts,
     meta: {
-      title: "Erfahrungen"
+      title: "Erfahrungen",
+      description: "Erfahrungsberichte über das Leben mit einem CI."
     },
     props: route => ({
       routerPage: "erfahrungen",
@@ -189,7 +198,8 @@ const routes = [
     name: "facilities",
     component: Facilities,
     meta: {
-      title: "Kliniken, Rehas, Beratungsstellen"
+      title: "Kliniken, Rehas, Beratungsstellen",
+      description: "Wichtige Anlaufstellen und Kliniken."
     }
   },
   {
@@ -213,13 +223,17 @@ const routes = [
     name: "datenkontrolle",
     component: DataControl,
     meta: {
-      title: "Datenkontrolle"
+      title: "Datenkontrolle",
+      description: "Abmeldung vom BayCIV-Newsletter und Zurücksetzen von Cookies."
     }
   },
   {
     path: "/:slug",
     name: "page",
     component: Page,
+    meta: {
+      description: "Infos zu: {slug}."
+    },
     props: true
   },
   { path: "*", redirect: "/404" }
@@ -254,6 +268,25 @@ router.beforeEach((to, from, next) => {
   }
   title += "BayCIV";
   document.title = title;
+  let description =
+    to.meta.description ||
+    "Wir beraten, informieren und vertreten Ihre Interessen. Gemeinsam sind wir stark!";
+  description = description.replace(/\{(.+?)\}/g, (_, param) => {
+    const key = param.trim();
+    if (to.params[key]) {
+      return to.params[key]
+        .split("-")
+        .map(word => {
+          word = word.replace(/ae/g, "\u00e4").replace(/oe/g, "\u00f6").replace(/ue/g, "\u00fc");
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+    }
+    return key;
+  });
+  document.querySelector('meta[name="description"]').setAttribute("content", description);
+  document.querySelector('meta[property="og:description"]').setAttribute("content", description);
+  document.querySelector('meta[itemprop="description"]').setAttribute("content", description);
   next();
 });
 
