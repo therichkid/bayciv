@@ -334,7 +334,7 @@ const parseEmbeds = str => {
           replacement = createYtElement(id);
         }
       }
-      if (!replacement) {
+      if (!replacement && localStorage.getItem("cookiesAccepted") !== "all") {
         replacement = createLinkElement(url);
       }
     }
@@ -359,6 +359,6 @@ const createYtElement = id => {
 };
 const createLinkElement = url => {
   return `<a href="${url}" target="_blank" rel="noopener noreferrer">
-  Hier geht es zum Video.
+  Hier geht es zum externen Inhalt.
 </a>`;
 };
