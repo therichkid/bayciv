@@ -101,8 +101,8 @@ export default {
         {
           icon: "mdi-map-marker",
           text: `Bayerischer Cochlea Implantat Verband e.V.
-          <br>Arberweg 28
-          <br>85748 Garching`
+            <br>Arberweg 28
+            <br>85748 Garching`
         },
         {
           icon: "mdi-phone",
