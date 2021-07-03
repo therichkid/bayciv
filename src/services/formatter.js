@@ -136,7 +136,8 @@ export default {
         region: orig.acf.region,
         featuredImage: addFeaturedImage(orig),
         type: orig.acf.typ,
-        category: addCategories(orig, true)[0]
+        category: addCategories(orig, true)[0],
+        onlineGroup: orig.acf["online-gruppe"]
       };
       groups.push(group);
     }

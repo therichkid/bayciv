@@ -15,6 +15,9 @@
       <v-col cols="12" sm="4" v-if="group.address">
         <v-card-title>Gruppentreffen</v-card-title>
         <v-card-text>
+          <v-chip v-if="group.onlineGroup" color="primary" text-color="white" class="mb-2">
+            Trifft sich online
+          </v-chip>
           <div class="align-center mb-2">
             <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
             <span class="body-2 text" v-html="group.address.split(', ').join('<br />')"></span>

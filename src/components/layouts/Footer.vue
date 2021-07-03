@@ -118,8 +118,7 @@ export default {
         },
         {
           icon: "mdi-facebook",
-          text:
-            "<a href='https://www.facebook.com/bayciv' target='_blank' rel='noopener noreferrer'>Facebook</a>"
+          text: "<a href='https://www.facebook.com/bayciv' target='_blank' rel='noopener noreferrer'>Facebook</a>"
         }
       ],
       menu: [

@@ -112,6 +112,13 @@
                     v-else-if="group.type === 'Reha'"
                   />
                   <img
+                    src="../../assets/map/shg_online.png"
+                    :alt="group.type"
+                    height="62px"
+                    width="40px"
+                    v-else-if="group.onlineGroup"
+                  />
+                  <img
                     src="../../assets/map/shg.png"
                     :alt="group.type"
                     height="62px"

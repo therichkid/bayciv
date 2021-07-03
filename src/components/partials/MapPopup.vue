@@ -1,6 +1,10 @@
 <template>
   <l-popup>
     <h3 class="headline mb-2">{{ group.name }}</h3>
+    <!-- Online group -->
+    <v-chip v-if="group.onlineGroup" color="primary" text-color="white" class="mb-2">
+      Trifft sich online
+    </v-chip>
     <!-- Address -->
     <div class="align-center mb-2" v-if="group.address">
       <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
