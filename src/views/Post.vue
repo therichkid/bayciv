@@ -28,6 +28,9 @@
         </template>
       </v-col>
       <v-col cols="12" v-html="post.content" :style="{ fontSize: fontSize + 'px' }"></v-col>
+      <v-col cols="12" v-if="post.images.length">
+        <ImageCarousel :images="post.images" />
+      </v-col>
       <!-- Social media -->
       <v-col cols="12">
         <SocialMedia :link="'/news/' + slug" :title="post.title" />
@@ -46,6 +49,7 @@
 
 <script>
 import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
+import ImageCarousel from "@/components/partials/ImageCarousel";
 import SocialMedia from "@/components/partials/SocialMedia";
 const LoadingError = () =>
   import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");
@@ -54,6 +58,7 @@ export default {
   components: {
     LoadingSkeleton,
     LoadingError,
+    ImageCarousel,
     SocialMedia
   },
 

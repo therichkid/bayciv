@@ -16,7 +16,8 @@ export default {
         dateOrig: orig.date.slice(0, 10),
         date: formatDate(null, orig.date),
         categories: addCategories(orig, false),
-        featuredImage: addFeaturedImage(orig)
+        featuredImage: addFeaturedImage(orig),
+        images: addImages(orig)
       };
       posts.push(article);
     }
@@ -274,6 +275,17 @@ const addFeaturedImage = input => {
     obj.source = require("../assets/placeholder.png");
   }
   return obj;
+};
+
+// Add carousel images to an article
+const addImages = input => {
+  return (input.acf.bilder || []).map(({ title, caption, url, sizes }) => ({
+    title,
+    caption,
+    url: sizes["medium-large"] || url,
+    lazyUrl: sizes.medium || url,
+    previewUrl: sizes.thumbnail
+  }));
 };
 
 // Add categories to an event, article or group
