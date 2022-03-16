@@ -118,6 +118,11 @@ export default {
           to: "/news"
         },
         {
+          icon: "mdi-finance",
+          title: "Zahlen und Fakten",
+          to: "/zahlen-fakten"
+        },
+        {
           icon: "mdi-clipboard-account",
           title: "Kontakt",
           to: "/kontakt"

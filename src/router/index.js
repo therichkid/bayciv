@@ -5,6 +5,7 @@ import Home from "../views/Home";
 import News from "../views/News";
 import Posts from "../views/Posts";
 import Post from "../views/Post";
+import NumbersFacts from "../views/NumbersFacts";
 import Event from "../views/Event";
 import SHG from "../views/SHG";
 import DataControl from "../views/DataControl";
@@ -115,6 +116,16 @@ const routes = [
       description: "Hier geht's zum vollständigen Artikel \u201E{slug}\u201C."
     },
     props: true
+  },
+  {
+    path: "/zahlen-fakten/page/:page?",
+    name: "numbers-facts",
+    component: NumbersFacts,
+    meta: {
+      title: "Zahlen und Fakten",
+      description: "Zahlen und Fakten über das Cochlea Implantat."
+    },
+    alias: "/zahlen-fakten"
   },
   { path: "/anmeldungen", redirect: "/events" },
   { path: "/veranstaltungen", redirect: "/events" },

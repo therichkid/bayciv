@@ -15,6 +15,10 @@ export default {
       Object.assign(params, {
         "filter[category_name]": groupName
       });
+    } else {
+      Object.assign(params, {
+        categories_exclude: /* zahlen-fakten */ 100
+      });
     }
     return new Promise((resolve, reject) => {
       api
