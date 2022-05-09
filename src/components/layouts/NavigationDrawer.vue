@@ -65,10 +65,6 @@ export default {
           title: "Cochlea-Implantat",
           to: [
             {
-              title: "Erfahrungen",
-              to: "/erfahrungen"
-            },
-            {
               title: "Was ist ein CI?",
               to: "/was-ist-ein-ci"
             },
@@ -116,6 +112,11 @@ export default {
           icon: "mdi-newspaper",
           title: "Neuigkeiten",
           to: "/news"
+        },
+        {
+          icon: "mdi-account-voice",
+          title: "Erfahrungen",
+          to: "/erfahrungen"
         },
         {
           icon: "mdi-finance",
