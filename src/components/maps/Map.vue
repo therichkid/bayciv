@@ -30,6 +30,14 @@
                 clearable
                 hide-details
               ></v-select>
+              <v-select
+                :items="targetAudiences"
+                v-model="selectedTargetAudience"
+                label="Zielgruppe"
+                clearable
+                hide-details
+                v-if="type === 'shgs'"
+              ></v-select>
             </v-col>
           </v-row>
         </v-card-text>
@@ -216,6 +224,8 @@ export default {
         "Thüringen"
       ],
       selectedRegion: null,
+      targetAudiences: ["Erwachsene", "Kinder"],
+      selectedTargetAudience: null,
       activeGroup: null,
       timeout: null
     };
@@ -249,6 +259,9 @@ export default {
           continue;
         }
         if (this.selectedRegion && group.region !== this.selectedRegion) {
+          continue;
+        }
+        if (this.selectedTargetAudience && group.targetAudience !== this.selectedTargetAudience) {
           continue;
         }
         if (this.search && !group.name.toLowerCase().includes(this.search.toLowerCase())) {

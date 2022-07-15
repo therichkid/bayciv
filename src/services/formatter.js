@@ -138,6 +138,7 @@ export default {
         featuredImage: addFeaturedImage(orig),
         type: orig.acf.typ,
         category: addCategories(orig, true)[0],
+        targetAudience: orig.acf.zielgruppe,
         onlineGroup: orig.acf["online-gruppe"]
       };
       groups.push(group);
