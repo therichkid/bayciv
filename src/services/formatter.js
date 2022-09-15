@@ -264,11 +264,8 @@ const addFeaturedImage = input => {
     const featuredImage = input._embedded["wp:featuredmedia"][0];
     obj.title = featuredImage.title.rendered;
     // Pick medium large size if it exists
-    if (featuredImage.media_details.sizes && featuredImage.media_details.sizes.medium_large) {
-      obj.source = featuredImage.media_details.sizes.medium_large.source_url;
-    } else {
-      obj.source = featuredImage.source_url;
-    }
+    obj.source =
+      featuredImage.media_details.sizes?.medium_large?.source_url || featuredImage.source_url;
   } else {
     // Set a placeholder
     // https://via.placeholder.com/600x400/f07f00/3b2e88?text=BayCIV+e.V.
@@ -280,13 +277,15 @@ const addFeaturedImage = input => {
 
 // Add carousel images to an article
 const addImages = input => {
-  return (input.acf.bilder || []).map(({ title, caption, url, sizes }) => ({
-    title,
-    caption,
-    url: sizes["medium-large"] || url,
-    lazyUrl: sizes.medium || url,
-    previewUrl: sizes.thumbnail
-  }));
+  return (input.acf.bilder || [])
+    .filter(({ mime_type }) => mime_type !== "application/pdf")
+    .map(({ title, caption, url, sizes }) => ({
+      title,
+      caption,
+      url: sizes?.["medium-large"] || url,
+      lazyUrl: sizes?.medium || url,
+      previewUrl: sizes?.thumbnail
+    }));
 };
 
 // Add categories to an event, article or group
