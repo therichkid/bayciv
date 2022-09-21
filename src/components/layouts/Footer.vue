@@ -106,7 +106,7 @@ export default {
         },
         {
           icon: "mdi-phone",
-          text: "<a href='tel:+498932928926'>+49 (0) 89 329 28 926</a>"
+          text: "<a href='tel:+498921548528'>+49 (0) 89 215 48 528</a>"
         },
         {
           icon: "mdi-fax",
