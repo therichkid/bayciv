@@ -1,27 +1,27 @@
 import "babel-polyfill";
 import Vue from "vue";
 import App from "./App.vue";
-import vuetify from "./plugins/vuetify";
-import router from "./router/index";
-import store from "./store/index";
-import VueAnalytics from "vue-analytics";
-
-import shared from "./services/shared";
-Vue.prototype.shared = shared;
-
-// Google Analytics
-Vue.use(VueAnalytics, {
-  id: "UA-21702009-1",
-  router,
-  debug: {
-    sendHitTask: process.env.NODE_ENV === "production"
-  },
-  disabled: true
-});
-
-// vue2-leaflet
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import VueGtag from "vue-gtag";
+import vuetify from "./plugins/vuetify";
+import router from "./router/index";
+import shared from "./services/shared";
+import store from "./store/index";
+
+Vue.prototype.shared = shared;
+
+// Google Tag Manager
+Vue.use(
+  VueGtag,
+  {
+    id: "UA-21702009-1",
+    disabled: true
+  },
+  router
+);
+
+// vue2-leaflet
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
