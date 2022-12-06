@@ -15,8 +15,8 @@ Vue.prototype.shared = shared;
 Vue.use(
   VueGtag,
   {
-    id: "UA-21702009-1",
-    disabled: true
+    id: "G-T5CJWYPB23",
+    enabled: false
   },
   router
 );
