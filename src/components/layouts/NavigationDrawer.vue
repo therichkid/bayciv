@@ -124,6 +124,11 @@ export default {
           to: "/zahlen-fakten"
         },
         {
+          icon: "mdi-play",
+          title: "EUTB",
+          to: "/eutb"
+        },
+        {
           icon: "mdi-clipboard-account",
           title: "Kontakt",
           to: "/kontakt"
