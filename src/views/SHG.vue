@@ -88,6 +88,15 @@
       <v-pagination v-model="page" :length="postPages" @input="changePage()"></v-pagination>
     </div>
     <Events :groupName="groupName" />
+
+    <v-row>
+      <v-col cols="12">
+        <v-btn @click="goBack()">
+          <v-icon>mdi-chevron-left</v-icon>
+          <span>Zurück</span>
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -169,6 +178,9 @@ export default {
       return (
         !!group.mailingAddress || !!group.email || !!group.phone || !!group.fax || !!group.homepage
       );
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
 
