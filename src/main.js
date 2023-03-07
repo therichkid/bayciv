@@ -15,7 +15,12 @@ Vue.prototype.shared = shared;
 Vue.use(
   VueGtag,
   {
-    config: { id: "G-T5CJWYPB23" },
+    config: {
+      id: "G-T5CJWYPB23",
+      params: {
+        anonymize_ip: true
+      }
+    },
     enabled: false
   },
   router
