@@ -14,9 +14,11 @@
         {{ info.teaser }}
       </h3>
     </v-card-title>
-    <v-card-actions v-if="info.link">
+    <v-card-actions v-if="info.buttons.length">
       <v-spacer></v-spacer>
-      <v-btn text v-bind="linkProps">{{ info.buttonText || "Mehr Infos" }}</v-btn>
+      <v-btn text v-for="button of info.buttons" :key="button.link" v-bind="button.linkProps">
+        {{ button.text || "Mehr Infos" }}
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -25,8 +27,7 @@
 export default {
   data() {
     return {
-      info: null,
-      linkProps: {}
+      info: null
     };
   },
 
@@ -35,34 +36,26 @@ export default {
       this.info = await this.$store.dispatch("fetchPageBySlug", "info-meldung").catch(error => {
         console.error(error);
       });
-      if (this.info) {
-        if (this.info.link) {
-          if (this.info.link.match(/http|www/i)) {
-            // External link
-            if (!this.info.link.includes("http")) {
-              this.info.link = `https://${this.info.link}`;
-            }
-            this.linkProps = {
-              href: this.info.link,
-              target: "_blank",
-              rel: "noopener noreferrer"
-            };
-          } else {
-            // Internal link
-            this.linkProps = {
-              to: this.info.link
-            };
-          }
+      if (!this.info) {
+        return;
+      }
+      this.info.buttons.forEach(button => {
+        if (button.link.match(/http|www/i)) {
+          // External link
+          button.linkProps = {
+            href: button.link.includes("http") ? button.link : `https://${button.link}`,
+            target: "_blank",
+            rel: "noopener noreferrer"
+          };
         } else {
-          const content = this.shared.stripHtml(this.info.content);
-          if (content) {
-            this.info.link = this.info.slug;
-            // Add a link to itself to show as a page
-            this.linkProps = {
-              to: this.info.link
-            };
-          }
+          // Internal link
+          button.linkProps = { to: button.link };
         }
+      });
+      const content = this.shared.stripHtml(this.info.content);
+      if (content) {
+        // Add a link to itself to show as a page
+        this.info.buttons.push({ linkProps: { to: this.info.slug } });
       }
     }
   },

@@ -3,7 +3,7 @@
     <v-container>
       <InfoMessage />
 
-      <h1 class="display-1 mb-2">Neuigkeiten</h1>
+      <h1 id="neuigkeiten" class="display-1 mb-2">Neuigkeiten</h1>
       <Posts :page="1" />
     </v-container>
     <div class="text-center">

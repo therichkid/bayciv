@@ -112,8 +112,7 @@ export default {
       Object.assign(page, {
         type: typeRemap[orig.acf.typ] || "primary",
         teaser: orig.acf.teaser,
-        link: orig.acf.link,
-        buttonText: orig.acf["button-text"]
+        buttons: orig.acf.buttons || []
       });
     }
     return page;

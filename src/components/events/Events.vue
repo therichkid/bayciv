@@ -4,10 +4,10 @@
       <v-col cols="auto" class="mr-auto">
         <h2 class="display-1 my-2" style="word-break: break-all">
           <template v-if="type === 'mainEvents'">
-            <span>Hauptveranstaltungen</span>
+            <span id="hauptveranstaltungen">Hauptveranstaltungen</span>
             <v-chip color="primary" text-color="white" class="ml-2 mb-1">Bitte anmelden!</v-chip>
           </template>
-          <span v-else>Veranstaltungen</span>
+          <span v-else id="veranstaltungen">Veranstaltungen</span>
         </h2>
       </v-col>
       <v-col cols="auto" v-if="type !== 'mainEvents' && !groupName">
