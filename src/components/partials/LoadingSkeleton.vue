@@ -17,7 +17,7 @@
   </v-row>
 
   <!-- Magazine -->
-  <v-row v-else-if="type === 'magazine'">
+  <v-row v-else-if="type === 'magazines'">
     <v-col v-for="i in magazineAmount" :key="i" cols="6" sm="4" lg="3">
       <v-skeleton-loader type="image"></v-skeleton-loader>
     </v-col>

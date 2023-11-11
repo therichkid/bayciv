@@ -1,8 +1,6 @@
 <template>
   <v-container>
-    <h1 class="display-1 mb-2">Hörgut</h1>
-
-    <LoadingSkeleton type="magazine" v-if="isLoading" />
+    <LoadingSkeleton v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getMagazineBySlug(slug)" />
 
     <v-row v-if="!isLoading && !loadingError">
@@ -12,7 +10,48 @@
       </v-col>
 
       <!-- Body -->
-      <!-- TODO -->
+      <v-col cols="12" md="3">
+        <v-img
+          :src="magazine.featuredImage?.source"
+          :alt="magazine.featuredImage?.title"
+          maxHeight="400"
+          contain
+        >
+        </v-img>
+      </v-col>
+      <v-col cols="12" md="9">
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th>Artikel</th>
+                <th>Autor</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="post in magazine.posts"
+                :key="post.id"
+                @click="navigateToPost(post.slug)"
+                style="cursor: pointer"
+              >
+                <td>{{ post.title }}</td>
+                <td>{{ post.author }}</td>
+                <td class="text-center">
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <v-icon v-on="on">mdi-chevron-right</v-icon>
+                    </template>
+                    <span>Zum Beitrag gehen</span>
+                  </v-tooltip>
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </v-col>
+
       <!-- Social media -->
       <v-col cols="12">
         <SocialMedia :link="'/magazin/' + slug" :title="magazine.name" />
@@ -65,7 +104,7 @@ export default {
 
   watch: {
     $route() {
-      this.getMagazineBySlug();
+      this.getMagazineBySlug(this.slug);
     }
   },
 
@@ -80,12 +119,17 @@ export default {
             console.error(error);
           })) || [];
       }
-      console.log(this.magazine);
+    },
+    navigateToPost(slug) {
+      this.$router.push(`/news/${slug}`);
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     }
   },
 
   created() {
-    this.getMagazineBySlug();
+    this.getMagazineBySlug(this.slug);
   }
 };
 </script>

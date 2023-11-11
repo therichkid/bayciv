@@ -2,7 +2,7 @@
   <v-container>
     <h1 class="display-1 mb-2">Hörgut</h1>
 
-    <LoadingSkeleton type="magazine" v-if="isLoading" />
+    <LoadingSkeleton type="magazines" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getMagazines()" />
 
     <v-row v-if="!isLoading && !loadingError && magazines.length" no-gutters>

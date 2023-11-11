@@ -352,7 +352,7 @@ export default {
         include: postIds.join()
       });
       const magazine = formatter.formatMagazine(rawMagazine, rawPosts);
-      context.commit("storeMagazine", magazine);
+      context.commit("storeMagazine", { slug, magazine });
       context.commit("incrementFailedRequests", 0);
       context.commit("changeMagazinesLoading", false);
       return magazine;
