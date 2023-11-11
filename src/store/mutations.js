@@ -100,6 +100,9 @@ export default {
   storeMagazines(state, magazines) {
     state.magazines = magazines;
   },
+  storeMagazine(state, { magazine, slug }) {
+    state.magazinesWithPosts[slug] = magazine;
+  },
   changeCalendarType(state, view) {
     state.calendarView = view;
   },

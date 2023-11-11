@@ -3,7 +3,7 @@
     <h1 class="display-1 mb-2">Hörgut</h1>
 
     <LoadingSkeleton type="magazine" v-if="isLoading" />
-    <LoadingError v-if="loadingError" :height="500" @retryAgain="getProducts(category)" />
+    <LoadingError v-if="loadingError" :height="500" @retryAgain="getMagazines()" />
 
     <v-row v-if="!isLoading && !loadingError && magazines.length" no-gutters>
       <v-col v-for="magazine in magazines" :key="magazine.id" cols="6" sm="4" lg="3" class="d-flex">
@@ -72,18 +72,15 @@ export default {
 
   methods: {
     async getMagazines() {
-      const magazinesFetched = this.$store.getters.getFetchedMagazines();
-      if (magazinesFetched[0]) {
-        // Already fetched
-        this.magazines = magazinesFetched[1];
+      const [isFetched, magazines] = this.$store.getters.getFetchedMagazines();
+      if (isFetched) {
+        this.magazines = magazines;
       } else {
-        // Not fetched yet
         this.magazines =
           (await this.$store.dispatch("fetchMagazines").catch(error => {
             console.error(error);
           })) || [];
       }
-      console.log("Formatted magazines", this.magazines);
     }
   },
 

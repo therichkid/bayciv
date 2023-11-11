@@ -147,25 +147,22 @@ export default {
     return groups;
   },
 
-  // * SHGs
-  formatMagazines: input => {
-    const magazines = [];
-    for (const orig of input) {
-      const magazine = {
-        id: orig.id,
-        slug: orig.slug,
-        name: decodeHtml(orig.title.rendered),
-        edition: orig.acf.ausgabe,
-        excerpt: orig.excerpt.rendered,
-        featuredImage: addFeaturedImage(orig)
-      };
-      magazines.push(magazine);
-    }
-    // Sort magazines by edition
-    magazines.sort((a, b) => {
-      return parseInt(a.edition.split("/")) - parseInt(b.edition.split("/"));
-    });
-    return magazines;
+  // * Magazines
+  formatMagazines(rawMagazines) {
+    return rawMagazines
+      .map(rawMagazine => this.formatMagazine(rawMagazine))
+      .sort((a, b) => parseInt(a.edition.split("/")) - parseInt(b.edition.split("/")));
+  },
+  formatMagazine(rawMagazine, rawPosts) {
+    return {
+      id: rawMagazine.id,
+      slug: rawMagazine.slug,
+      name: decodeHtml(rawMagazine.title.rendered),
+      edition: rawMagazine.acf.ausgabe,
+      excerpt: rawMagazine.excerpt.rendered,
+      featuredImage: addFeaturedImage(rawMagazine),
+      posts: rawPosts ? this.formatPosts(rawPosts) : []
+    };
   }
 };
 

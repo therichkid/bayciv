@@ -90,5 +90,9 @@ export default {
   getFetchedMagazines: state => () => {
     const magazines = state.magazines;
     return magazines && magazines.length ? [true, magazines] : [false, null];
+  },
+  getFetchedMagazine: state => slug => {
+    const magazine = state.magazinesWithPosts[slug];
+    return magazine ? [true, magazine] : [false, null];
   }
 };

@@ -318,35 +318,49 @@ export default {
         });
     });
   },
-  fetchMagazines(context) {
+  async fetchMagazines(context) {
     context.commit("changeMagazinesLoading", true);
     context.commit("changeMagazinesLoadingError", false);
-    const path = "wp/v2/magazin";
-    const params = {
-      _embed: true,
-      per_page: 100
-    };
-    return new Promise((resolve, reject) => {
-      api
-        .fetchData(path, params)
-        .then(
-          response => {
-            let { data } = response;
-            console.log("Unformatted magazines", data);
-            const magazines = formatter.formatMagazines(data);
-            context.commit("storeMagazines", magazines);
-            context.commit("incrementFailedRequests", 0);
-            resolve(magazines);
-          },
-          error => {
-            context.commit("changeMagazinesLoadingError", true);
-            context.commit("incrementFailedRequests", 1);
-            reject(error);
-          }
-        )
-        .finally(() => {
-          context.commit("changeMagazinesLoading", false);
-        });
-    });
+    try {
+      const { data: rawMagazines } = await api.fetchData("wp/v2/magazin", {
+        _embed: true,
+        per_page: 100
+      });
+      const magazines = formatter.formatMagazines(rawMagazines);
+      context.commit("storeMagazines", magazines);
+      context.commit("incrementFailedRequests", 0);
+      context.commit("changeMagazinesLoading", false);
+      return magazines;
+    } catch (error) {
+      context.commit("changeMagazinesLoadingError", true);
+      context.commit("incrementFailedRequests", 1);
+      context.commit("changeMagazinesLoading", false);
+      throw new Error(error);
+    }
+  },
+  async fetchMagazineBySlug(context, slug) {
+    context.commit("changeMagazinesLoading", true);
+    context.commit("changeMagazinesLoadingError", false);
+    try {
+      const {
+        data: [rawMagazine]
+      } = await api.fetchData("wp/v2/magazin", { _embed: true, slug });
+      const postIds = rawMagazine.acf.beitraege;
+      const { data: rawPosts } = await api.fetchData("wp/v2/posts", {
+        _embed: true,
+        per_page: 100,
+        include: postIds.join()
+      });
+      const magazine = formatter.formatMagazine(rawMagazine, rawPosts);
+      context.commit("storeMagazine", magazine);
+      context.commit("incrementFailedRequests", 0);
+      context.commit("changeMagazinesLoading", false);
+      return magazine;
+    } catch (error) {
+      context.commit("changeMagazinesLoadingError", true);
+      context.commit("incrementFailedRequests", 1);
+      context.commit("changeMagazinesLoading", false);
+      throw new Error(error);
+    }
   }
 };

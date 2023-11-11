@@ -9,6 +9,7 @@ import NumbersFacts from "../views/NumbersFacts";
 import Event from "../views/Event";
 import SHG from "../views/SHG";
 import Magazines from "../views/Magazines";
+import Magazine from "../views/Magazine";
 import DataControl from "../views/DataControl";
 import Page from "../views/Page";
 import PageNotFound from "../views/PageNotFound";
@@ -193,8 +194,18 @@ const routes = [
     name: "magazines",
     component: Magazines,
     meta: {
-      title: "Hörgut"
+      title: "Hörgut Magazin"
     }
+  },
+  {
+    path: "/magazin/:slug",
+    name: "magazine",
+    component: Magazine,
+    meta: {
+      title: "Hörgut Magazin",
+      description: "Die Ausgabe \u201E{slug}\u201C des Hörgut Magazins."
+    },
+    props: true
   },
   {
     path: "/erfahrungen/page/:page?",
