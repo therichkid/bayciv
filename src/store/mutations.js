@@ -91,6 +91,15 @@ export default {
   storeFacilities(state, facilities) {
     state.facilities = facilities;
   },
+  changeMagazinesLoading(state, value) {
+    state.magazinesLoading = value;
+  },
+  changeMagazinesLoadingError(state, value) {
+    state.magazinesLoadingError = value;
+  },
+  storeMagazines(state, magazines) {
+    state.magazines = magazines;
+  },
   changeCalendarType(state, view) {
     state.calendarView = view;
   },

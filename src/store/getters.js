@@ -86,5 +86,9 @@ export default {
   getFetchedFacilities: state => () => {
     const facilities = state.facilities;
     return facilities && facilities.length ? [true, facilities] : [false, null];
+  },
+  getFetchedMagazines: state => () => {
+    const magazines = state.magazines;
+    return magazines && magazines.length ? [true, magazines] : [false, null];
   }
 };

@@ -317,5 +317,36 @@ export default {
           context.commit("changeFacilitiesLoading", false);
         });
     });
+  },
+  fetchMagazines(context) {
+    context.commit("changeMagazinesLoading", true);
+    context.commit("changeMagazinesLoadingError", false);
+    const path = "wp/v2/magazin";
+    const params = {
+      _embed: true,
+      per_page: 100
+    };
+    return new Promise((resolve, reject) => {
+      api
+        .fetchData(path, params)
+        .then(
+          response => {
+            let { data } = response;
+            console.log("Unformatted magazines", data);
+            const magazines = formatter.formatMagazines(data);
+            context.commit("storeMagazines", magazines);
+            context.commit("incrementFailedRequests", 0);
+            resolve(magazines);
+          },
+          error => {
+            context.commit("changeMagazinesLoadingError", true);
+            context.commit("incrementFailedRequests", 1);
+            reject(error);
+          }
+        )
+        .finally(() => {
+          context.commit("changeMagazinesLoading", false);
+        });
+    });
   }
 };

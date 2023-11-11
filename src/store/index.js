@@ -34,6 +34,9 @@ export default new Vuex.Store({
     facilities: [],
     facilitiesLoading: false,
     facilitiesLoadingError: false,
+    magazines: [],
+    magazinesLoading: false,
+    magazinesLoadingError: false,
     calendarView: "",
     calendarFocus: "",
     region: ""

@@ -1,7 +1,7 @@
 <template>
   <!-- Posts -->
   <v-row v-if="type === 'posts'">
-    <v-col v-for="i in amount" :key="i" cols="12" sm="6">
+    <v-col v-for="i in postAmount" :key="i" cols="12" sm="6">
       <v-skeleton-loader type="image, article, actions"></v-skeleton-loader>
     </v-col>
   </v-row>
@@ -13,6 +13,13 @@
     </v-col>
     <v-col v-for="i in 3" :key="i" cols="12" sm="4">
       <v-skeleton-loader :type="i === 1 ? 'image' : 'article'"></v-skeleton-loader>
+    </v-col>
+  </v-row>
+
+  <!-- Magazine -->
+  <v-row v-else-if="type === 'magazine'">
+    <v-col v-for="i in magazineAmount" :key="i" cols="6" sm="4" lg="3">
+      <v-skeleton-loader type="image"></v-skeleton-loader>
     </v-col>
   </v-row>
 
@@ -31,11 +38,20 @@ export default {
   },
 
   computed: {
-    amount() {
+    postAmount() {
       if (this.$vuetify.breakpoint.xsOnly) {
         return 2;
       } else {
         return 4;
+      }
+    },
+    magazineAmount() {
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return 4;
+      } else if (this.$vuetify.breakpoint.mdAndDown) {
+        return 6;
+      } else {
+        return 8;
       }
     }
   }

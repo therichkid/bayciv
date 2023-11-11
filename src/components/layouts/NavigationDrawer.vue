@@ -114,6 +114,11 @@ export default {
           to: "/news"
         },
         {
+          icon: "mdi-bookshelf",
+          title: "Hörgut",
+          to: "/magazin"
+        },
+        {
           icon: "mdi-account-voice",
           title: "Erfahrungen",
           to: "/erfahrungen"

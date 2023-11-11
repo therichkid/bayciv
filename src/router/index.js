@@ -8,6 +8,7 @@ import Post from "../views/Post";
 import NumbersFacts from "../views/NumbersFacts";
 import Event from "../views/Event";
 import SHG from "../views/SHG";
+import Magazines from "../views/Magazines";
 import DataControl from "../views/DataControl";
 import Page from "../views/Page";
 import PageNotFound from "../views/PageNotFound";
@@ -186,6 +187,14 @@ const routes = [
     },
     props: true,
     alias: "/shgs/:groupName"
+  },
+  {
+    path: "/magazin",
+    name: "magazines",
+    component: Magazines,
+    meta: {
+      title: "Hörgut"
+    }
   },
   {
     path: "/erfahrungen/page/:page?",
