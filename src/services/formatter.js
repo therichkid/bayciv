@@ -151,7 +151,7 @@ export default {
   formatMagazines(rawMagazines) {
     return rawMagazines
       .map(rawMagazine => this.formatMagazine(rawMagazine))
-      .sort((a, b) => parseInt(a.edition.split("/")) - parseInt(b.edition.split("/")));
+      .sort((a, b) => parseInt(b.edition.split("/")) - parseInt(a.edition.split("/")));
   },
   formatMagazine(rawMagazine, rawPosts) {
     return {
