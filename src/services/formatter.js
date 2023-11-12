@@ -154,14 +154,17 @@ export default {
       .sort((a, b) => parseInt(b.edition.split("/")) - parseInt(a.edition.split("/")));
   },
   formatMagazine(rawMagazine, rawPosts) {
+    const postIds = rawMagazine.acf.beitraege;
+
     return {
       id: rawMagazine.id,
       slug: rawMagazine.slug,
       name: decodeHtml(rawMagazine.title.rendered),
-      edition: rawMagazine.acf.ausgabe,
-      excerpt: rawMagazine.excerpt.rendered,
+      edition: rawMagazine.acf.ausgabe.replace(/^0+/, ""),
       featuredImage: addFeaturedImage(rawMagazine),
-      posts: rawPosts ? this.formatPosts(rawPosts) : []
+      posts: rawPosts
+        ? this.formatPosts(rawPosts).sort((a, b) => postIds.indexOf(a.id) - postIds.indexOf(b.id))
+        : []
     };
   }
 };

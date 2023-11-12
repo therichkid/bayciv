@@ -194,7 +194,7 @@ const routes = [
     name: "magazines",
     component: Magazines,
     meta: {
-      title: "Hörgut Magazin"
+      title: "HörGut Magazin"
     }
   },
   {
@@ -202,8 +202,8 @@ const routes = [
     name: "magazine",
     component: Magazine,
     meta: {
-      title: "Hörgut Magazin",
-      description: "Die Ausgabe \u201E{slug}\u201C des Hörgut Magazins."
+      title: "HörGut Magazin",
+      description: "Die Ausgabe \u201E{slug}\u201C des HörGut Magazins."
     },
     props: true
   },

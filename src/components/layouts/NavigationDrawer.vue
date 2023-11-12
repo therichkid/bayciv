@@ -115,7 +115,7 @@ export default {
         },
         {
           icon: "mdi-bookshelf",
-          title: "Hörgut",
+          title: "HörGut",
           to: "/magazin"
         },
         {

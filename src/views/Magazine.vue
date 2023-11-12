@@ -6,7 +6,7 @@
     <v-row v-if="!isLoading && !loadingError">
       <!-- Header -->
       <v-col cols="12">
-        <h1 class="display-1">Hörgut {{ magazine.edition }}: {{ magazine.name }}</h1>
+        <h1 class="display-1">HörGut {{ magazine.edition }}: {{ magazine.name }}</h1>
       </v-col>
 
       <!-- Body -->
@@ -24,6 +24,7 @@
           <template v-slot:default>
             <thead>
               <tr>
+                <th>Kategorie</th>
                 <th>Artikel</th>
                 <th>Autor</th>
                 <th></th>
@@ -36,6 +37,7 @@
                 @click="navigateToPost(post.slug)"
                 style="cursor: pointer"
               >
+                <td>{{ post.categoriesFormatted }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.author }}</td>
                 <td class="text-center">
@@ -119,6 +121,9 @@ export default {
             console.error(error);
           })) || [];
       }
+      this.magazine.posts.forEach(post => {
+        post.categoriesFormatted = post.categories?.map(({ name }) => name).join(", ") || "";
+      });
     },
     navigateToPost(slug) {
       this.$router.push(`/news/${slug}`);

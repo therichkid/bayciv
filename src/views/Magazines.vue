@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="display-1 mb-2">Hörgut</h1>
+    <h1 class="display-1 mb-2">HörGut</h1>
 
     <LoadingSkeleton type="magazines" v-if="isLoading" />
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getMagazines()" />
