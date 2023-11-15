@@ -122,7 +122,10 @@ export default {
           })) || [];
       }
       this.magazine.posts.forEach(post => {
-        post.categoriesFormatted = post.categories?.map(({ name }) => name).join(", ") || "";
+        post.categoriesFormatted =
+          post.categories
+            ?.map(({ type, name }) => (type === "shg" ? "Selbsthilfegruppe" : name))
+            .join(", ") || "";
       });
     },
     navigateToPost(slug) {

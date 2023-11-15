@@ -4,6 +4,16 @@
     <LoadingError v-if="loadingError" :height="500" @retryAgain="getPostBySlug(slug)" />
 
     <v-row v-if="!isLoading && !loadingError && Object.keys(post).length" align="center">
+      <!-- Featured image -->
+      <v-col cols="12"
+        ><v-img
+          v-if="post.featuredImage && post.featuredImage.title !== 'Placeholder Image'"
+          :src="post.featuredImage.source"
+          :alt="post.featuredImage.title"
+          maxHeight="400px"
+        ></v-img
+      ></v-col>
+
       <!-- Header -->
       <v-col cols="12">
         <h1 class="display-1">{{ post.title }}</h1>
