@@ -2,16 +2,23 @@
   <v-container>
     <h1 class="display-1 mb-2">Neuigkeiten</h1>
 
-    <v-btn-toggle v-model="selection" mandatory style="overflow-x: auto">
+    <v-btn-toggle v-model="selection" mandatory style="overflow-x: auto" class="mb-2">
       <v-btn value="all">Alle</v-btn>
       <v-btn value="bayciv">BayCIV</v-btn>
       <v-btn value="netzwerk">Netzwerk</v-btn>
       <v-btn value="presse">Presse</v-btn>
+      <v-btn value="stellungnahmen">Stellungnahmen</v-btn>
+      <v-btn value="technik">Technik</v-btn>
     </v-btn-toggle>
 
     <Posts :page="page" @postPagesInit="postPages = $event"></Posts>
     <div class="text-center">
-      <v-pagination v-model="page" :length="postPages" @input="changePage()"></v-pagination>
+      <v-pagination
+        v-model="page"
+        :length="postPages"
+        @input="changePage()"
+        class="mt-2"
+      ></v-pagination>
     </div>
   </v-container>
 </template>

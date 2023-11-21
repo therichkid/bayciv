@@ -3,7 +3,12 @@
     <h1 class="display-1 mb-2" v-html="shared.capitalize(routerPage)"></h1>
     <Posts :page="page" :groupName="routerPage" @postPagesInit="postPages = $event" />
     <div class="text-center" v-if="postPages">
-      <v-pagination v-model="page" :length="postPages" @input="changePage()"></v-pagination>
+      <v-pagination
+        v-model="page"
+        :length="postPages"
+        @input="changePage()"
+        class="mt-2"
+      ></v-pagination>
     </div>
   </v-container>
 </template>

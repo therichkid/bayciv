@@ -1,13 +1,7 @@
 <template>
-  <div>
-    <v-img
-      src="@/assets/sleeping_cat.svg"
-      contain
-      height="100px"
-      class="my-5"
-      alt="Schlafende Katze"
-    ></v-img>
-    <v-row justify="center">
+  <div class="my-5">
+    <v-img src="@/assets/sleeping_cat.svg" contain height="150px" alt="Schlafende Katze"></v-img>
+    <v-row justify="center" class="mt-5">
       <span class="grey--text">Hier ist es noch leer.</span>
     </v-row>
   </div>

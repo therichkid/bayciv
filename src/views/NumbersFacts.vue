@@ -4,7 +4,12 @@
 
     <Posts :page="page" groupName="zahlen-fakten" @postPagesInit="postPages = $event"></Posts>
     <div class="text-center">
-      <v-pagination v-model="page" :length="postPages" @input="changePage()"></v-pagination>
+      <v-pagination
+        v-model="page"
+        :length="postPages"
+        @input="changePage()"
+        class="mt-2"
+      ></v-pagination>
     </div>
   </v-container>
 </template>
