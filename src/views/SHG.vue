@@ -57,7 +57,7 @@
             <v-icon color="primary" class="icon">mdi-email</v-icon>
             <span class="body-2 text">{{ group.email }}</span>
           </div>
-          <div class="align-center mb-2" v-if="group.homepage">
+          <div class="align-center" v-if="group.homepage">
             <v-icon color="primary" class="icon">mdi-web</v-icon>
             <span
               class="body-2 text"
@@ -67,6 +67,42 @@
                 }' target='_blank' rel='noopener noreferrer'>${group.homepage}</a>`
               "
             ></span>
+          </div>
+          <div class="align-center mt-5" v-if="group.instagram || group.facebook">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  icon
+                  v-if="group.instagram"
+                  v-on="on"
+                  :href="group.instagram"
+                  target="_blank"
+                  rel="nofollow"
+                  class="mx-1 white--text instagram"
+                  :aria-label="`${group.name} auf Instagram folgen`"
+                >
+                  <v-icon>mdi-instagram</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ group.name }} auf Instagram folgen</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  icon
+                  v-if="group.facebook"
+                  v-on="on"
+                  :href="group.facebook"
+                  target="_blank"
+                  rel="nofollow"
+                  class="mx-1 white--text facebook"
+                  :aria-label="`${group.name} auf Facebook folgen`"
+                >
+                  <v-icon>mdi-facebook</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ group.name }} auf Facebook folgen</span>
+            </v-tooltip>
           </div>
         </v-card-text>
       </v-col>
@@ -202,5 +238,18 @@ export default {
 .text {
   display: block;
   padding-left: 30px;
+}
+.instagram {
+  background: radial-gradient(
+    circle at 30% 105%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+}
+.facebook {
+  background-color: #4267b2;
 }
 </style>

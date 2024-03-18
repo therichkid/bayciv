@@ -135,6 +135,8 @@ export default {
         mobile: orig.acf.mobil,
         fax: orig.acf.fax,
         homepage: orig.acf.homepage,
+        instagram: orig.acf.instagram,
+        facebook: orig.acf.facebook,
         region: orig.acf.region,
         featuredImage: addFeaturedImage(orig),
         type: orig.acf.typ,
