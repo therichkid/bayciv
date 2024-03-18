@@ -261,32 +261,26 @@ export default {
   fetchGroups(context) {
     context.commit("changeGroupsLoading", true);
     context.commit("changeGroupsLoadingError", false);
-    const path = "wp/v2/shgs";
-    const params = {
-      _embed: true,
-      per_page: 100
-    };
-    return new Promise((resolve, reject) => {
-      api
-        .fetchData(path, params)
-        .then(
-          response => {
-            let { data } = response;
-            const groups = formatter.formatGroups(data);
-            context.commit("storeGroups", groups);
-            context.commit("incrementFailedRequests", 0);
-            resolve(groups);
-          },
-          error => {
-            context.commit("changeGroupsLoadingError", true);
-            context.commit("incrementFailedRequests", 1);
-            reject(error);
-          }
-        )
-        .finally(() => {
-          context.commit("changeGroupsLoading", false);
-        });
-    });
+    const groupEndpoints = [
+      { path: "wp/v2/shgs", params: { _embed: true, per_page: 100 } },
+      { path: "wp/v2/pages", params: { _embed: true, slug: "/eutb" } }
+    ];
+    return Promise.all(groupEndpoints.map(({ path, params }) => api.fetchData(path, params)))
+      .then(responses => {
+        const data = responses.map(({ data }) => data).flat();
+        const groups = formatter.formatGroups(data);
+        context.commit("storeGroups", groups);
+        context.commit("incrementFailedRequests", 0);
+        return groups;
+      })
+      .catch(error => {
+        context.commit("changeGroupsLoadingError", true);
+        context.commit("incrementFailedRequests", 1);
+        throw error;
+      })
+      .finally(() => {
+        context.commit("changeGroupsLoading", false);
+      });
   },
   fetchFacilities(context) {
     context.commit("changeFacilitiesLoading", true);

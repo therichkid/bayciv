@@ -189,7 +189,11 @@ export default {
 
   methods: {
     changePage() {
-      this.$router.push(`/shgs/${this.groupName}/page/${this.page}`);
+      if (this.group.isGroupLike) {
+        this.$router.push(`/${this.groupName}/page/${this.page}`);
+      } else {
+        this.$router.push(`/shgs/${this.groupName}/page/${this.page}`);
+      }
     },
     async getGroup(groupName) {
       let groups = [];
@@ -217,7 +221,13 @@ export default {
     },
     checkOptionalInfo(group) {
       return (
-        !!group.mailingAddress || !!group.email || !!group.phone || !!group.fax || !!group.homepage
+        !!group.mailingAddress ||
+        !!group.email ||
+        !!group.phone ||
+        !!group.fax ||
+        !!group.homepage ||
+        !!group.instagram ||
+        !!group.facebook
       );
     },
     goBack() {

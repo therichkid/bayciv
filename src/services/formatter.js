@@ -142,7 +142,8 @@ export default {
         type: orig.acf.typ,
         category: addCategories(orig, true)[0],
         targetAudience: orig.acf.zielgruppe,
-        onlineGroup: orig.acf["online-gruppe"]
+        onlineGroup: orig.acf["online-gruppe"],
+        isGroupLike: orig.type !== "shgs"
       };
       groups.push(group);
     }

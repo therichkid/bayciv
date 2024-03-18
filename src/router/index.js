@@ -1,18 +1,18 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import Home from "../views/Home";
-import News from "../views/News";
-import Posts from "../views/Posts";
-import Post from "../views/Post";
-import NumbersFacts from "../views/NumbersFacts";
-import Event from "../views/Event";
-import SHG from "../views/SHG";
-import Magazines from "../views/Magazines";
-import Magazine from "../views/Magazine";
 import DataControl from "../views/DataControl";
+import Event from "../views/Event";
+import Home from "../views/Home";
+import Magazine from "../views/Magazine";
+import Magazines from "../views/Magazines";
+import News from "../views/News";
+import NumbersFacts from "../views/NumbersFacts";
 import Page from "../views/Page";
 import PageNotFound from "../views/PageNotFound";
+import Post from "../views/Post";
+import Posts from "../views/Posts";
+import SHG from "../views/SHG";
 
 // Chunks
 const Calendar = () => import(/* webpackChunkName: "calendar" */ "../views/Calendar");
@@ -188,6 +188,17 @@ const routes = [
     },
     props: true,
     alias: "/shgs/:groupName"
+  },
+  {
+    path: "/eutb/page/:page?",
+    name: "eutb",
+    component: SHG,
+    meta: {
+      title: "EUTB",
+      description: "Ergänzende unabhängige Teilhabeberatung"
+    },
+    props: { groupName: "eutb", page: true },
+    alias: "/eutb"
   },
   {
     path: "/magazin",

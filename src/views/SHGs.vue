@@ -34,7 +34,7 @@ export default {
       const groupsFetched = this.$store.getters.getFetchedGroups();
       if (groupsFetched[0]) {
         // Already fetched
-        this.groups = groupsFetched[1];
+        this.groups = groupsFetched[1].filter(group => !group.isGroupLike);
       } else {
         // Not fetched yet
         this.groups =
