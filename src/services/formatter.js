@@ -17,7 +17,8 @@ export default {
         date: formatDate(null, orig.date),
         categories: addCategories(orig, false),
         featuredImage: addFeaturedImage(orig),
-        images: addImages(orig)
+        images: addImages(orig),
+        showOnMainPage: orig.acf.auf_startseite_anzeigen !== false
       };
       posts.push(article);
     }

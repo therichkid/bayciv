@@ -4,7 +4,7 @@
       <InfoMessage />
 
       <h1 id="neuigkeiten" class="display-1 mb-2">Neuigkeiten</h1>
-      <Posts :page="1" />
+      <Posts :page="1" :isMainPage="true" />
     </v-container>
     <div class="text-center">
       <v-btn :disabled="postPages < 2" large color="primary" @click="loadMorePosts()" class="mb-2"

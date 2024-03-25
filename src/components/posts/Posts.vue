@@ -71,7 +71,8 @@ export default {
 
   props: {
     page: Number,
-    groupName: String
+    groupName: String,
+    isMainPage: Boolean
   },
 
   data() {
@@ -90,24 +91,20 @@ export default {
   },
 
   watch: {
-    $route() {
-      this.getPosts(this.page, this.groupName);
+    async $route() {
+      this.posts = await this.getPosts(this.page, this.groupName);
     }
   },
 
   methods: {
-    async getPosts(page, groupName) {
+    async getPosts(page, groupName, prevPosts = []) {
       // Overwrite groupName with query param if it exists
       if (this.$route.query.selection) {
         groupName = this.$route.query.selection;
       }
-      const postsFetched = this.$store.getters.getFetchedPosts(page, groupName);
-      if (postsFetched[0]) {
-        // Already fetched
-        this.posts = postsFetched[1];
-      } else {
-        // Not fetched yet
-        this.posts =
+      let [fromCache, posts] = this.$store.getters.getFetchedPosts(page, groupName);
+      if (!fromCache) {
+        posts =
           (await this.$store
             .dispatch("fetchPosts", { page, groupName })
             .catch(error => console.error(error))) || [];
@@ -117,11 +114,23 @@ export default {
       } else {
         this.$emit("postPagesInit", this.$store.state.totalPostPages);
       }
+      if (this.isMainPage) {
+        let mainPagePosts = [...prevPosts, ...posts].filter(post => !!post.showOnMainPage);
+
+        if (mainPagePosts.length > posts.length) {
+          mainPagePosts.length = posts.length;
+        } else if (mainPagePosts.length < posts.length) {
+          mainPagePosts = await this.getPosts(page + 1, groupName, mainPagePosts);
+        }
+
+        return mainPagePosts;
+      }
+      return posts;
     }
   },
 
-  created() {
-    this.getPosts(this.page, this.groupName);
+  async created() {
+    this.posts = await this.getPosts(this.page, this.groupName);
   }
 };
 </script>
