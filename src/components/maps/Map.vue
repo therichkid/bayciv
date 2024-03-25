@@ -166,11 +166,11 @@
 </template>
 
 <script>
-import MapPopup from "@/components/partials/MapPopup";
-import { LMap, LTileLayer, LGeoJson, LMarker, LIcon, LPopup, LCircle } from "vue2-leaflet";
-import L from "leaflet";
-import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 import bavaria from "@/assets/map/bavaria.geo.json";
+import MapPopup from "@/components/partials/MapPopup";
+import L from "leaflet";
+import { LCircle, LGeoJson, LIcon, LMap, LMarker, LPopup, LTileLayer } from "vue2-leaflet";
+import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 
 export default {
   components: {

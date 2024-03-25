@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import ImageCarousel from "@/components/partials/ImageCarousel";
+import LoadingSkeleton from "@/components/partials/LoadingSkeleton";
 import SocialMedia from "@/components/partials/SocialMedia";
 const LoadingError = () =>
   import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");

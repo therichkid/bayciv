@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import Posts from "@/components/posts/Posts";
 import InfoMessage from "@/components/partials/InfoMessage";
+import Posts from "@/components/posts/Posts";
 const Events = () => import(/* webpackChunkName: "events" */ "@/components/events/Events");
 
 export default {

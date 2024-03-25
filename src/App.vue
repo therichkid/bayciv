@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import NavigationDrawer from "@/components/layouts/NavigationDrawer";
 import AppBar from "@/components/layouts/AppBar";
 import Footer from "@/components/layouts/Footer";
-import FAB from "@/components/partials/FAB";
+import NavigationDrawer from "@/components/layouts/NavigationDrawer";
 import CookieAlert from "@/components/partials/CookieAlert";
+import FAB from "@/components/partials/FAB";
 
 export default {
   components: { NavigationDrawer, AppBar, Footer, FAB, CookieAlert },

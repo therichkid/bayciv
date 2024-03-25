@@ -68,9 +68,9 @@
 </template>
 
 <script>
-import Loading from "@/components/partials/Loading";
 import EventCard from "@/components/events/EventCard";
 import MainEventCard from "@/components/events/MainEventCard";
+import Loading from "@/components/partials/Loading";
 import NoContentYet from "@/components/partials/NoContentYet";
 const LoadingError = () =>
   import(/* webpackChunkName: "dialog" */ "@/components/partials/LoadingError");

@@ -1,9 +1,9 @@
 import "babel-polyfill";
-import Vue from "vue";
-import App from "./App.vue";
 import { Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import Vue from "vue";
 import VueGtag from "vue-gtag";
+import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import router from "./router/index";
 import shared from "./services/shared";
