@@ -334,7 +334,7 @@ const addCategories = (input, onlyGroups) => {
     for (const taxonomy of taxonomies) {
       if (
         taxonomy.taxonomy === "category" &&
-        !["uncategorized", "selbsthilfegruppen"].includes(taxonomy.slug)
+        !["uncategorized", "selbsthilfegruppen", "nur-shg"].includes(taxonomy.slug)
       ) {
         if ((onlyGroups && taxonomy.link.includes("selbsthilfegruppen")) || !onlyGroups) {
           categories.push({
