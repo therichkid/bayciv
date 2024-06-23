@@ -295,9 +295,9 @@ export default {
         clearTimeout(this.activeGroupTimeout);
       }
       this.activeGroupId = group.id;
-      this.zoom = 11;
+      this.center = group.addressLatLng;
       setTimeout(() => {
-        this.center = group.addressLatLng;
+        this.zoom = 11;
       }, 750);
       // Set the activeGroup to null after the bouncing animation
       // Else the icon would bounce again after each filter change
