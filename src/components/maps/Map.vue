@@ -94,22 +94,20 @@
             :attribution="tileProvider.attribution"
           ></l-tile-layer>
           <l-geo-json :geojson="bavaria" :options="geojsonOptions" />
-          <l-marker-cluster :options="{ maxClusterRadius: 15 }">
-            <div v-for="group in filteredGroups" :key="group.id">
-              <l-marker :lat-lng="group.addressLatLng">
-                <MapIcon :group="group" :isActive="activeGroupId === group.id" />
-                <MapPopup :group="group" :type="type" />
-              </l-marker>
-              <l-marker
-                v-for="(additionalAddressLatLng, i) in group.additionalAddressLatLngs"
-                :key="group.id + i"
-                :lat-lng="additionalAddressLatLng"
-              >
-                <MapIcon :group="group" :isActive="activeGroupId === group.id" />
-                <MapPopup :group="group" :address="group.additionalAddresses[i]" :type="type" />
-              </l-marker>
-            </div>
-          </l-marker-cluster>
+          <div v-for="group in filteredGroups" :key="group.id">
+            <l-marker :lat-lng="group.addressLatLng">
+              <MapIcon :group="group" :isActive="activeGroupId === group.id" />
+              <MapPopup :group="group" :type="type" />
+            </l-marker>
+            <l-marker
+              v-for="(additionalAddressLatLng, i) in group.additionalAddressLatLngs"
+              :key="group.id + i"
+              :lat-lng="additionalAddressLatLng"
+            >
+              <MapIcon :group="group" :isActive="activeGroupId === group.id" />
+              <MapPopup :group="group" :address="group.additionalAddresses[i]" :type="type" />
+            </l-marker>
+          </div>
           <div v-if="allowGeolocation">
             <l-circle
               :lat-lng="currentLocation.center"
@@ -143,7 +141,6 @@ import MapIcon from "@/components/partials/MapIcon";
 import MapPopup from "@/components/partials/MapPopup";
 import L from "leaflet";
 import { LCircle, LGeoJson, LIcon, LMap, LMarker, LPopup, LTileLayer } from "vue2-leaflet";
-import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 
 export default {
   components: {
@@ -155,8 +152,7 @@ export default {
     LMarker,
     LIcon,
     LPopup,
-    LCircle,
-    "l-marker-cluster": Vue2LeafletMarkerCluster
+    LCircle
   },
 
   props: {
@@ -296,10 +292,12 @@ export default {
       }
       this.activeGroupId = group.id;
       this.center = group.addressLatLng;
-      setTimeout(() => {
-        this.zoom = 11;
-      }, 750 * 2);
-      // Set the activeGroup to null after the bouncing animation
+      if (this.zoom < 8) {
+        setTimeout(() => {
+          this.zoom = 8;
+        }, 750 * 2);
+      }
+      // Set the activeGroupId to null after the bouncing animation
       // Else the icon would bounce again after each filter change
       this.activeGroupTimeout = setTimeout(() => {
         this.activeGroupId = null;
@@ -319,9 +317,6 @@ export default {
 </script>
 
 <style>
-@import "~leaflet.markercluster/dist/MarkerCluster.css";
-@import "~leaflet.markercluster/dist/MarkerCluster.Default.css";
-
 #map {
   height: 800px;
   width: 100%;
