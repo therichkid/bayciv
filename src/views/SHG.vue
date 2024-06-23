@@ -12,15 +12,28 @@
         <v-img :src="group.featuredImage.source" maxHeight="300px" contain alt="SHG-Logo"></v-img>
       </v-col>
       <!-- 2nd column -->
-      <v-col cols="12" sm="4" v-if="group.address">
+      <v-col cols="12" sm="4" v-if="group.address || group.additionalAddresses?.length">
         <v-card-title>Gruppentreffen</v-card-title>
         <v-card-text>
           <v-chip v-if="group.onlineGroup" color="primary" text-color="white" class="mb-2">
             Trifft sich online
           </v-chip>
-          <div class="align-center mb-2">
+          <div v-if="group.address" class="align-center mb-2">
             <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
             <span class="body-2 text" v-html="group.address.split(', ').join('<br />')"></span>
+          </div>
+          <div v-if="group.additionalAddresses?.length">
+            <div
+              v-for="(additionalAddress, i) in group.additionalAddresses"
+              :key="i"
+              class="align-center mb-2"
+            >
+              <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
+              <span
+                class="body-2 text"
+                v-html="additionalAddress.split(', ').join('<br />')"
+              ></span>
+            </div>
           </div>
         </v-card-text>
       </v-col>
