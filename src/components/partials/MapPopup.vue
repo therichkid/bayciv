@@ -6,9 +6,11 @@
       Trifft sich online
     </v-chip>
     <!-- Address -->
-    <div class="align-center mb-2" v-if="group.address">
+    <div class="align-center mb-2" v-if="address || group.address">
       <v-icon color="primary" class="icon">mdi-map-marker</v-icon>
-      <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">{{ group.address }}</span>
+      <span style="color: rgba(0, 0, 0, 0.6)" class="body-2 text">
+        {{ address || group.address }}
+      </span>
     </div>
     <!-- Telephone -->
     <div class="align-center mb-2" v-if="group.phone">
@@ -73,6 +75,7 @@ export default {
 
   props: {
     group: Object,
+    address: String,
     type: String
   }
 };

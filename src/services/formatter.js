@@ -127,8 +127,10 @@ export default {
         slug: orig.slug,
         name: decodeHtml(orig.title.rendered),
         content: orig.content ? parseContent(orig.content.rendered) : null,
-        address: addAddress(orig),
-        latlng: orig.acf.adresse ? [orig.acf.adresse.lat, orig.acf.adresse.lng] : [0, 0],
+        address: addAddress(orig.acf),
+        addressLatLng: addAddressLatLng(orig.acf),
+        additionalAddresses: (orig.acf.weitere_adressen || []).map(addAddress),
+        additionalAddressLatLngs: (orig.acf.weitere_adressen || []).map(addAddressLatLng),
         mailingAddress: addMailingAddress(orig),
         email: orig.acf.email,
         phone: orig.acf.telefon,
@@ -258,19 +260,23 @@ const checkDateFormat = (type, ...input) => {
 };
 
 // Add the address to an event or a Selbsthilfegruppe
-const addAddress = input => {
+const addAddress = ({ adresse, adressname }) => {
   let str = "";
-  if (input.acf.adressname) {
-    str += input.acf.adressname + (input.acf.adresse ? ", " : "");
+  if (adressname) {
+    str += adressname + (adresse ? ", " : "");
   }
-  if (input.acf.adresse) {
-    if (input.acf.adresse.address.includes("Deutschland")) {
-      str += input.acf.adresse.address.split(",").slice(0, -1).join(",");
+  if (adresse) {
+    if (adresse.address.includes("Deutschland")) {
+      str += adresse.address.split(",").slice(0, -1).join(",");
     } else {
-      str += input.acf.adresse.address;
+      str += adresse.address;
     }
   }
   return str;
+};
+
+const addAddressLatLng = ({ adresse }) => {
+  return [adresse?.lat ?? 0, adresse?.lng ?? 0];
 };
 
 // Add the address to an event or a Selbsthilfegruppe

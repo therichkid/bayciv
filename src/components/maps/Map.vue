@@ -95,48 +95,20 @@
           ></l-tile-layer>
           <l-geo-json :geojson="bavaria" :options="geojsonOptions" />
           <l-marker-cluster :options="{ maxClusterRadius: 15 }">
-            <l-marker v-for="group in filteredGroups" :key="group.id" :lat-lng="group.latlng">
-              <l-icon :icon-size="[40, 62]" :icon-anchor="[20, 62]" :popup-anchor="[0, -40]">
-                <div :class="{ bounce: group === activeGroup }">
-                  <img
-                    src="../../assets/map/beratungsstelle.png"
-                    :alt="group.type"
-                    height="62px"
-                    width="40px"
-                    v-if="group.type === 'Beratungsstelle'"
-                  />
-                  <img
-                    src="../../assets/map/klinik.png"
-                    :alt="group.type"
-                    height="62px"
-                    width="40px"
-                    v-else-if="group.type === 'Klinik'"
-                  />
-                  <img
-                    src="../../assets/map/reha.png"
-                    :alt="group.type"
-                    height="62px"
-                    width="40px"
-                    v-else-if="group.type === 'Reha'"
-                  />
-                  <img
-                    src="../../assets/map/shg_online.png"
-                    :alt="group.type"
-                    height="62px"
-                    width="40px"
-                    v-else-if="group.onlineGroup"
-                  />
-                  <img
-                    src="../../assets/map/shg.png"
-                    :alt="group.type"
-                    height="62px"
-                    width="40px"
-                    v-else
-                  />
-                </div>
-              </l-icon>
-              <MapPopup :group="group" :type="type" />
-            </l-marker>
+            <div v-for="group in filteredGroups" :key="group.id">
+              <l-marker :lat-lng="group.addressLatLng">
+                <MapIcon :group="group" :isActive="activeGroupId === group.id" />
+                <MapPopup :group="group" :type="type" />
+              </l-marker>
+              <l-marker
+                v-for="(additionalAddressLatLng, i) in group.additionalAddressLatLngs"
+                :key="group.id + i"
+                :lat-lng="additionalAddressLatLng"
+              >
+                <MapIcon :group="group" :isActive="activeGroupId === group.id" />
+                <MapPopup :group="group" :address="group.additionalAddresses[i]" :type="type" />
+              </l-marker>
+            </div>
           </l-marker-cluster>
           <div v-if="allowGeolocation">
             <l-circle
@@ -167,6 +139,7 @@
 
 <script>
 import bavaria from "@/assets/map/bavaria.geo.json";
+import MapIcon from "@/components/partials/MapIcon";
 import MapPopup from "@/components/partials/MapPopup";
 import L from "leaflet";
 import { LCircle, LGeoJson, LIcon, LMap, LMarker, LPopup, LTileLayer } from "vue2-leaflet";
@@ -174,6 +147,7 @@ import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 
 export default {
   components: {
+    MapIcon,
     MapPopup,
     LMap,
     LTileLayer,
@@ -226,8 +200,8 @@ export default {
       selectedRegion: null,
       targetAudiences: ["Erwachsene", "Kinder"],
       selectedTargetAudience: null,
-      activeGroup: null,
-      timeout: null
+      activeGroupId: null,
+      activeGroupTimeout: null
     };
   },
 
@@ -313,27 +287,24 @@ export default {
     addDistanceToGroups() {
       for (const group of this.groups) {
         const loc = this.currentLocation.center;
-        group.distance = parseInt(L.latLng(loc[0], loc[1]).distanceTo(group.latlng) / 1000);
+        group.distance = parseInt(L.latLng(loc[0], loc[1]).distanceTo(group.addressLatLng) / 1000);
       }
     },
     setGroupToActive(group) {
-      if (this.timeout) {
-        clearTimeout(this.timeout);
+      if (this.activeGroupTimeout) {
+        clearTimeout(this.activeGroupTimeout);
       }
-      this.activeGroup = group;
-      this.center = group.latlng;
+      this.activeGroupId = group.id;
+      this.zoom = 11;
       setTimeout(() => {
-        this.zoom = 12;
-      }, 1000);
+        this.center = group.addressLatLng;
+      }, 750);
       // Set the activeGroup to null after the bouncing animation
       // Else the icon would bounce again after each filter change
-      this.timeout = setTimeout(() => {
-        this.activeGroup = null;
+      this.activeGroupTimeout = setTimeout(() => {
+        this.activeGroupId = null;
       }, 750 * 5);
     }
-    // updateZoom(event) {
-    //   this.$emit("update:zoom", event);
-    // }
   },
 
   mounted() {
@@ -357,22 +328,5 @@ export default {
 }
 .vue2leaflet-map {
   z-index: 0;
-}
-@keyframes bounce {
-  0% {
-    transform: scale(1, 1) translate(0px, 0px);
-  }
-  30% {
-    transform: scale(1, 0.8) translate(0px, 10px);
-  }
-  75% {
-    transform: scale(1, 1.1) translate(0px, -25px);
-  }
-  100% {
-    transform: scale(1, 1) translate(0px, 0px);
-  }
-}
-.bounce {
-  animation: bounce 0.75s 5;
 }
 </style>
