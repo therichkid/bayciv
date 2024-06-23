@@ -88,7 +88,7 @@
     <!-- Map -->
     <v-col cols="12" sm="7" md="8">
       <div id="map">
-        <l-map :zoom.sync="zoom" :center="center">
+        <l-map :zoom.sync="zoom" :center.sync="center">
           <l-tile-layer
             :url="tileProvider.url"
             :attribution="tileProvider.attribution"
@@ -298,7 +298,7 @@ export default {
       this.center = group.addressLatLng;
       setTimeout(() => {
         this.zoom = 11;
-      }, 750);
+      }, 750 * 2);
       // Set the activeGroup to null after the bouncing animation
       // Else the icon would bounce again after each filter change
       this.activeGroupTimeout = setTimeout(() => {
