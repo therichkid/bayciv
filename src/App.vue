@@ -192,10 +192,15 @@ table.tablepress tr:last-child > td:last-child {
   footer,
   body.no-img img,
   body.no-img iframe,
+  body.no-img .v-image,
   .v-btn--fab,
   .v-menu__content,
   .v-tooltip__content {
     display: none !important;
+  }
+  body:not(.no-img) .v-image {
+    visibility: visible;
+    print-color-adjust: exact;
   }
   main {
     padding: 0 !important;
