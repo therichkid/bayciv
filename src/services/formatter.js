@@ -41,7 +41,7 @@ export default {
         endTime: orig.acf.zeit_bis,
         featured: !!orig.acf.hauptevent,
         registration: !!orig.acf.anmeldung,
-        address: addAddress(orig),
+        address: addAddress(orig.acf),
         groups: addCategories(orig, true),
         featuredImage: orig.acf.hauptevent ? addFeaturedImage(orig) : null
       };
