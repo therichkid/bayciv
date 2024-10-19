@@ -1,3 +1,5 @@
+import crypt from "./crypt";
+
 export default {
   // * Posts
   formatPosts: input => {
@@ -132,7 +134,10 @@ export default {
         additionalAddresses: (orig.acf.weitere_adressen || []).map(addAddress),
         additionalAddressLatLngs: (orig.acf.weitere_adressen || []).map(addAddressLatLng),
         mailingAddress: addMailingAddress(orig),
-        email: orig.acf.email,
+        email:
+          orig.acf.email && !["@", "(at)", "[at]"].find(str => orig.acf.email.includes(str))
+            ? crypt.decrypt(orig.acf.email)
+            : orig.acf.email,
         phone: orig.acf.telefon,
         mobile: orig.acf.mobil,
         fax: orig.acf.fax,

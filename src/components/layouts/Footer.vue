@@ -88,6 +88,8 @@
 </template>
 
 <script>
+import crypt from "../../services/crypt";
+
 const Newsletter = () => import(/* webpackChunkName: "form" */ "@/components/partials/Newsletter");
 
 export default {
@@ -114,7 +116,7 @@ export default {
         },
         {
           icon: "mdi-email",
-          text: "info(at)bayciv.de"
+          text: crypt.decrypt("kG5wlirrnMvsIHvtkHIeJQE=")
         },
         {
           icon: "mdi-facebook",
