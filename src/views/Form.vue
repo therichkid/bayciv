@@ -33,7 +33,12 @@
       <v-card-text>
         <v-form v-model="valid">
           <div v-for="form in forms" :key="form.id">
-            <div v-if="form.precedingText" v-html="form.precedingText" class="mt-3"></div>
+            <div
+              v-if="form.precedingText"
+              v-html="form.precedingText"
+              class="mt-3"
+              :style="{ fontSize: fontSize + 'px' }"
+            ></div>
             <!-- Text field -->
             <v-text-field
               v-if="textFieldTypes.indexOf(form.type) > -1"
@@ -231,7 +236,7 @@ export default {
           for (let label of splitLabel) {
             if (label) {
               // Remove multiple spaces with a single space
-              label = label.replace(/\s\s+/g, " ");
+              // label = label.replace(/\s\s+/g, " ");
               if (label.includes("<label>")) {
                 label = label.replace(/<label>/g, "");
                 obj.label = label;
@@ -368,6 +373,9 @@ export default {
       } else {
         return false;
       }
+    },
+    fontSize() {
+      return this.$store.state.fontSize;
     }
   },
 
