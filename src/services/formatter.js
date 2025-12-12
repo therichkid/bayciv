@@ -48,6 +48,10 @@ export default {
         featuredImage: orig.acf.hauptevent ? addFeaturedImage(orig) : null
       };
       // Format the date
+      event.startDate = event.startDate.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
+      if (event.endDate) {
+        event.endDate = event.endDate.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
+      }
       [event.dateFormatted, event.dayFormatted, event.monthFormatted] = formatDate(
         "event",
         event.startDate,
