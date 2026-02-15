@@ -10,7 +10,7 @@
         :key="i"
         :src="image.url"
         :lazy-src="image.lazyUrl"
-        :alt="image.title"
+        :alt="image.alt"
         contain
       >
         <v-container class="fill-height align-end">

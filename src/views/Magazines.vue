@@ -19,7 +19,7 @@
           <v-spacer></v-spacer>
           <v-img
             :src="magazine.featuredImage.source"
-            :alt="magazine.featuredImage.title"
+            :alt="magazine.featuredImage.alt"
             maxHeight="400"
             contain
           >

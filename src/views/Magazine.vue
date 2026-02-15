@@ -13,7 +13,7 @@
       <v-col cols="12" md="3">
         <v-img
           :src="magazine.featuredImage?.source"
-          :alt="magazine.featuredImage?.title"
+          :alt="magazine.featuredImage?.alt"
           maxHeight="400"
           contain
         >

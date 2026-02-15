@@ -316,6 +316,7 @@ const addFeaturedImage = input => {
   ) {
     const featuredImage = input._embedded["wp:featuredmedia"][0];
     obj.title = featuredImage.title.rendered;
+    obj.alt = featuredImage.alt_text || featuredImage.title.rendered;
     // Pick medium large size if it exists
     obj.source =
       featuredImage.media_details.sizes?.medium_large?.source_url || featuredImage.source_url;
@@ -323,6 +324,7 @@ const addFeaturedImage = input => {
     // Set a placeholder
     // https://via.placeholder.com/600x400/f07f00/3b2e88?text=BayCIV+e.V.
     obj.title = "Placeholder Image";
+    obj.alt = "Placeholder Image";
     obj.source = require("../assets/placeholder.png");
   }
   return obj;
@@ -332,13 +334,23 @@ const addFeaturedImage = input => {
 const addImages = input => {
   return (input.acf.bilder || [])
     .filter(({ mime_type }) => mime_type !== "application/pdf")
-    .map(({ title, caption, url, sizes }) => ({
-      title,
-      caption,
-      url: sizes?.["medium-large"] || url,
-      lazyUrl: sizes?.medium || url,
-      previewUrl: sizes?.thumbnail
-    }));
+    .map(id => {
+      const image = input._embedded["acf:attachment"]?.find(attachment => attachment.id === id);
+
+      if (!image) {
+        return null;
+      }
+
+      return {
+        title: image.title.rendered,
+        caption: image.caption.rendered,
+        alt: image.alt_text || image.title.rendered,
+        url: image.media_details.sizes?.medium_large?.source_url || image.source_url,
+        lazyUrl: image.media_details.sizes?.medium?.source_url || image.source_url,
+        previewUrl: image.media_details.sizes?.thumbnail?.source_url
+      };
+    })
+    .filter(image => image !== null);
 };
 
 // Add categories to an event, article or group

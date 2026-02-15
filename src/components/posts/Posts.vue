@@ -14,7 +14,7 @@
           <v-img
             :src="article.featuredImage.source"
             maxHeight="300px"
-            :alt="article.featuredImage.title"
+            :alt="article.featuredImage.alt"
           >
             <v-chip-group column class="mt-1 ml-3" v-if="article.categories.length">
               <v-chip

@@ -5,7 +5,7 @@
         <v-img
           maxHeight="250px"
           :src="event.featuredImage.source"
-          :alt="event.featuredImage.title"
+          :alt="event.featuredImage.alt"
         ></v-img>
         <v-card-title>
           <h3 :class="$vuetify.breakpoint.mdAndUp ? 'headline' : 'title'">{{ event.title }}</h3>

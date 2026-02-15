@@ -9,7 +9,7 @@
         ><v-img
           v-if="post.featuredImage && post.featuredImage.title !== 'Placeholder Image'"
           :src="post.featuredImage.source"
-          :alt="post.featuredImage.title"
+          :alt="post.featuredImage.alt"
           maxHeight="400px"
         ></v-img
       ></v-col>
