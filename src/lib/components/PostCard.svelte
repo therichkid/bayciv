@@ -28,8 +28,15 @@
 				{@html post.title.rendered}
 			</Card.Title>
 
-			<Card.Description class="line-clamp-5 text-sm text-muted-foreground">
-				{@html post.excerpt.rendered}
+			<Card.Description class="text-muted-foreground">
+				<p class="mb-2 text-xs">
+					{new Date(post.date).toLocaleDateString('de-DE')}
+					· von {post.acf.abweichender_autor || post._embedded.author[0].name}
+				</p>
+
+				<p class="line-clamp-5 text-sm">
+					{@html post.excerpt.rendered}
+				</p>
 			</Card.Description>
 		</Card.Content>
 

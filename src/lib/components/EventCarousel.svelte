@@ -15,7 +15,7 @@
 </script>
 
 <div class="my-6 flex justify-center">
-	{#if eventState.isLoading}
+	{#if eventState.isLoading && events.length === 0}
 		<p>Lade Events...</p>
 	{:else if events.length > 0}
 		<Carousel.Root

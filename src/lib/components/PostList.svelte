@@ -13,7 +13,7 @@
 </script>
 
 <div class="my-6 w-full">
-	{#if postState.isLoading}
+	{#if postState.isLoading && posts?.length === 0}
 		<p>Lade Neuigkeiten...</p>
 	{:else if posts?.length}
 		<div class="grid auto-rows-max grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
