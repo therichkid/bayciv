@@ -19,7 +19,8 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 11
+          runtime: node@22
           cache: true
 
       - name: Install dependencies
