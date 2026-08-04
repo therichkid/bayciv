@@ -97,7 +97,7 @@
 	let expandedEventId = $state<string | undefined>(undefined);
 </script>
 
-<div class="flex w-full flex-col gap-6 lg:flex-row">
+<div class="flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start">
 	<div class="w-fit shrink-0 grow lg:grow-0">
 		<Calendar
 			type="single"
@@ -123,7 +123,7 @@
 		</Calendar>
 	</div>
 
-	<aside class="grow rounded-lg border shadow-sm">
+	<aside class="w-full grow rounded-lg border shadow-sm">
 		<div class="border-b px-4 py-5">
 			<h1 class="mb-5 text-lg font-semibold">Veranstaltungen</h1>
 			<p class="text-xs text-muted-foreground">

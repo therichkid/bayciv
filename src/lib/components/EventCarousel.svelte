@@ -14,7 +14,7 @@
 	});
 </script>
 
-<div class="my-6 w-full">
+<div class="my-6 flex justify-center">
 	{#if eventState.isLoading}
 		<p>Lade Events...</p>
 	{:else if events.length > 0}
@@ -22,12 +22,12 @@
 			opts={{
 				align: 'start',
 			}}
-			class="max-w-sm  md:max-w-2xl lg:max-w-4xl xl:max-w-6xl"
+			class="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl"
 		>
 			<Carousel.Content>
 				{#each events as event (event.id)}
 					<Carousel.Item class="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-						<div class="p-2">
+						<div class="h-full p-1.5">
 							<EventCard {event} />
 						</div>
 					</Carousel.Item>

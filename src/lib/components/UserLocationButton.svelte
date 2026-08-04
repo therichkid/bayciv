@@ -56,7 +56,7 @@
 
 {#if 'geolocation' in navigator}
 	<div class="flex flex-col items-end">
-		<Button variant="outline" class="py-2" onclick={locateUser} disabled={locating}>
+		<Button variant="outline" class="cursor-pointer py-2" onclick={locateUser} disabled={locating}>
 			<Target />
 			<span class="ml-2">In meiner Nähe</span>
 		</Button>
