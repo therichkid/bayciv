@@ -12,6 +12,7 @@
 	}
 
 	let { event }: Props = $props();
+	let groupNames = $derived(getGroupNames(event._embedded?.['wp:term']));
 </script>
 
 <a href={resolve(`/events/${event.slug}`)}>
@@ -40,7 +41,6 @@
 		</Card.Header>
 
 		<Card.Content class="text-sm text-muted-foreground">
-			{@const groupNames = getGroupNames(event._embedded?.['wp:term'])}
 			{#if groupNames.length > 0}
 				<p class="my-3 flex items-center gap-2">
 					<Users size={22} class="shrink-0" />
