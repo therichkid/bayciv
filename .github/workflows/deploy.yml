@@ -3,7 +3,7 @@ name: Deploy App
 on:
   push:
     branches:
-      - master
+      - legacy
   pull_request:
     types:
       - closed
