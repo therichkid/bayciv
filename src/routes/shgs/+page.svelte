@@ -100,7 +100,7 @@
 		</div>
 
 		<div
-			class="grid grow grid-cols-1 gap-6 overflow-x-hidden p-2 lg:overflow-y-auto xl:grid-cols-2 min-[128rem]:grid-cols-3"
+			class="grid grow auto-rows-max grid-cols-1 gap-6 overflow-x-hidden overflow-y-auto p-2 xl:grid-cols-2 min-[128rem]:grid-cols-3"
 		>
 			{#each filteredShgs as shg (shg.id)}
 				<ShgCard
