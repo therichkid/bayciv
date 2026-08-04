@@ -26,8 +26,10 @@
 		>
 			<Carousel.Content>
 				{#each events as event (event.id)}
-					<Carousel.Item class="pl-6 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-						<EventCard {event} />
+					<Carousel.Item class="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+						<div class="p-2">
+							<EventCard {event} />
+						</div>
 					</Carousel.Item>
 				{/each}
 			</Carousel.Content>

@@ -7,7 +7,7 @@
 </script>
 
 {#snippet MainNavigationItem({ title, icon }: NavigationItem)}
-	<span class="flex items-center gap-2">
+	<span class="flex cursor-pointer items-center gap-2">
 		{#if icon}
 			<svelte:component this={icon} size={18} />
 		{/if}
