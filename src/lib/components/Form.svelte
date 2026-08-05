@@ -17,6 +17,7 @@
 
 	let { formId, pageId }: { formId: number; pageId?: number } = $props();
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let formData = $state<Record<string, any>>({});
 
 	$effect(() => {
@@ -42,6 +43,7 @@
 				}
 				return data;
 			},
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			{} as Record<string, any>,
 		);
 	};
@@ -260,7 +262,7 @@
 		{/each}
 
 		{#if !hasSubmitButton}
-			<Button type="submit">Absenden</Button>
+			<Button type="submit" size="lg" class="cursor-pointer">Absenden</Button>
 		{/if}
 	</form>
 {/if}

@@ -7,17 +7,29 @@
 		handler: ((event: MouseEvent) => void) | null;
 	}
 
-	let { html }: { html: HTMLDivElement | null } = $props();
+	type LightboxContainer = HTMLElement | null;
+	type LightboxContainers = LightboxContainer | LightboxContainer[];
+
+	let { html }: { html: LightboxContainers } = $props();
 
 	let images: LightboxImage[] = [];
 	let zoomedImage: LightboxImage | null = $state(null);
 
 	const setupImageHandlers = () => {
-		if (!html) {
+		const containers = (Array.isArray(html) ? html : [html]).filter(
+			(container): container is HTMLElement => container instanceof HTMLElement,
+		);
+
+		if (!containers.length) {
+			images = [];
 			return;
 		}
 
-		images = Array.from(html.querySelectorAll('img')).map((elem, index) => ({ elem, index, handler: null }));
+		const uniqueImages = Array.from(
+			new Set(containers.flatMap((container) => Array.from(container.querySelectorAll('img')))),
+		);
+
+		images = uniqueImages.map((elem, index) => ({ elem, index, handler: null }));
 
 		images.forEach((image) => {
 			if (image.handler) {

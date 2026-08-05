@@ -43,7 +43,7 @@
 
 			<Card.Description class="text-muted-foreground">
 				<p class="mb-2 text-xs">
-					{new Date(post.date).toLocaleDateString('de-DE')}
+					{new Date(post.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric' })}
 					· von {post.acf.abweichender_autor || post._embedded.author[0].name}
 				</p>
 
