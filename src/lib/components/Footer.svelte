@@ -17,11 +17,13 @@
 				{#each footerNavigation as item, i (i)}
 					<NavigationMenu.Item>
 						<NavigationMenu.Link>
-							<a href={resolve(item.href!)} class={navigationMenuTriggerStyle()}>
-								<span class="cursor-pointer">
-									{item.title}
-								</span>
-							</a>
+							{#snippet child()}
+								<a href={resolve(item.href!)} class={navigationMenuTriggerStyle()}>
+									<span class="cursor-pointer">
+										{item.title}
+									</span>
+								</a>
+							{/snippet}
 						</NavigationMenu.Link>
 					</NavigationMenu.Item>
 				{/each}
