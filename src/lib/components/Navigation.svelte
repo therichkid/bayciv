@@ -3,7 +3,7 @@
 	import BayCivIcon from '$lib/components/images/BayCivIcon.svelte';
 	import * as NavigationMenu from '$lib/components/ui/navigation-menu';
 	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
-	import { navigation, type NavigationItem } from '$lib/navigation.js';
+	import { mainNavigation, type NavigationItem } from '$lib/navigation';
 </script>
 
 {#snippet MainNavigationItem({ title, icon }: NavigationItem)}
@@ -47,7 +47,7 @@
 			</NavigationMenu.Link>
 		</NavigationMenu.Item>
 
-		{#each navigation as item, i (i)}
+		{#each mainNavigation as item, i (i)}
 			<NavigationMenu.Item>
 				{#if item.children}
 					<NavigationMenu.Trigger>

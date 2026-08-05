@@ -11,7 +11,7 @@ export interface NavigationItem {
 
 export type Navigation = NavigationItem[];
 
-export const navigation: Navigation = [
+export const mainNavigation: Navigation = [
 	{
 		title: 'Selbsthilfegruppen',
 		icon: Users,
@@ -120,5 +120,20 @@ export const navigation: Navigation = [
 				description: 'Werde Mitglied im Verband.',
 			},
 		],
+	},
+];
+
+export const footerNavigation: Navigation = [
+	{
+		title: 'Datenschutz',
+		href: '/datenschutz',
+	},
+	{
+		title: 'Impressum',
+		href: '/impressum',
+	},
+	{
+		title: 'Datenkontrolle',
+		href: '/datenkontrolle',
 	},
 ];
