@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import BayCivIcon from '$lib/components/images/BayCivIcon.svelte';
 	import * as NavigationMenu from '$lib/components/ui/navigation-menu';
 	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
@@ -15,17 +16,22 @@
 	</span>
 {/snippet}
 
-{#snippet ListItem({ title, href, description }: NavigationItem)}
+{#snippet ListItem(subItem: NavigationItem)}
+	{@const href = resolve(subItem.href!)}
+	{@const isActive = page.url.pathname === href}
+
 	<li>
 		<NavigationMenu.Link>
 			{#snippet child()}
 				<a
-					href={resolve(href!)}
-					class="block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+					{href}
+					class="block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground {isActive
+						? 'bg-accent text-accent-foreground'
+						: ''}"
 				>
-					<div class="text-sm leading-none font-medium">{title}</div>
+					<div class="text-sm leading-none font-medium">{subItem.title}</div>
 					<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-						{description}
+						{subItem.description}
 					</p>
 				</a>
 			{/snippet}
@@ -70,9 +76,16 @@
 						</ul>
 					</NavigationMenu.Content>
 				{:else if item.href}
+					{@const href = resolve(item.href!)}
+					{@const isActive = page.url.pathname === href}
+
 					<NavigationMenu.Link>
 						{#snippet child()}
-							<a href={resolve(item.href!)} class={navigationMenuTriggerStyle()}>
+							<a
+								{href}
+								aria-current={isActive ? 'page' : undefined}
+								class={navigationMenuTriggerStyle({ class: isActive ? 'bg-accent text-accent-foreground' : '' })}
+							>
 								{@render MainNavigationItem({
 									title: item.title,
 									icon: item.icon,
