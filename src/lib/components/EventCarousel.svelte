@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import { SvelteDate } from 'svelte/reactivity';
 	import EventCard from './EventCard.svelte';
+	import EventCardSkeleton from './skeletons/EventCardSkeleton.svelte';
 
 	let events = $state<WP_REST_API_Event[]>([]);
 
@@ -15,16 +16,22 @@
 </script>
 
 <div class="my-6 flex justify-center">
-	{#if eventState.isLoading && events.length === 0}
-		<p>Lade Events...</p>
-	{:else if events.length > 0}
-		<Carousel.Root
-			opts={{
-				align: 'start',
-			}}
-			class="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl"
-		>
-			<Carousel.Content>
+	<Carousel.Root
+		opts={{
+			align: 'start',
+		}}
+		class="max-w-sm md:max-w-2xl lg:max-w-4xl xl:max-w-6xl"
+	>
+		<Carousel.Content>
+			{#if eventState.isLoading && events.length === 0}
+				{#each Array(4) as _, i (i)}
+					<Carousel.Item class="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+						<div class="h-full p-1.5">
+							<EventCardSkeleton />
+						</div>
+					</Carousel.Item>
+				{/each}
+			{:else if events.length > 0}
 				{#each events as event (event.id)}
 					<Carousel.Item class="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
 						<div class="h-full p-1.5">
@@ -32,9 +39,9 @@
 						</div>
 					</Carousel.Item>
 				{/each}
-			</Carousel.Content>
-			<Carousel.Previous class="cursor-pointer" />
-			<Carousel.Next class="cursor-pointer" />
-		</Carousel.Root>
-	{/if}
+			{/if}
+		</Carousel.Content>
+		<Carousel.Previous class="cursor-pointer" />
+		<Carousel.Next class="cursor-pointer" />
+	</Carousel.Root>
 </div>

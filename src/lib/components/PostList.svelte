@@ -3,6 +3,7 @@
 	import { getPosts, postState } from '$lib/post.svelte';
 	import { onMount } from 'svelte';
 	import PostCard from './PostCard.svelte';
+	import PostCardSkeleton from './skeletons/PostCardSkeleton.svelte';
 
 	let posts = $state<Custom_WP_REST_API_Posts>([]);
 
@@ -13,15 +14,17 @@
 </script>
 
 <div class="my-6 w-full">
-	{#if postState.isLoading && posts?.length === 0}
-		<p>Lade Neuigkeiten...</p>
-	{:else if posts?.length}
-		<div class="grid auto-rows-max grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+	<div class="grid auto-rows-max grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+		{#if postState.isLoading && posts?.length === 0}
+			{#each Array(8) as _, i (i)}
+				<PostCardSkeleton />
+			{/each}
+		{:else if posts?.length}
 			{#each posts as post, i (post.id)}
 				{#if i < 8}
 					<PostCard {post} />
 				{/if}
 			{/each}
-		</div>
-	{/if}
+		{/if}
+	</div>
 </div>
