@@ -59,19 +59,27 @@
 		<NavigationMenu.Root>
 			<NavigationMenu.List>
 				{#each footerNavigation as item, i (i)}
-					{@const href = resolve(item.href!)}
-					{@const isActive = page.url.pathname === href}
+					{@const isInternalLink = item.href?.startsWith('/') ?? false}
+					{@const href = isInternalLink ? resolve(item.href as `/${string}`) : item.href}
+					{@const isActive = href && page.url.pathname.startsWith(href)}
 
 					<NavigationMenu.Item>
 						<NavigationMenu.Link active={isActive}>
 							{#snippet child()}
 								<a
 									{href}
+									target={!isInternalLink ? '_blank' : undefined}
+									rel={!isInternalLink ? 'noopener noreferrer' : undefined}
 									aria-current={isActive ? 'page' : undefined}
 									class={navigationMenuTriggerStyle({ class: isActive ? 'bg-accent text-accent-foreground' : '' })}
 								>
-									<span class="cursor-pointer">
-										{item.title}
+									<span class="flex cursor-pointer items-center gap-2">
+										{#if item.icon}
+											<svelte:component this={item.icon} size={18} />
+										{/if}
+										{#if item.title}
+											{item.title}
+										{/if}
 									</span>
 								</a>
 							{/snippet}

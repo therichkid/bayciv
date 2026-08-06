@@ -1,9 +1,9 @@
-import { Ear, Info, Newspaper, UserPlus, Users } from '@lucide/svelte';
+import { Ear, Info, Newspaper, UserPlus, Users, UserShield } from '@lucide/svelte';
 import type { Component } from 'svelte';
 
 export interface NavigationItem {
 	title: string;
-	href?: `/${string}`;
+	href?: `/${string}` | `https://${string}`;
 	description?: string;
 	icon?: Component;
 	children?: NavigationItem[];
@@ -135,5 +135,10 @@ export const footerNavigation: Navigation = [
 	{
 		title: 'Datenkontrolle',
 		href: '/datenkontrolle',
+	},
+	{
+		title: '',
+		icon: UserShield,
+		href: 'https://admin.bayciv.de/wp-admin/',
 	},
 ];

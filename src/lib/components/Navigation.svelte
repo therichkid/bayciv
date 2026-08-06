@@ -12,19 +12,25 @@
 		{#if icon}
 			<svelte:component this={icon} size={18} />
 		{/if}
-		{title}
+		{#if title}
+			{title}
+		{/if}
 	</span>
 {/snippet}
 
 {#snippet ListItem(subItem: NavigationItem)}
-	{@const href = resolve(subItem.href!)}
-	{@const isActive = page.url.pathname === href}
+	{@const isInternalLink = subItem.href?.startsWith('/') ?? false}
+	{@const href = isInternalLink ? resolve(subItem.href as `/${string}`) : subItem.href}
+	{@const isActive = href && page.url.pathname.startsWith(href)}
 
 	<li>
 		<NavigationMenu.Link>
 			{#snippet child()}
 				<a
 					{href}
+					target={!isInternalLink ? '_blank' : undefined}
+					rel={!isInternalLink ? 'noopener noreferrer' : undefined}
+					aria-current={isActive ? 'page' : undefined}
 					class="block space-y-1 rounded-md p-3 leading-none no-underline transition-colors outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground {isActive
 						? 'bg-accent text-accent-foreground'
 						: ''}"
@@ -76,13 +82,16 @@
 						</ul>
 					</NavigationMenu.Content>
 				{:else if item.href}
-					{@const href = resolve(item.href!)}
-					{@const isActive = page.url.pathname === href}
+					{@const isInternalLink = item.href?.startsWith('/') ?? false}
+					{@const href = isInternalLink ? resolve(item.href as `/${string}`) : item.href}
+					{@const isActive = href && page.url.pathname.startsWith(href)}
 
 					<NavigationMenu.Link>
 						{#snippet child()}
 							<a
 								{href}
+								target={!isInternalLink ? '_blank' : undefined}
+								rel={!isInternalLink ? 'noopener noreferrer' : undefined}
 								aria-current={isActive ? 'page' : undefined}
 								class={navigationMenuTriggerStyle({ class: isActive ? 'bg-accent text-accent-foreground' : '' })}
 							>
