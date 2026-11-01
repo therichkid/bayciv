@@ -42,7 +42,7 @@
         <v-list-item
           v-for="event in items.events"
           :key="event.id"
-          :to="`/events/${event.acf.event_datum}/${event.slug}`"
+          :to="`/events/${event.acf.date_from}/${event.slug}`"
         >
           <v-list-item-content>
             <v-list-item-title v-html="event.title.rendered"></v-list-item-title>
@@ -138,7 +138,7 @@ export default {
       this.items.events = events;
     },
     formatDate(item, type) {
-      const date = type === "post" ? item.date : item.acf.event_datum;
+      const date = type === "post" ? item.date : item.acf.date_from;
       return date.slice(8, 10) + "." + date.slice(5, 7) + "." + date.slice(2, 4);
     }
   }

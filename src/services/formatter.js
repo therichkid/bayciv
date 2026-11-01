@@ -12,7 +12,7 @@ export default {
         id: orig.id,
         slug: orig.slug,
         title: decodeHtml(orig.title.rendered),
-        author: orig.acf.abweichender_autor || orig._embedded.author[0].name,
+        author: orig.acf.author_override || orig._embedded.author[0].name,
         excerpt: orig.excerpt.rendered,
         content: parseContent(orig.content.rendered),
         dateOrig: orig.date.slice(0, 10),
@@ -36,16 +36,15 @@ export default {
         title: decodeHtml(orig.title.rendered),
         excerpt: orig.excerpt.rendered,
         content: parseContent(orig.content.rendered),
-        startDate: orig.acf.event_datum,
-        endDate:
-          orig.acf.event_datum !== orig.acf.event_datum_ende ? orig.acf.event_datum_ende : null,
-        startTime: orig.acf.zeit_von,
-        endTime: orig.acf.zeit_bis,
-        featured: !!orig.acf.hauptevent,
-        registration: !!orig.acf.anmeldung,
+        startDate: orig.acf.date_from,
+        endDate: orig.acf.date_from !== orig.acf.date_to ? orig.acf.date_to : null,
+        startTime: orig.acf.time_from,
+        endTime: orig.acf.time_to,
+        featured: !!orig.acf.is_main_event,
+        registration: !!orig.acf.needs_registration,
         address: addAddress(orig.acf),
         groups: addCategories(orig, true),
-        featuredImage: orig.acf.hauptevent ? addFeaturedImage(orig) : null
+        featuredImage: orig.acf.is_main_event ? addFeaturedImage(orig) : null
       };
       // Format the date
       event.startDate = event.startDate.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
@@ -74,8 +73,8 @@ export default {
       }
       // Add form data
       Object.assign(event, {
-        formId: parseInt(orig.acf.formular_id, 10),
-        formData: orig.acf.formular_code
+        formId: parseInt(orig.acf.form_id, 10),
+        formData: orig.acf.form_code
       });
       events.push(event);
     }
@@ -96,7 +95,7 @@ export default {
       id: orig.id,
       slug: orig.slug,
       title: decodeHtml(orig.title.rendered),
-      author: orig.acf.abweichender_autor || orig._embedded.author[0].name,
+      author: orig.acf.author_override || orig._embedded.author[0].name,
       content: parseContent(orig.content.rendered),
       dateOrig: orig.date.slice(0, 10),
       date: formatDate(null, orig.date),
@@ -104,8 +103,8 @@ export default {
     };
     // Add form data
     Object.assign(page, {
-      formId: parseInt(orig.acf.formular_id, 10),
-      formData: orig.acf.formular_code
+      formId: parseInt(orig.acf.form_id, 10),
+      formData: orig.acf.form_code
     });
     // Add info message specific fields
     if (page.slug === "info-meldung") {
@@ -135,15 +134,15 @@ export default {
         content: orig.content ? parseContent(orig.content.rendered) : null,
         address: addAddress(orig.acf),
         addressLatLng: addAddressLatLng(orig.acf),
-        additionalAddresses: (orig.acf.weitere_adressen || []).map(addAddress),
-        additionalAddressLatLngs: (orig.acf.weitere_adressen || []).map(addAddressLatLng),
+        additionalAddresses: (orig.acf.other_addresses || []).map(addAddress),
+        additionalAddressLatLngs: (orig.acf.other_addresses || []).map(addAddressLatLng),
         mailingAddress: addMailingAddress(orig),
         email:
           orig.acf.email && !["@", "(at)", "[at]"].find(str => orig.acf.email.includes(str))
             ? crypt.decrypt(orig.acf.email)
             : orig.acf.email,
-        phone: orig.acf.telefon,
-        mobile: orig.acf.mobil,
+        phone: orig.acf.phone,
+        mobile: orig.acf.mobile,
         fax: orig.acf.fax,
         homepage: orig.acf.homepage,
         instagram: orig.acf.instagram,
@@ -152,8 +151,8 @@ export default {
         featuredImage: addFeaturedImage(orig),
         type: orig.acf.typ,
         category: addCategories(orig, true)[0],
-        targetAudience: orig.acf.zielgruppe,
-        onlineGroup: orig.acf["online-gruppe"],
+        targetAudience: orig.acf.audience,
+        onlineGroup: orig.acf.meets_online,
         isGroupLike: orig.type !== "shgs"
       };
       groups.push(group);
@@ -269,36 +268,36 @@ const checkDateFormat = (type, ...input) => {
 };
 
 // Add the address to an event or a Selbsthilfegruppe
-const addAddress = ({ adresse, adressname }) => {
+const addAddress = ({ address, address_name }) => {
   let str = "";
-  if (adressname) {
-    str += adressname + (adresse ? ", " : "");
+  if (address_name) {
+    str += address_name + (address ? ", " : "");
   }
-  if (adresse) {
-    if (adresse.address.includes("Deutschland")) {
-      str += adresse.address.split(",").slice(0, -1).join(",");
+  if (address) {
+    if (address.address.includes("Deutschland")) {
+      str += address.address.split(",").slice(0, -1).join(",");
     } else {
-      str += adresse.address;
+      str += address.address;
     }
   }
   return str;
 };
 
-const addAddressLatLng = ({ adresse }) => {
-  return [adresse?.lat ?? 0, adresse?.lng ?? 0];
+const addAddressLatLng = ({ adress }) => {
+  return [adress?.lat ?? 0, adress?.lng ?? 0];
 };
 
 // Add the address to an event or a Selbsthilfegruppe
 const addMailingAddress = input => {
   let str = "";
-  if (input.acf.postanschriftsname) {
-    str += input.acf.postanschriftsname + (input.acf.postanschrift ? ", " : "");
+  if (input.acf.postal_name) {
+    str += input.acf.postal_name + (input.acf.postal_address ? ", " : "");
   }
-  if (input.acf.postanschrift) {
-    if (input.acf.postanschrift.address.includes("Deutschland")) {
-      str += input.acf.postanschrift.address.split(",").slice(0, -1).join(",");
+  if (input.acf.postal_address) {
+    if (input.acf.postal_address.address.includes("Deutschland")) {
+      str += input.acf.postal_address.address.split(",").slice(0, -1).join(",");
     } else {
-      str += input.acf.postanschrift.address;
+      str += input.acf.postal_address.address;
     }
   }
   return str;
@@ -332,7 +331,7 @@ const addFeaturedImage = input => {
 
 // Add carousel images to an article
 const addImages = input => {
-  return (input.acf.bilder || [])
+  return (input.acf.images || [])
     .filter(({ mime_type }) => mime_type !== "application/pdf")
     .map(id => {
       const image = input._embedded["acf:attachment"]?.find(attachment => attachment.id === id);

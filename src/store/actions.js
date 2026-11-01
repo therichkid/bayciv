@@ -119,7 +119,7 @@ export default {
     };
     if (startDate) {
       Object.assign(params, {
-        "filter[meta_query][0][key]": "event_datum",
+        "filter[meta_query][0][key]": "date_from",
         "filter[meta_query][0][value]": startDate,
         "filter[meta_query][0][compare]": ">="
       });
@@ -128,14 +128,14 @@ export default {
     }
     if (endDate) {
       Object.assign(params, {
-        "filter[meta_query][1][key]": "event_datum",
+        "filter[meta_query][1][key]": "date_from",
         "filter[meta_query][1][value]": endDate,
         "filter[meta_query][1][compare]": "<="
       });
     }
     if (onlyMainEvents) {
       Object.assign(params, {
-        "filter[meta_query][2][key]": "hauptevent",
+        "filter[meta_query][2][key]": "is_main_event",
         "filter[meta_query][2][value]": 1
       });
     }
