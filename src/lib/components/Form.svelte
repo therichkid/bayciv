@@ -262,7 +262,7 @@
 		{/each}
 
 		{#if !hasSubmitButton}
-			<Button type="submit" size="lg" class="cursor-pointer">Absenden</Button>
+			<Button type="submit" size="lg">Absenden</Button>
 		{/if}
 	</form>
 {/if}

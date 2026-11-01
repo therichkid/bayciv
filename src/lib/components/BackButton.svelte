@@ -14,7 +14,7 @@
 	};
 </script>
 
-<Button variant="outline" class="cursor-pointer" onclick={goBack}>
+<Button variant="outline" onclick={goBack}>
 	<ChevronLeft />
 	<span class="ml-2">Zurück</span>
 </Button>

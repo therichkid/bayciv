@@ -41,7 +41,7 @@
 				{/each}
 			{/if}
 		</Carousel.Content>
-		<Carousel.Previous class="cursor-pointer" />
-		<Carousel.Next class="cursor-pointer" />
+		<Carousel.Previous />
+		<Carousel.Next />
 	</Carousel.Root>
 </div>
