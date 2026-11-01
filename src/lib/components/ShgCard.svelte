@@ -83,7 +83,7 @@
 					<p class="my-3 flex items-center gap-2">
 						<MapPin size={22} class="shrink-0" />
 						<span class="line-clamp-4">
-							{getAddressString(shg.acf.adresse, shg.acf.adressname)}
+							{getAddressString(shg.acf.adress, shg.acf.address_name)}
 						</span>
 					</p>
 					{#if shg.acf.email}
@@ -92,10 +92,10 @@
 							<span>{decrypt(shg.acf.email)}</span>
 						</p>
 					{/if}
-					{#if shg.acf.telefon}
+					{#if shg.acf.phone}
 						<p class="my-3 flex items-center gap-2">
 							<Phone size={22} class="shrink-0" />
-							<span>{shg.acf.telefon}</span>
+							<span>{shg.acf.phone}</span>
 						</p>
 					{/if}
 				</div>

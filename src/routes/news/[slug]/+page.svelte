@@ -9,7 +9,7 @@
 	let { data }: PageProps = $props();
 	let post = $derived(data.post);
 	let title = $derived(decodeHtml(post.title.rendered));
-	let author = $derived(post.acf.abweichender_autor || post._embedded.author[0].name);
+	let author = $derived(post.acf.author_override || post._embedded.author[0].name);
 	let groupNames = $derived(getGroupNames(post._embedded?.['wp:term']));
 	let featuredMedia = $derived(post._embedded?.['wp:featuredmedia']?.[0]);
 	let featuredImageSrc = $derived(

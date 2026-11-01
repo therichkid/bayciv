@@ -34,11 +34,11 @@
 		return [...events]
 			.sort(
 				(a, b) =>
-					new Date(`${a.acf.event_datum} ${a.acf.zeit_von}`).getTime() -
-					new Date(`${b.acf.event_datum} ${b.acf.zeit_von}`).getTime(),
+					new Date(`${a.acf.date_from} ${a.acf.time_from}`).getTime() -
+					new Date(`${b.acf.date_from} ${b.acf.time_from}`).getTime(),
 			)
 			.reduce((map, event) => {
-				const date = event.acf.event_datum;
+				const date = event.acf.date_from;
 				if (!map.has(date)) {
 					map.set(date, []);
 				}
@@ -170,9 +170,9 @@
 														{#if groupNames.length > 0}
 															<span>{groupNames.join(', ')} | </span>
 														{/if}
-														<span>{event.acf.zeit_von}</span>
-														{#if event.acf.zeit_bis}
-															<span>- {event.acf.zeit_bis}</span>
+														<span>{event.acf.time_from}</span>
+														{#if event.acf.time_to}
+															<span>- {event.acf.time_to}</span>
 														{/if}
 													</p>
 												</div>

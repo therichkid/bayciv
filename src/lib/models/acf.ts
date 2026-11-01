@@ -1,41 +1,41 @@
 export interface WP_REST_API_Page_ACF {
-	abweichender_autor: string;
-	formular_id?: number;
+	author_override: string;
+	form_id?: number;
 }
 
 export interface WP_REST_API_Post_ACF {
-	abweichender_autor: string;
-	bilder: number[] | '';
+	author_override: string;
+	images: number[] | '';
 }
 
 export interface WP_REST_API_SHG_ACF {
-	adressname: string;
-	adresse: ACF_Address | false;
+	address_name: string;
+	adress: ACF_Address | false;
 	email: string;
 	instagram: string;
 	facebook: string;
-	telefon: string;
-	mobil: string;
+	phone: string;
+	mobile: string;
 	fax: string;
 	homepage: string;
 	region: string;
-	zielgruppe: 'Erwachsene' | 'Kinder';
-	'online-gruppe': boolean;
-	weitere_adressen: null;
-	postanschriftsname: string;
-	postanschrift: ACF_Address | null;
+	audience: 'Erwachsene' | 'Kinder';
+	meets_online: boolean;
+	other_addresses: null;
+	postal_name: string;
+	postal_address: ACF_Address | null;
 }
 
 export interface WP_REST_API_Event_ACF {
-	event_datum: string;
-	event_datum_ende: string;
-	zeit_von: string;
-	zeit_bis: string;
-	adressname: string;
-	adresse: ACF_Address | false;
-	hauptevent: boolean;
-	anmeldung: boolean;
-	formular_id?: number;
+	date_from: string;
+	date_to: string;
+	time_from: string;
+	time_to: string;
+	address_name: string;
+	address: ACF_Address | false;
+	is_main_event: boolean;
+	needs_registration: boolean;
+	form_id?: number;
 }
 
 export interface ACF_Address {

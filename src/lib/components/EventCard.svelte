@@ -20,13 +20,13 @@
 		<div class="relative h-40 w-full overflow-hidden rounded-t-lg">
 			<div class="pointer-events-none absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent"></div>
 			<div class="absolute top-5 left-5 z-10">
-				<p class="text-5xl font-bold tracking-tight text-secondary">{new Date(event.acf.event_datum).getDate()}.</p>
+				<p class="text-5xl font-bold tracking-tight text-secondary">{new Date(event.acf.date_from).getDate()}.</p>
 				<p class=" text-2xl font-bold tracking-tight text-secondary">
-					{new Date(event.acf.event_datum).toLocaleString(undefined, { month: 'short' })}
+					{new Date(event.acf.date_from).toLocaleString(undefined, { month: 'short' })}
 				</p>
-				{#if new Date(event.acf.event_datum).getFullYear() !== new Date().getFullYear()}
+				{#if new Date(event.acf.date_from).getFullYear() !== new Date().getFullYear()}
 					<p class=" text-lg font-semibold tracking-tight text-secondary">
-						{new Date(event.acf.event_datum).getFullYear()}
+						{new Date(event.acf.date_from).getFullYear()}
 					</p>
 				{/if}
 			</div>
@@ -49,15 +49,15 @@
 			{/if}
 			<p class="my-3 flex items-center gap-2">
 				<Clock size={22} class="shrink-0" />
-				<span>{event.acf.zeit_von}</span>
-				{#if event.acf.zeit_bis}
-					<span> - {event.acf.zeit_bis}</span>
+				<span>{event.acf.time_from}</span>
+				{#if event.acf.time_to}
+					<span> - {event.acf.time_to}</span>
 				{/if}
 			</p>
 			<p class="my-3 flex items-center gap-2">
 				<MapPin size={24} class="shrink-0" />
 				<span>
-					{getAddressString(event.acf.adresse, event.acf.adressname)}
+					{getAddressString(event.acf.address, event.acf.address_name)}
 				</span>
 			</p>
 		</Card.Content>

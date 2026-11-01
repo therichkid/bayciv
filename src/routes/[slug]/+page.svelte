@@ -23,9 +23,9 @@
 			{@html page.content.rendered}
 		</div>
 
-		{#if page.acf.formular_id}
+		{#if page.acf.form_id}
 			<div class="mt-12">
-				<Form formId={page.acf.formular_id} pageId={page.id} />
+				<Form formId={page.acf.form_id} pageId={page.id} />
 			</div>
 		{/if}
 		<div></div>
