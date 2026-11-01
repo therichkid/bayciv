@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
 	import * as Accordion from '#lib/components/ui/accordion/index.js';
-	import { Calendar } from '#lib/components/ui/calendar/index.js';
 	import CalendarDay from '#lib/components/ui/calendar/calendar-day.svelte';
+	import { Calendar } from '#lib/components/ui/calendar/index.js';
 	import { getEvents } from '#lib/event.svelte.js';
 	import type { WP_REST_API_Event, WP_REST_API_Events } from '#lib/models/wordpress.js';
 	import { getGroupNames } from '#lib/utils/shg.js';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { CalendarDate, getLocalTimeZone, today } from '@internationalized/date';
+	import { toast } from 'svelte-sonner';
 	import { SvelteDate, SvelteMap } from 'svelte/reactivity';
 	import type { PageProps } from './$types';
 
@@ -16,19 +18,30 @@
 	let events = $state<WP_REST_API_Events>([]);
 
 	$effect(() => {
-		events = [...data.initialEvents];
+		const { initialEvents, totalPages, from, to } = data;
+		let cancelled = false;
+		events = [...initialEvents];
 
-		if (data.totalPages > 1) {
-			loadRemainingPages();
-		}
+		const loadRemainingPages = async () => {
+			try {
+				for (let page = 2; page <= totalPages; page++) {
+					const batch = await getEvents(new SvelteDate(from), new SvelteDate(to), page);
+					if (cancelled) return;
+					events.push(...batch.events);
+				}
+			} catch (error) {
+				if (!cancelled) {
+					console.error('Failed to load remaining events:', error);
+					toast.error('Weitere Veranstaltungen konnten nicht geladen werden.');
+				}
+			}
+		};
+
+		if (totalPages > 1) void loadRemainingPages();
+		return () => {
+			cancelled = true;
+		};
 	});
-
-	const loadRemainingPages = async () => {
-		for (let page = 2; page <= data.totalPages; page++) {
-			const batch = await getEvents(new SvelteDate(data.from), new SvelteDate(data.to), page);
-			events.push(...batch.events);
-		}
-	};
 
 	let eventsPerDay = $derived.by(() => {
 		return [...events]
@@ -68,7 +81,10 @@
 			return;
 		}
 
-		goto(href, { replaceState: true, keepFocus: true, noScroll: true });
+		void goto(href, { replace: true, reset: false }).catch((error) => {
+			console.error('Failed to navigate to calendar month:', error);
+			toast.error('Der ausgewählte Monat konnte nicht geladen werden.');
+		});
 	});
 
 	const timelineDayElements = new SvelteMap<string, HTMLLIElement>();
@@ -95,6 +111,16 @@
 	});
 
 	let expandedEventId = $state<string | undefined>(undefined);
+
+	$effect(() => {
+		const match = /^#event-(\d+)$/.exec(page.url.hash);
+		if (!match) return;
+		const event = events.find((event) => String(event.id) === match[1]);
+		if (!event) return;
+		const [year, month, day] = event.acf.date_from.split('-').map(Number);
+		value = new CalendarDate(year, month, day);
+		expandedEventId = match[1];
+	});
 </script>
 
 <div class="flex w-full flex-col items-center gap-6 lg:flex-row lg:items-start">
@@ -127,7 +153,7 @@
 		<div class="border-b px-4 py-5">
 			<h1 class="mb-5 text-lg font-semibold">Veranstaltungen</h1>
 			<p class="text-xs text-muted-foreground">
-				{events.length} Veranstaltungen im {new Date().toLocaleString(undefined, {
+				{events.length} Veranstaltungen im {new Date(data.from.year, data.from.month - 1, 1).toLocaleString('de', {
 					month: 'long',
 					year: 'numeric',
 				})}.

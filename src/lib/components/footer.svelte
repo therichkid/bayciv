@@ -60,7 +60,7 @@
 			<NavigationMenu.List>
 				{#each footerNavigation as item, i (i)}
 					{@const isInternalLink = item.href?.startsWith('/') ?? false}
-					{@const href = isInternalLink ? resolve(item.href as `/${string}`) : item.href}
+					{@const href = isInternalLink ? resolve(item.href!.slice(1)) : item.href}
 					{@const isActive = href && page.url.pathname.startsWith(href)}
 
 					<NavigationMenu.Item>

@@ -122,7 +122,7 @@
 		center={centerOfBavaria}
 		maxBounds={bavariaBounds}
 		zoom={6.5}
-		style="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json"
+		style="https://tiles.openfreemap.org/styles/bright"
 		class="h-[calc(100vh-256px)] w-full rounded-lg lg:w-2/3"
 	>
 		<GeoJSON id="bavaria-boundary" data={JSON.parse(BavariaGeoJson)}>

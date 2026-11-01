@@ -15,7 +15,12 @@
 	let groupNames = $derived(getGroupNames(event._embedded?.['wp:term']));
 </script>
 
-<a href={resolve(`events/${event.slug}`)}>
+<a
+	href="{resolve('/events/[[year]]/[[month]]', {
+		year: event.acf.date_from.slice(0, 4),
+		month: event.acf.date_from.slice(5, 7),
+	})}#event-{event.id}"
+>
 	<Card.Root class="h-full p-0 transition duration-300 hover:scale-[1.02] hover:shadow-lg">
 		<div class="relative h-40 w-full overflow-hidden rounded-t-lg">
 			<div class="pointer-events-none absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent"></div>

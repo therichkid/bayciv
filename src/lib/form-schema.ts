@@ -38,19 +38,14 @@ export const buildFormSchema = (form: WP_REST_API_Form) => {
 				validation = z.number({
 					error: `${elementName} muss eine Zahl sein.`,
 				});
-				if (element.min) {
+				if (element.min != null && element.min !== '') {
 					validation = validation.min(Number(element.min), {
 						error: `${elementName} muss mindestens ${element.min} sein.`,
 					});
 				}
-				if (element.max) {
+				if (element.max != null && element.max !== '') {
 					validation = validation.max(Number(element.max), {
 						message: `${elementName} darf höchstens ${element.max} sein.`,
-					});
-				}
-				if (element.required && !element.min) {
-					validation = validation.min(1, {
-						message: `${elementName} ist ein Pflichtfeld und darf nicht leer sein.`,
 					});
 				}
 				break;

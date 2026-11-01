@@ -7,6 +7,7 @@
 	import * as Select from '#lib/components/ui/select/index.js';
 	import { Textarea } from '#lib/components/ui/textarea/index.js';
 	import { buildFormSchema } from '#lib/form-schema.js';
+	import { getEmptyFormData } from '#lib/form-values.js';
 	import { formState, getForm } from '#lib/form.svelte.js';
 	import type { WP_REST_API_Form_Field } from '#lib/models/wordpress.js';
 	import { onMount } from 'svelte';
@@ -22,31 +23,9 @@
 
 	$effect(() => {
 		if (formState.byId[formId]) {
-			formData = getEmptyFormData();
+			formData = getEmptyFormData(formState.byId[formId].elements);
 		}
 	});
-
-	const getEmptyFormData = () => {
-		return (formState.byId[formId]?.elements || []).reduce(
-			(data, element) => {
-				if (element.type === 'text_block' || element.type === 'submit') {
-					return data;
-				}
-				if (element.type === 'checkbox' || element.type === 'acceptance') {
-					data[element.name] = new Array(element.options?.length || 0).fill(false);
-				} else if (element.type === 'quiz') {
-					data[element.name] = new Array(element.options?.length || 0).fill('');
-				} else if (element.multiple) {
-					data[element.name] = element.default_value ? [element.default_value] : [];
-				} else {
-					data[element.name] = element.default_value ?? '';
-				}
-				return data;
-			},
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			{} as Record<string, any>,
-		);
-	};
 
 	let formErrors = $state<Record<string, { errors: string[] }>>({});
 
@@ -119,7 +98,7 @@
 				toast.success('Formular erfolgreich gesendet.');
 
 				formEl.reset();
-				formData = getEmptyFormData();
+				formData = getEmptyFormData(formState.byId[formId].elements);
 				formErrors = {};
 			} else {
 				toast.error(data.message || 'Fehler beim Senden des Formulars. Bitte versuchen Sie es später erneut.');
@@ -149,9 +128,21 @@
 					{#if element.label}
 						<Field.Label for={element.name}>{element.label}</Field.Label>
 					{/if}
-					{#if ['text', 'number', 'date', 'email', 'tel', 'url', 'file', 'quiz'].includes(element.type)}
+					{#if element.type === 'file'}
 						<Input
-							type={element.type}
+							type="file"
+							name={element.name}
+							id={element.name}
+							required={element.required}
+							aria-invalid={formErrors[element.name] ? 'true' : 'false'}
+							onchange={(event) => {
+								formData[element.name] = event.currentTarget.files?.[0];
+								delete formErrors[element.name];
+							}}
+						/>
+					{:else if ['text', 'number', 'date', 'email', 'tel', 'url', 'quiz'].includes(element.type)}
+						<Input
+							type={element.type === 'quiz' ? 'text' : element.type}
 							name={element.name}
 							id={element.name}
 							required={element.required}
@@ -208,7 +199,8 @@
 						{#each element.options ?? [] as option, j (j)}
 							<div class="flex items-center gap-3">
 								<Checkbox
-									name={`${element.name}[]`}
+									name={element.type === 'acceptance' ? element.name : `${element.name}[]`}
+									value={element.type === 'acceptance' ? '1' : (option.value ?? option.label)}
 									id={`${element.name}-${j}`}
 									required={element.required}
 									aria-invalid={formErrors[element.name] ? 'true' : 'false'}

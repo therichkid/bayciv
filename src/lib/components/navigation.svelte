@@ -20,7 +20,7 @@
 
 {#snippet ListItem(subItem: NavigationItem)}
 	{@const isInternalLink = subItem.href?.startsWith('/') ?? false}
-	{@const href = isInternalLink ? resolve(subItem.href as `/${string}`) : subItem.href}
+	{@const href = isInternalLink ? resolve(subItem.href!.slice(1)) : subItem.href}
 	{@const isActive = href && page.url.pathname.startsWith(href)}
 
 	<li>
@@ -83,7 +83,7 @@
 					</NavigationMenu.Content>
 				{:else if item.href}
 					{@const isInternalLink = item.href?.startsWith('/') ?? false}
-					{@const href = isInternalLink ? resolve(item.href as `/${string}`) : item.href}
+					{@const href = isInternalLink ? resolve(item.href.slice(1)) : item.href}
 					{@const isActive = href && page.url.pathname.startsWith(href)}
 
 					<NavigationMenu.Link>

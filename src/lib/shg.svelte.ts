@@ -27,17 +27,27 @@ export const getShgs = async (): Promise<WP_REST_API_SHGs> => {
 	});
 	url.search = params.toString();
 
-	const response = await fetch(url);
-	const shgs = await response.json();
+	try {
+		const shgs: WP_REST_API_SHGs = [];
+		let totalPages = 1;
+		for (let page = 1; page <= totalPages; page++) {
+			url.searchParams.set('page', page.toString());
+			const response = await fetch(url);
+			if (!response.ok) {
+				throw new Error(`Failed to load self-help groups (page ${page}): HTTP ${response.status}`);
+			}
+			if (page === 1) {
+				totalPages = Number(response.headers.get('X-WP-TotalPages')) || 1;
+			}
+			shgs.push(...(await response.json()));
+		}
 
-	const sortedShgs = shgs.sort((a: WP_REST_API_SHG, b: WP_REST_API_SHG) => {
-		return a.title.rendered.localeCompare(b.title.rendered);
-	});
-
-	shgState.shgs = sortedShgs;
-	shgState.isLoading = false;
-
-	return sortedShgs;
+		shgs.sort((a, b) => a.title.rendered.localeCompare(b.title.rendered));
+		shgState.shgs = shgs;
+		return shgs;
+	} finally {
+		shgState.isLoading = false;
+	}
 };
 
 export const getShg = async (slug: string): Promise<WP_REST_API_SHG | null> => {

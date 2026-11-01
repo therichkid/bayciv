@@ -83,7 +83,7 @@
 					<p class="my-3 flex items-center gap-2">
 						<MapPin size={22} class="shrink-0" />
 						<span class="line-clamp-4">
-							{getAddressString(shg.acf.adress, shg.acf.address_name)}
+							{getAddressString(shg.acf.address, shg.acf.address_name)}
 						</span>
 					</p>
 					{#if shg.acf.email}
