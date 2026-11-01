@@ -283,8 +283,8 @@ const addAddress = ({ address, address_name }) => {
   return str;
 };
 
-const addAddressLatLng = ({ adress }) => {
-  return [adress?.lat ?? 0, adress?.lng ?? 0];
+const addAddressLatLng = ({ address }) => {
+  return [address?.lat ?? 0, address?.lng ?? 0];
 };
 
 // Add the address to an event or a Selbsthilfegruppe
