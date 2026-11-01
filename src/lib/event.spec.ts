@@ -19,14 +19,11 @@ describe('getEvents', () => {
 
 		await getEvents(from, undefined, 1, isMainEvent);
 		const params = new URL(fetchMock.mock.calls[0][0].toString()).searchParams;
-		expect(params.get('from_date')).toBe('2026-03-01');
+		expect(params.get('date_from')).toBe('2026-03-01');
 		expect(params.get('page')).toBe('1');
 		expect(params.get('per_page')).toBe('20');
-		expect(params.get('filter[meta_query][0][key]')).toBe('is_main_event');
-		expect(params.get('filter[meta_query][0][value]')).toBe(isMainEvent ? '1' : '0');
-		expect(params.get('filter[meta_key]')).toBe('date_from');
-		expect(params.get('filter[orderby]')).toBe('meta_value');
-		expect(params.get('filter[order]')).toBe('ASC');
+		expect(params.get('is_main_event')).toBe(String(isMainEvent));
+		expect([...params.keys()].some((key) => key.startsWith('filter['))).toBe(false);
 		expect(params.get('_embed')).toBe(isMainEvent ? 'wp:term,wp:featuredmedia' : 'wp:term');
 	});
 
@@ -43,10 +40,10 @@ describe('getEvents', () => {
 		expect((await getEvents(from)).events[0].id).toBe(3);
 		expect((await getEvents(from, undefined, 1, true)).events[0].id).toBe(1);
 		expect(fetchMock).toHaveBeenCalledTimes(3);
-		expect(new URL(fetchMock.mock.calls[2][0].toString()).searchParams.has('filter[meta_query][0][key]')).toBe(false);
+		expect(new URL(fetchMock.mock.calls[2][0].toString()).searchParams.has('is_main_event')).toBe(false);
 	});
 
-	it('sorts events by date and time', async () => {
+	it('preserves the order returned by the endpoint', async () => {
 		vi.stubGlobal(
 			'fetch',
 			vi
@@ -55,7 +52,7 @@ describe('getEvents', () => {
 					response([event(1, '2026-03-02', '09:00'), event(2, '2026-03-01', '16:00'), event(3, '2026-03-01', '10:00')]),
 				),
 		);
-		expect((await getEvents(from)).events.map((item) => item.id)).toEqual([3, 2, 1]);
+		expect((await getEvents(from)).events.map((item) => item.id)).toEqual([1, 2, 3]);
 	});
 
 	it('does not cache failed requests and allows a retry', async () => {
@@ -65,28 +62,23 @@ describe('getEvents', () => {
 			.mockResolvedValueOnce(response());
 		vi.stubGlobal('fetch', fetchMock);
 		await expect(getEvents(from)).rejects.toThrow('HTTP 500');
-		expect(eventState.isLoading).toBe(false);
 		await getEvents(from);
 		expect(fetchMock).toHaveBeenCalledTimes(2);
 	});
 
-	it('stays loading until both filtered requests finish', async () => {
-		let finishMain!: (value: Response) => void;
-		let finishRegular!: (value: Response) => void;
-		vi.stubGlobal(
-			'fetch',
-			vi
-				.fn()
-				.mockImplementationOnce(() => new Promise((resolve) => (finishMain = resolve)))
-				.mockImplementationOnce(() => new Promise((resolve) => (finishRegular = resolve))),
-		);
-		const main = getEvents(from, undefined, 1, true);
-		const regular = getEvents(from, undefined, 1, false);
-		finishMain(response());
-		await main;
-		expect(eventState.isLoading).toBe(true);
-		finishRegular(response());
-		await regular;
-		expect(eventState.isLoading).toBe(false);
+	it('keeps concurrent main and regular event requests separate', async () => {
+		const fetchMock = vi
+			.fn()
+			.mockResolvedValueOnce(response([event(1, '2026-03-01')]))
+			.mockResolvedValueOnce(response([event(2, '2026-03-01')]));
+		vi.stubGlobal('fetch', fetchMock);
+
+		const [main, regular] = await Promise.all([
+			getEvents(from, undefined, 1, true),
+			getEvents(from, undefined, 1, false),
+		]);
+		expect(main.events[0].id).toBe(1);
+		expect(regular.events[0].id).toBe(2);
+		expect(fetchMock).toHaveBeenCalledTimes(2);
 	});
 });

@@ -44,22 +44,16 @@
 	});
 
 	let eventsPerDay = $derived.by(() => {
-		return [...events]
-			.sort(
-				(a, b) =>
-					new Date(`${a.acf.date_from} ${a.acf.time_from}`).getTime() -
-					new Date(`${b.acf.date_from} ${b.acf.time_from}`).getTime(),
-			)
-			.reduce((map, event) => {
-				const date = event.acf.date_from;
-				if (!map.has(date)) {
-					map.set(date, []);
-				}
-				if (!map.get(date)?.some(({ id }) => id === event.id)) {
-					map.get(date)!.push(event);
-				}
-				return map;
-			}, new SvelteMap<string, WP_REST_API_Event[]>());
+		return events.reduce((map, event) => {
+			const date = event.acf.date_from;
+			const dayEvents = map.get(date);
+			if (!dayEvents) {
+				map.set(date, [event]);
+			} else if (!dayEvents.some(({ id }) => id === event.id)) {
+				dayEvents.push(event);
+			}
+			return map;
+		}, new Map<string, WP_REST_API_Event[]>());
 	});
 
 	let value = $state(today(getLocalTimeZone()));
