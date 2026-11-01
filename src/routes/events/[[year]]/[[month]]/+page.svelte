@@ -1,14 +1,15 @@
 <script lang="ts">
+	import EventInfo from '#lib/components/event-info.svelte';
 	import * as Accordion from '#lib/components/ui/accordion/index.js';
 	import CalendarDay from '#lib/components/ui/calendar/calendar-day.svelte';
 	import { Calendar } from '#lib/components/ui/calendar/index.js';
 	import { getEvents } from '#lib/event.svelte.js';
 	import type { WP_REST_API_Event, WP_REST_API_Events } from '#lib/models/wordpress.js';
-	import { getGroupNames } from '#lib/utils/shg.js';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { CalendarDate, getLocalTimeZone, today } from '@internationalized/date';
+	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
 	import { SvelteDate, SvelteMap } from 'svelte/reactivity';
 	import type { PageProps } from './$types';
@@ -113,7 +114,15 @@
 		if (!event) return;
 		const [year, month, day] = event.acf.date_from.split('-').map(Number);
 		value = new CalendarDate(year, month, day);
-		expandedEventId = match[1];
+
+		let cancelled = false;
+		void tick().then(() => {
+			if (!cancelled) expandedEventId = match[1];
+		});
+
+		return () => {
+			cancelled = true;
+		};
 	});
 </script>
 
@@ -179,25 +188,15 @@
 						<div class="mt-3 space-y-3">
 							<Accordion.Root type="single" class="w-full" bind:value={expandedEventId}>
 								{#each events as event (event.id)}
-									{@const groupNames = getGroupNames(event._embedded?.['wp:term'])}
-
 									<Accordion.Item value={String(event.id)}>
-										<Accordion.Trigger
-											><div class="flex items-center gap-2">
-												<div>
-													<p class="text-sm font-medium">{@html event.title.rendered}</p>
-													<p class="text-xs text-muted-foreground">
-														{#if groupNames.length > 0}
-															<span>{groupNames.join(', ')} | </span>
-														{/if}
-														<span>{event.acf.time_from}</span>
-														{#if event.acf.time_to}
-															<span>- {event.acf.time_to}</span>
-														{/if}
-													</p>
-												</div>
-											</div></Accordion.Trigger
-										>
+										<Accordion.Trigger>
+											<div class={{ 'text-primary': expandedEventId === String(event.id) }}>
+												<p class={['text-sm', expandedEventId === String(event.id) ? 'font-bold' : 'font-medium']}>
+													{@html event.title.rendered}
+												</p>
+												<EventInfo {event} />
+											</div>
+										</Accordion.Trigger>
 										<Accordion.Content>
 											<div class="prose-md prose-a:text-primary prose-a:hover:underline">
 												{@html event.content.rendered}

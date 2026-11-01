@@ -64,7 +64,7 @@
 			{#if event.acf.time_from}
 				<p class="my-3 flex items-center gap-2">
 					<Clock size={22} class="shrink-0" />
-					<span>{event.acf.time_from}{event.acf.time_to ? ` – ${event.acf.time_to}` : ''} Uhr</span>
+					<span>{event.acf.time_from}{event.acf.time_to ? ` - ${event.acf.time_to}` : ''} Uhr</span>
 				</p>
 			{/if}
 			{#if address}
