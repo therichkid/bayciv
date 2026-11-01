@@ -7,6 +7,7 @@
 	import UserLocationButton from '#lib/components/user-location-button.svelte';
 	import UserLocationMarker from '#lib/components/user-location-marker.svelte';
 	import type { WP_REST_API_SHG } from '#lib/models/wordpress.js';
+	import { preferGermanMapLabels } from '#lib/utils/map.js';
 	import { Eraser, Search } from '@lucide/svelte';
 	import { LngLat } from 'maplibre-gl';
 	import { FillLayer, GeoJSON, LineLayer, MapLibre, type Map } from 'svelte-maplibre';
@@ -111,7 +112,7 @@
 						if (shg.acf.address && shg.acf.address.lng && shg.acf.address.lat) {
 							map?.flyTo({ center: [shg.acf.address.lng, shg.acf.address.lat], essential: true });
 						}
-						openShg = shg.id;
+						openShg = openShg === shg.id ? null : shg.id;
 					}}
 					onmouseenter={() => (activeShg = shg.id)}
 					onmouseleave={() => (activeShg = null)}
@@ -126,6 +127,7 @@
 		maxBounds={bavariaBounds}
 		zoom={6.5}
 		style="https://tiles.openfreemap.org/styles/bright"
+		onload={preferGermanMapLabels}
 		class="h-[calc(100vh-256px)] w-full rounded-lg lg:w-2/3"
 	>
 		<GeoJSON id="bavaria-boundary" data={JSON.parse(BavariaGeoJson)}>

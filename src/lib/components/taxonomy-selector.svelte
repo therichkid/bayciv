@@ -18,7 +18,7 @@
 	let taxonomyTerms = $state<WP_REST_API_Term[]>([]);
 
 	onMount(async () => {
-		taxonomyTerms = await getTaxonomyTerms(slug);
+		taxonomyTerms = (await getTaxonomyTerms(slug)).sort((a, b) => a.name.localeCompare(b.name));
 	});
 
 	const toggleTermId = (id: number) => {
