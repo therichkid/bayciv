@@ -114,7 +114,8 @@
 	max-width: 100%;
 }
 
-/* Maplibre Popup styles */
+/* Maplibre */
+@custom-variant map-popup-content (& .maplibregl-popup-content);
 .maplibregl-popup-content {
 	margin: 0;
 	padding: 0;

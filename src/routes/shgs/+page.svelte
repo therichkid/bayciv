@@ -1,6 +1,7 @@
 <script lang="ts">
 	import BavariaGeoJson from '#lib/assets/bavaria.geo.json?raw';
 	import ShgCard from '#lib/components/shg-card.svelte';
+	import ShgMarker from '#lib/components/shg-marker.svelte';
 	import TaxonomySelector from '#lib/components/taxonomy-selector.svelte';
 	import * as InputGroup from '#lib/components/ui/input-group/index.js';
 	import UserLocationButton from '#lib/components/user-location-button.svelte';
@@ -8,7 +9,7 @@
 	import type { WP_REST_API_SHG } from '#lib/models/wordpress.js';
 	import { Eraser, Search } from '@lucide/svelte';
 	import { LngLat } from 'maplibre-gl';
-	import { FillLayer, GeoJSON, LineLayer, MapLibre, Marker, Popup, type Map } from 'svelte-maplibre';
+	import { FillLayer, GeoJSON, LineLayer, MapLibre, type Map } from 'svelte-maplibre';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -55,6 +56,7 @@
 	});
 
 	let activeShg = $state<number | null>(null);
+	let openShg = $state<number | null>(null);
 
 	let userLocation: [number, number] | null = $state(null);
 
@@ -109,6 +111,7 @@
 						if (shg.acf.address && shg.acf.address.lng && shg.acf.address.lat) {
 							map?.flyTo({ center: [shg.acf.address.lng, shg.acf.address.lat], essential: true });
 						}
+						openShg = shg.id;
 					}}
 					onmouseenter={() => (activeShg = shg.id)}
 					onmouseleave={() => (activeShg = null)}
@@ -143,27 +146,17 @@
 		{/if}
 
 		{#each filteredShgs as shg (shg.slug)}
-			{#if shg.acf.address}
-				<Marker
-					lngLat={[shg.acf.address.lng, shg.acf.address.lat]}
-					class="cursor-pointer hover:z-20 {activeShg === shg.id ? ' z-15' : 'z-10'}"
-				>
-					<div
-						class="max-w-40 rounded-lg p-2 text-center shadow-lg transition-all duration-500 hover:max-w-80 hover:scale-[1.15] {activeShg ===
-						shg.id
-							? ' max-w-80 bg-primary text-white'
-							: 'border bg-white'}"
-					>
-						<span class="line-clamp-1 text-xs font-semibold">
-							{@html shg.title.rendered}
-						</span>
-					</div>
-
-					<Popup offset={[0, -35]}>
-						<ShgCard {shg} class="max-w-150 animate-none" />
-					</Popup>
-				</Marker>
-			{/if}
+			<ShgMarker
+				{shg}
+				active={activeShg === shg.id}
+				bind:open={
+					() => openShg === shg.id,
+					(open) => {
+						if (open) openShg = shg.id;
+						else if (openShg === shg.id) openShg = null;
+					}
+				}
+			/>
 		{/each}
 	</MapLibre>
 </div>
