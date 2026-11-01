@@ -1,7 +1,7 @@
 <script lang="ts">
-	import BackButton from '$lib/components/BackButton.svelte';
-	import Form from '$lib/components/Form.svelte';
-	import ImageLightbox from '$lib/components/ImageLightbox.svelte';
+	import BackButton from '$lib/components/back-button.svelte';
+	import Form from '$lib/components/form.svelte';
+	import ImageLightbox from '$lib/components/image-lightbox.svelte';
 	import { decodeHtml } from '$lib/utils/html';
 	import type { PageProps } from './$types';
 

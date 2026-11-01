@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import FacebookIcon from '$lib/components/images/FacebookIcon.svelte';
-	import InstagramIcon from '$lib/components/images/InstagramIcon.svelte';
+	import FacebookIcon from '$lib/components/images/facebook-icon.svelte';
+	import InstagramIcon from '$lib/components/images/instagram-icon.svelte';
 	import * as NavigationMenu from '$lib/components/ui/navigation-menu';
 	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
 	import { footerNavigation } from '$lib/navigation';

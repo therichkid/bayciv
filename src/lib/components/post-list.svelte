@@ -2,8 +2,8 @@
 	import type { Custom_WP_REST_API_Posts } from '$lib/models/wordpress';
 	import { getPosts, postState } from '$lib/post.svelte';
 	import { onMount } from 'svelte';
-	import PostCard from './PostCard.svelte';
-	import PostCardSkeleton from './skeletons/PostCardSkeleton.svelte';
+	import PostCard from './post-card.svelte';
+	import PostCardSkeleton from './skeletons/post-card-skeleton.svelte';
 
 	let posts = $state<Custom_WP_REST_API_Posts>([]);
 

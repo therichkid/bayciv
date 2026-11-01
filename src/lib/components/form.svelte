@@ -6,8 +6,8 @@
 	import * as RadioGroup from '$lib/components/ui/radio-group';
 	import * as Select from '$lib/components/ui/select';
 	import { Textarea } from '$lib/components/ui/textarea';
+	import { buildFormSchema } from '$lib/form-schema';
 	import { formState, getForm } from '$lib/form.svelte';
-	import { buildFormSchema } from '$lib/formSchema';
 	import type { WP_REST_API_Form_Field } from '$lib/models/wordpress';
 	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';

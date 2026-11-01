@@ -1,6 +1,6 @@
 <script lang="ts">
-	import EventCarousel from '$lib/components/EventCarousel.svelte';
-	import PostList from '$lib/components/PostList.svelte';
+	import EventCarousel from '$lib/components/event-carousel.svelte';
+	import PostList from '$lib/components/post-list.svelte';
 </script>
 
 <svelte:head>

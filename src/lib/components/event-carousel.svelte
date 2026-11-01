@@ -4,8 +4,8 @@
 	import type { WP_REST_API_Event } from '$lib/models/wordpress';
 	import { onMount } from 'svelte';
 	import { SvelteDate } from 'svelte/reactivity';
-	import EventCard from './EventCard.svelte';
-	import EventCardSkeleton from './skeletons/EventCardSkeleton.svelte';
+	import EventCard from './event-card.svelte';
+	import EventCardSkeleton from './skeletons/event-card-skeleton.svelte';
 
 	let events = $state<WP_REST_API_Event[]>([]);
 

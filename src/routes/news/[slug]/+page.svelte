@@ -1,6 +1,6 @@
 <script lang="ts">
-	import BackButton from '$lib/components/BackButton.svelte';
-	import ImageLightbox from '$lib/components/ImageLightbox.svelte';
+	import BackButton from '$lib/components/back-button.svelte';
+	import ImageLightbox from '$lib/components/image-lightbox.svelte';
 	import { decodeHtml } from '$lib/utils/html';
 	import { getGroupNames } from '$lib/utils/shg';
 	import { Tag } from '@lucide/svelte';

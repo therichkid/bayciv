@@ -1,8 +1,8 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
-	import Footer from '$lib/components/Footer.svelte';
-	import BayCivBanner from '$lib/components/images/BayCivBanner.svelte';
-	import Navigation from '$lib/components/Navigation.svelte';
+	import Footer from '$lib/components/footer.svelte';
+	import BaycivBanner from '$lib/components/images/bayciv-banner.svelte';
+	import Navigation from '$lib/components/navigation.svelte';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import './layout.css';
 
@@ -17,7 +17,7 @@
 <div class="flex min-h-screen flex-col">
 	<Toaster />
 
-	<BayCivBanner />
+	<BaycivBanner />
 
 	<header class="sticky top-0 z-50 flex w-full items-center bg-background">
 		<Navigation />

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import BayCivIcon from '$lib/components/images/BayCivIcon.svelte';
+	import BaycivIcon from '$lib/components/images/bayciv-icon.svelte';
 	import * as NavigationMenu from '$lib/components/ui/navigation-menu';
 	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
 	import { mainNavigation, type NavigationItem } from '$lib/navigation';
@@ -52,7 +52,7 @@
 				{#snippet child()}
 					<a href={resolve('/')} class={navigationMenuTriggerStyle()}>
 						<span class="flex items-center gap-2">
-							<BayCivIcon size={24} />
+							<BaycivIcon size={24} />
 						</span>
 					</a>
 				{/snippet}

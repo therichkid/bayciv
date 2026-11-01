@@ -1,10 +1,10 @@
 <script lang="ts">
 	import BavariaGeoJson from '$lib/assets/bavaria.geo.json?raw';
-	import ShgCard from '$lib/components/ShgCard.svelte';
-	import TaxonomySelector from '$lib/components/TaxonomySelector.svelte';
+	import ShgCard from '$lib/components/shg-card.svelte';
+	import TaxonomySelector from '$lib/components/taxonomy-selector.svelte';
 	import * as InputGroup from '$lib/components/ui/input-group';
-	import UserLocationButton from '$lib/components/UserLocationButton.svelte';
-	import UserLocationMarker from '$lib/components/UserLocationMarker.svelte';
+	import UserLocationButton from '$lib/components/user-location-button.svelte';
+	import UserLocationMarker from '$lib/components/user-location-marker.svelte';
 	import type { WP_REST_API_SHG } from '$lib/models/wordpress';
 	import { Eraser, Search } from '@lucide/svelte';
 	import { LngLat } from 'maplibre-gl';
