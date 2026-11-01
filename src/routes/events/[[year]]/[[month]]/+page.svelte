@@ -132,7 +132,7 @@
 			type="single"
 			bind:value
 			bind:placeholder
-			class="rounded-lg border shadow-sm [--cell-size:--spacing(16)] md:[--cell-size:--spacing(18)]"
+			class="rounded-lg border [--cell-size:--spacing(16)] md:[--cell-size:--spacing(18)]"
 			captionLayout="label"
 			locale="de"
 		>
@@ -152,8 +152,8 @@
 		</Calendar>
 	</div>
 
-	<aside class="w-full grow rounded-lg border shadow-sm">
-		<div class="border-b px-4 py-5">
+	<aside class="w-full grow">
+		<div class="border-b py-5">
 			<h1 class="mb-5 text-lg font-semibold">Veranstaltungen</h1>
 			<p class="text-xs text-muted-foreground">
 				{events.length} Veranstaltungen im {new Date(data.from.year, data.from.month - 1, 1).toLocaleString('de', {
@@ -163,14 +163,10 @@
 			</p>
 		</div>
 
-		<div class="max-h-[70vh] w-full overflow-auto px-4 py-5">
-			<ol class="space-y-6">
+		<div class="max-h-[70vh] w-full overflow-auto pt-5">
+			<ol class="space-y-10">
 				{#each eventsPerDay.entries() as [day, events] (day)}
-					<li
-						class="rounded-md border p-3"
-						tabindex="-1"
-						bind:this={() => timelineDayElements.get(day), (v) => timelineDayElements.set(day, v)}
-					>
+					<li tabindex="-1" bind:this={() => timelineDayElements.get(day), (v) => timelineDayElements.set(day, v)}>
 						<div class="flex items-center justify-between">
 							<div>
 								<span class="text-3xl font-bold tracking-tight text-primary">
@@ -186,12 +182,18 @@
 						</div>
 
 						<div class="mt-3 space-y-3">
-							<Accordion.Root type="single" class="w-full" bind:value={expandedEventId}>
+							<Accordion.Root type="single" class="w-full space-y-2" bind:value={expandedEventId}>
 								{#each events as event (event.id)}
-									<Accordion.Item value={String(event.id)}>
-										<Accordion.Trigger>
-											<div class={{ 'text-primary': expandedEventId === String(event.id) }}>
-												<p class={['text-sm', expandedEventId === String(event.id) ? 'font-bold' : 'font-medium']}>
+									<Accordion.Item
+										value={String(event.id)}
+										class={[
+											'rounded-md border px-3 transition-colors hover:bg-muted/50',
+											expandedEventId === String(event.id) && 'border-l-4 border-l-primary bg-muted/50',
+										]}
+									>
+										<Accordion.Trigger class="hover:no-underline">
+											<div>
+												<p class="text-sm font-medium">
 													{@html event.title.rendered}
 												</p>
 												<EventInfo {event} />
