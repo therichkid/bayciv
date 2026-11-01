@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import * as Accordion from '$lib/components/ui/accordion';
-	import { Calendar } from '$lib/components/ui/calendar';
-	import CalendarDay from '$lib/components/ui/calendar/calendar-day.svelte';
-	import { getEvents } from '$lib/event.svelte';
-	import type { WP_REST_API_Event, WP_REST_API_Events } from '$lib/models/wordpress';
-	import { getGroupNames } from '$lib/utils/shg';
+	import * as Accordion from '#lib/components/ui/accordion/index.js';
+	import { Calendar } from '#lib/components/ui/calendar/index.js';
+	import CalendarDay from '#lib/components/ui/calendar/calendar-day.svelte';
+	import { getEvents } from '#lib/event.svelte.js';
+	import type { WP_REST_API_Event, WP_REST_API_Events } from '#lib/models/wordpress.js';
+	import { getGroupNames } from '#lib/utils/shg.js';
 	import { CalendarDate, getLocalTimeZone, today } from '@internationalized/date';
 	import { SvelteDate, SvelteMap } from 'svelte/reactivity';
 	import type { PageProps } from './$types';

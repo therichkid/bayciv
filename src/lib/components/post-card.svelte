@@ -1,8 +1,8 @@
 <script lang="ts">
+	import * as Card from '#lib/components/ui/card/index.js';
+	import type { Custom_WP_REST_API_Post } from '#lib/models/wordpress.js';
+	import { getGroupNames } from '#lib/utils/shg.js';
 	import { resolve } from '$app/paths';
-	import * as Card from '$lib/components/ui/card';
-	import type { Custom_WP_REST_API_Post } from '$lib/models/wordpress';
-	import { getGroupNames } from '$lib/utils/shg';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 
 	interface Props extends HTMLAnchorAttributes {
@@ -15,7 +15,7 @@
 	let groupNames = $derived(getGroupNames(post._embedded?.['wp:term']));
 </script>
 
-<a href={resolve(`/news/${post.slug}`)}>
+<a href={resolve(`news/${post.slug}`)}>
 	<Card.Root class="h-full p-0 transition duration-300 hover:scale-[1.02] hover:shadow-lg">
 		<div class="relative h-48 w-full overflow-hidden rounded-t-lg">
 			{#if groupNames.length > 0}

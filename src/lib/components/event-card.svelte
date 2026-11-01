@@ -1,9 +1,9 @@
 <script lang="ts">
+	import * as Card from '#lib/components/ui/card/index.js';
+	import type { WP_REST_API_Event } from '#lib/models/wordpress.js';
+	import { getAddressString } from '#lib/utils/address.js';
+	import { getGroupNames } from '#lib/utils/shg.js';
 	import { resolve } from '$app/paths';
-	import * as Card from '$lib/components/ui/card';
-	import type { WP_REST_API_Event } from '$lib/models/wordpress';
-	import { getAddressString } from '$lib/utils/address';
-	import { getGroupNames } from '$lib/utils/shg';
 	import { Clock, MapPin, Users } from '@lucide/svelte';
 	import type { HTMLAnchorAttributes } from 'svelte/elements';
 
@@ -15,10 +15,11 @@
 	let groupNames = $derived(getGroupNames(event._embedded?.['wp:term']));
 </script>
 
-<a href={resolve(`/events/${event.slug}`)}>
+<a href={resolve(`events/${event.slug}`)}>
 	<Card.Root class="h-full p-0 transition duration-300 hover:scale-[1.02] hover:shadow-lg">
 		<div class="relative h-40 w-full overflow-hidden rounded-t-lg">
 			<div class="pointer-events-none absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent"></div>
+
 			<div class="absolute top-5 left-5 z-10">
 				<p class="text-5xl font-bold tracking-tight text-secondary">{new Date(event.acf.date_from).getDate()}.</p>
 				<p class=" text-2xl font-bold tracking-tight text-secondary">

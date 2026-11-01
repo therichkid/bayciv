@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Badge } from '$lib/components/ui/badge';
-	import { TAXONOMY_DISPLAY_MAP } from '$lib/constants/taxonomy';
-	import { getTaxonomyTerms } from '$lib/taxonomy.svelte';
-	import { getRandomTailwindColor } from '$lib/utils/random';
+	import { Badge } from '#lib/components/ui/badge/index.js';
+	import { TAXONOMY_DISPLAY_MAP } from '#lib/constants/taxonomy.js';
+	import { getTaxonomyTerms } from '#lib/taxonomy.svelte.js';
+	import { getRandomTailwindColor } from '#lib/utils/random.js';
 	import { Check } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import type { WP_REST_API_Term } from 'wp-types';

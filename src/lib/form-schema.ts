@@ -1,4 +1,4 @@
-import type { WP_REST_API_Form } from '$lib/models/wordpress';
+import type { WP_REST_API_Form } from '#lib/models/wordpress.js';
 import { z } from 'zod';
 
 export const buildFormSchema = (form: WP_REST_API_Form) => {

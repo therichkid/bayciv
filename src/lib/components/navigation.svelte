@@ -1,10 +1,10 @@
 <script lang="ts">
+	import BaycivIcon from '#lib/components/images/bayciv-icon.svelte';
+	import * as NavigationMenu from '#lib/components/ui/navigation-menu/index.js';
+	import { navigationMenuTriggerStyle } from '#lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
+	import { mainNavigation, type NavigationItem } from '#lib/navigation.js';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import BaycivIcon from '$lib/components/images/bayciv-icon.svelte';
-	import * as NavigationMenu from '$lib/components/ui/navigation-menu';
-	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
-	import { mainNavigation, type NavigationItem } from '$lib/navigation';
 </script>
 
 {#snippet MainNavigationItem({ title, icon }: NavigationItem)}

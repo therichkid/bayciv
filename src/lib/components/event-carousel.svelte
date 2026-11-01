@@ -1,7 +1,7 @@
 <script lang="ts">
-	import * as Carousel from '$lib/components/ui/carousel';
-	import { eventState, getEvents } from '$lib/event.svelte';
-	import type { WP_REST_API_Event } from '$lib/models/wordpress';
+	import * as Carousel from '#lib/components/ui/carousel/index.js';
+	import { eventState, getEvents } from '#lib/event.svelte.js';
+	import type { WP_REST_API_Event } from '#lib/models/wordpress.js';
 	import { onMount } from 'svelte';
 	import { SvelteDate } from 'svelte/reactivity';
 	import EventCard from './event-card.svelte';

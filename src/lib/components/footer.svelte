@@ -1,11 +1,11 @@
 <script lang="ts">
+	import FacebookIcon from '#lib/components/images/facebook-icon.svelte';
+	import InstagramIcon from '#lib/components/images/instagram-icon.svelte';
+	import * as NavigationMenu from '#lib/components/ui/navigation-menu/index.js';
+	import { navigationMenuTriggerStyle } from '#lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
+	import { footerNavigation } from '#lib/navigation.js';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import FacebookIcon from '$lib/components/images/facebook-icon.svelte';
-	import InstagramIcon from '$lib/components/images/instagram-icon.svelte';
-	import * as NavigationMenu from '$lib/components/ui/navigation-menu';
-	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
-	import { footerNavigation } from '$lib/navigation';
 	import { Mail, MapPin, Phone } from '@lucide/svelte';
 	import { Separator } from './ui/separator';
 

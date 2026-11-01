@@ -1,4 +1,4 @@
-import type { ACF_Address } from '$lib/models/acf';
+import type { ACF_Address } from '#lib/models/acf.js';
 
 export const getAddressString = (
 	address?: ACF_Address | false | null | undefined,

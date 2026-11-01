@@ -1,8 +1,8 @@
 <script lang="ts">
-	import BackButton from '$lib/components/back-button.svelte';
-	import ImageLightbox from '$lib/components/image-lightbox.svelte';
-	import { decodeHtml } from '$lib/utils/html';
-	import { getGroupNames } from '$lib/utils/shg';
+	import BackButton from '#lib/components/back-button.svelte';
+	import ImageLightbox from '#lib/components/image-lightbox.svelte';
+	import { decodeHtml } from '#lib/utils/html.js';
+	import { getGroupNames } from '#lib/utils/shg.js';
 	import { Tag } from '@lucide/svelte';
 	import type { PageProps } from './$types';
 

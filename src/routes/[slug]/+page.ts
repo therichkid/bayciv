@@ -1,4 +1,4 @@
-import { getPage } from '$lib/page.svelte';
+import { getPage } from '#lib/page.svelte.js';
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 

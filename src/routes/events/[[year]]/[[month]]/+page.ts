@@ -1,4 +1,4 @@
-import { getEvents } from '$lib/event.svelte';
+import { getEvents } from '#lib/event.svelte.js';
 import { endOfMonth, getLocalTimeZone, startOfMonth, today, type CalendarDate } from '@internationalized/date';
 import { SvelteDate } from 'svelte/reactivity';
 import type { PageLoad } from './$types';

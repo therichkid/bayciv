@@ -1,4 +1,4 @@
-import { getPost } from '$lib/post.svelte';
+import { getPost } from '#lib/post.svelte.js';
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 

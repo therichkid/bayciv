@@ -1,4 +1,4 @@
-import type { WP_REST_API_Embedded_Term } from '$lib/models/wordpress';
+import type { WP_REST_API_Embedded_Term } from '#lib/models/wordpress.js';
 
 export const getGroupNames = (termGroups: WP_REST_API_Embedded_Term[][] | undefined): string[] => {
 	const groupNames: string[] = [];

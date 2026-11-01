@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { Badge } from '#lib/components/ui/badge/index.js';
+	import * as Card from '#lib/components/ui/card/index.js';
+	import { TAXONOMY_DISPLAY_MAP } from '#lib/constants/taxonomy.js';
+	import type { WP_REST_API_SHG } from '#lib/models/wordpress.js';
+	import { getAddressString } from '#lib/utils/address.js';
+	import { decrypt } from '#lib/utils/crypt.js';
+	import { getRandomTailwindColor } from '#lib/utils/random.js';
 	import { resolve } from '$app/paths';
-	import { Badge } from '$lib/components/ui/badge';
-	import * as Card from '$lib/components/ui/card';
-	import { TAXONOMY_DISPLAY_MAP } from '$lib/constants/taxonomy';
-	import type { WP_REST_API_SHG } from '$lib/models/wordpress';
-	import { getAddressString } from '$lib/utils/address';
-	import { decrypt } from '$lib/utils/crypt';
-	import { getRandomTailwindColor } from '$lib/utils/random';
 	import { Mail, MapPin, Navigation, Phone } from '@lucide/svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -104,8 +104,8 @@
 	</Card.Content>
 
 	<Card.Footer class="mt-auto p-4">
-		<a href={resolve(`/shgs/${shg.slug}`)} class="ml-auto">
-			<span class="text-sm font-medium text-primary"> Zur Gruppenseite → </span>
-		</a>
+		<a href={resolve(`shgs/${shg.slug}`)} class="ml-auto"
+			><span class="text-sm font-medium text-primary">Zur Gruppenseite →</span></a
+		>
 	</Card.Footer>
 </Card.Root>

@@ -1,4 +1,4 @@
-import { getShgs } from '$lib/shg.svelte';
+import { getShgs } from '#lib/shg.svelte.js';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async () => {

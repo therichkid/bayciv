@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { Button } from '$lib/components/ui/button';
 	import { ChevronLeft } from '@lucide/svelte';
 
 	const goBack = () => {

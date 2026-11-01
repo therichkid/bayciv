@@ -1,9 +1,9 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
-	import Footer from '$lib/components/footer.svelte';
-	import BaycivBanner from '$lib/components/images/bayciv-banner.svelte';
-	import Navigation from '$lib/components/navigation.svelte';
-	import { Toaster } from '$lib/components/ui/sonner';
+	import favicon from '#lib/assets/favicon.svg';
+	import Footer from '#lib/components/footer.svelte';
+	import BaycivBanner from '#lib/components/images/bayciv-banner.svelte';
+	import Navigation from '#lib/components/navigation.svelte';
+	import { Toaster } from '#lib/components/ui/sonner/index.js';
 	import './layout.css';
 
 	let { children } = $props();

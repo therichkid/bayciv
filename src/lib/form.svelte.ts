@@ -1,4 +1,4 @@
-import type { WP_REST_API_Form } from '$lib/models/wordpress';
+import type { WP_REST_API_Form } from '#lib/models/wordpress.js';
 import { SvelteURL } from 'svelte/reactivity';
 
 export const formState = $state<{
