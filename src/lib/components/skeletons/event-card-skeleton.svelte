@@ -4,7 +4,7 @@
 </script>
 
 <Card.Root class="h-full p-0">
-	<div class="h-40 w-75 rounded-t-lg">
+	<div class="h-40 w-full overflow-hidden rounded-t-lg">
 		<Skeleton class="h-full w-full rounded-none" />
 	</div>
 

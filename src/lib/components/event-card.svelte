@@ -13,6 +13,9 @@
 
 	let { event }: Props = $props();
 	let groupNames = $derived(getGroupNames(event._embedded?.['wp:term']));
+	let featuredMedia = $derived(event._embedded?.['wp:featuredmedia']?.[0]);
+	let date = $derived(new Date(`${event.acf.date_from}T00:00:00`));
+	let address = $derived(getAddressString(event.acf.address, event.acf.address_name));
 </script>
 
 <a
@@ -22,22 +25,27 @@
 	})}#event-{event.id}"
 >
 	<Card.Root class="h-full p-0 transition duration-300 hover:scale-[1.02] hover:shadow-lg">
-		<div class="relative h-40 w-full overflow-hidden rounded-t-lg">
+		<div class="relative h-40 w-full overflow-hidden rounded-t-lg bg-primary">
+			{#if featuredMedia?.source_url}
+				<img
+					src={featuredMedia.media_details?.sizes?.medium?.source_url || featuredMedia.source_url}
+					alt={featuredMedia.alt_text || ''}
+					class="h-full w-full object-cover"
+				/>
+			{/if}
 			<div class="pointer-events-none absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent"></div>
 
 			<div class="absolute top-5 left-5 z-10">
-				<p class="text-5xl font-bold tracking-tight text-secondary">{new Date(event.acf.date_from).getDate()}.</p>
+				<p class="text-5xl font-bold tracking-tight text-secondary">{date.getDate()}.</p>
 				<p class=" text-2xl font-bold tracking-tight text-secondary">
-					{new Date(event.acf.date_from).toLocaleString(undefined, { month: 'short' })}
+					{date.toLocaleString('de-DE', { month: 'short' })}
 				</p>
-				{#if new Date(event.acf.date_from).getFullYear() !== new Date().getFullYear()}
+				{#if date.getFullYear() !== new Date().getFullYear()}
 					<p class=" text-lg font-semibold tracking-tight text-secondary">
-						{new Date(event.acf.date_from).getFullYear()}
+						{date.getFullYear()}
 					</p>
 				{/if}
 			</div>
-
-			<img src="https://picsum.photos/300/200?random{event.id}" alt="Lorem Picsum" class="h-full w-full object-cover" />
 		</div>
 
 		<Card.Header>
@@ -53,19 +61,18 @@
 					<span>{groupNames.join(', ')}</span>
 				</p>
 			{/if}
-			<p class="my-3 flex items-center gap-2">
-				<Clock size={22} class="shrink-0" />
-				<span>{event.acf.time_from}</span>
-				{#if event.acf.time_to}
-					<span> - {event.acf.time_to}</span>
-				{/if}
-			</p>
-			<p class="my-3 flex items-center gap-2">
-				<MapPin size={24} class="shrink-0" />
-				<span>
-					{getAddressString(event.acf.address, event.acf.address_name)}
-				</span>
-			</p>
+			{#if event.acf.time_from}
+				<p class="my-3 flex items-center gap-2">
+					<Clock size={22} class="shrink-0" />
+					<span>{event.acf.time_from}{event.acf.time_to ? ` – ${event.acf.time_to}` : ''} Uhr</span>
+				</p>
+			{/if}
+			{#if address}
+				<p class="my-3 flex items-center gap-2">
+					<MapPin size={24} class="shrink-0" />
+					<span>{address}</span>
+				</p>
+			{/if}
 		</Card.Content>
 
 		<Card.Footer class="mt-auto p-4">

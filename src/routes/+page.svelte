@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EventCarousel from '#lib/components/event-carousel.svelte';
+	import EventSection from '#lib/components/event-section.svelte';
 	import PostList from '#lib/components/post-list.svelte';
 </script>
 
@@ -12,5 +12,5 @@
 	<PostList />
 
 	<h2 class="mt-12 mb-8 text-3xl font-semibold">Veranstaltungen</h2>
-	<EventCarousel />
+	<EventSection />
 </div>
