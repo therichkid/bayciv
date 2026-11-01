@@ -10,7 +10,7 @@ export interface WP_REST_API_Post_ACF {
 
 export interface WP_REST_API_SHG_ACF {
 	address_name: string;
-	adress: ACF_Address | false;
+	address: ACF_Address | false;
 	email: string;
 	instagram: string;
 	facebook: string;

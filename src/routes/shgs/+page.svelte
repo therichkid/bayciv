@@ -37,8 +37,8 @@
 
 			filtered = filtered
 				.map((shg) => {
-					if (shg.acf.adress && shg.acf.adress.lat && shg.acf.adress.lng) {
-						const to = new LngLat(shg.acf.adress.lng, shg.acf.adress.lat);
+					if (shg.acf.address && shg.acf.address.lat && shg.acf.address.lng) {
+						const to = new LngLat(shg.acf.address.lng, shg.acf.address.lat);
 						return { ...shg, distanceInMeters: from.distanceTo(to) };
 					}
 					return { ...shg, distanceInMeters: undefined };
@@ -106,8 +106,8 @@
 				<ShgCard
 					{shg}
 					onclick={() => {
-						if (shg.acf.adress && shg.acf.adress.lng && shg.acf.adress.lat) {
-							map?.flyTo({ center: [shg.acf.adress.lng, shg.acf.adress.lat], essential: true });
+						if (shg.acf.address && shg.acf.address.lng && shg.acf.address.lat) {
+							map?.flyTo({ center: [shg.acf.address.lng, shg.acf.address.lat], essential: true });
 						}
 					}}
 					onmouseenter={() => (activeShg = shg.id)}
@@ -143,9 +143,9 @@
 		{/if}
 
 		{#each filteredShgs as shg (shg.slug)}
-			{#if shg.acf.adress}
+			{#if shg.acf.address}
 				<Marker
-					lngLat={[shg.acf.adress.lng, shg.acf.adress.lat]}
+					lngLat={[shg.acf.address.lng, shg.acf.address.lat]}
 					class="cursor-pointer hover:z-20 {activeShg === shg.id ? ' z-15' : 'z-10'}"
 				>
 					<div
